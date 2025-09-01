@@ -16,7 +16,7 @@ export class ScheduleService {
       return await getGroups();
     } catch (error) {
       console.error("Error fetching groups:", error);
-      throw new Error("Не удалось получить список групп. Попробуйте позже.");
+      throw new Error("❌ Не удалось получить список групп. Попробуйте позже.");
     }
   }
 
@@ -25,7 +25,7 @@ export class ScheduleService {
       return await getTeachers();
     } catch (error) {
       console.error("Error fetching teachers:", error);
-      throw new Error("Не удалось получить список преподавателей. Попробуйте позже.");
+      throw new Error("❌ Не удалось получить список преподавателей. Попробуйте позже.");
     }
   }
 
@@ -34,7 +34,7 @@ export class ScheduleService {
       return await getGroupSchedule(groupId, dates);
     } catch (error) {
       console.error("Error fetching group schedule:", error);
-      throw new Error("Не удалось получить расписание для группы. Попробуйте позже.");
+      throw new Error("❌ Не удалось получить расписание для группы. Попробуйте позже.");
     }
   }
 
@@ -47,14 +47,14 @@ export class ScheduleService {
       return await getTeacherSchedule(teacherId, dates);
     } catch (error) {
       console.error("Error fetching teacher schedule:", error);
-      throw new Error("Не удалось получить расписание для преподавателя. Попробуйте позже.");
+      throw new Error("❌ Не удалось получить расписание для преподавателя. Попробуйте позже.");
     }
   }
 
   formatSchedule(schedule: GetScheduleForOneGroup[]): string {
     // Handle case when no schedule data is available
     if (!schedule || schedule.length === 0) {
-      return "Расписание не найдено. Возможно, расписание еще не сформировано или нет занятий на выбранные даты.";
+      return "📋 Расписание не найдено. Возможно, расписание еще не сформировано или нет занятий на выбранные даты.";
     }
 
     // Check if any day has schedules
@@ -67,18 +67,18 @@ export class ScheduleService {
     }
     
     if (!hasAnySchedules) {
-      return "Расписание не найдено. Возможно, расписание еще не сформировано или нет занятий на выбранные даты.";
+      return "📋 Расписание не найдено. Возможно, расписание еще не сформировано или нет занятий на выбранные даты.";
     }
 
-    let message = "Расписание занятий:\n\n";
-
+    let message = "📅 Расписание занятий:\n\n";
+    
     for (const day of schedule) {
       // Skip days with no schedules
       if (!day.schedules || day.schedules.length === 0) {
         continue;
       }
-
-      message += `📅 ${day.date || 'Дата не указана'}\n`;
+      
+      message += `📆 ${day.date || 'Дата не указана'}\n`;
       
       for (const lesson of day.schedules) {
         // Add null checks for all properties
@@ -95,8 +95,8 @@ export class ScheduleService {
         message += `📚 Тип: ${this.translateLessonType(lessonType)}\n\n`;
       }
     }
-
-    return message || "Расписание не найдено. Возможно, расписание еще не сформировано или нет занятий на выбранные даты.";
+    
+    return message || "📋 Расписание не найдено. Возможно, расписание еще не сформировано или нет занятий на выбранные даты.";
  }
 
   private translateLessonType(type: string): string {
@@ -117,7 +117,7 @@ export class ScheduleService {
       return "Группы не найдены.";
     }
 
-    let message = "Список групп:\n\n";
+    let message = "👥 Список групп:\n\n";
     
     // Group by course
     const groupsByCourse: { [key: number]: Group[] } = {};
@@ -136,13 +136,13 @@ export class ScheduleService {
       .sort((a, b) => a - b);
     
     for (const course of sortedCourses) {
-      message += `Курс ${course}:\n`;
-      const sortedGroups = groupsByCourse[course].sort((a, b) => 
+      message += `📚 Курс ${course}:\n`;
+      const sortedGroups = groupsByCourse[course].sort((a, b) =>
         (a.groupNumber || '').localeCompare(b.groupNumber || '')
       );
       
       for (const group of sortedGroups) {
-        message += `- ${group.groupNumber || 'Не указано'} (ID: ${group.id})\n`;
+        message += `🔹 ${group.groupNumber || 'Не указано'}\n`;
       }
       message += "\n";
     }
@@ -155,15 +155,15 @@ export class ScheduleService {
       return "Преподаватели не найдены.";
     }
 
-    let message = "Список преподавателей:\n\n";
+    let message = "👨‍🏫 Список преподавателей:\n\n";
     
     // Sort teachers by name
-    const sortedTeachers = teachers.sort((a, b) => 
+    const sortedTeachers = teachers.sort((a, b) =>
       (a.fio || '').localeCompare(b.fio || '')
     );
     
     for (const teacher of sortedTeachers) {
-      message += `- ${teacher.fio || 'Не указано'} (ID: ${teacher.id})\n`;
+      message += `🔸 ${teacher.fio || 'Не указано'}\n`;
     }
     
     return message;

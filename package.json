@@ -20,13 +20,13 @@
   "author": "BSAC Schedule Bot",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "grammy": "^1.28.0",
+    "dotenv": "^17.2.1",
+    "grammy": "^1.38.1",
     "openapi-fetch": "^0.14.0"
   },
   "devDependencies": {
-    "@types/node": "^20.14.12",
+    "@types/node": "^24.3.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.9.2"
   }
 }

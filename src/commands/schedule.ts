@@ -1,14 +1,15 @@
-import { Context } from "grammy";
+import { Context, InlineKeyboard } from "grammy";
 
 export const scheduleCommand = async (ctx: Context) => {
   const scheduleMessage = `
-Для получения расписания, пожалуйста, выберите один из вариантов:
-
-1. Расписание для группы
-2. Расписание для преподавателя
-
-Введите номер варианта (1 или 2):
+📅 Выберите тип расписания:
   `.trim();
 
-  await ctx.reply(scheduleMessage);
+  // Create inline keyboard with options
+  const keyboard = new InlineKeyboard()
+    .text("👥 Группа", "group_schedule")
+    .row()
+    .text("👨‍🏫 Преподаватель", "teacher_schedule");
+
+  await ctx.reply(scheduleMessage, { reply_markup: keyboard });
 };
