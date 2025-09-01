@@ -1,6 +1,17 @@
-import { Bot, Context, SessionFlavor, session } from "grammy";
+import { Bot, session } from "grammy";
 import dotenv from "dotenv";
-import { startScheduleConversation, handleScheduleResponse, handleGroupChoice, handleTeacherChoice, handleGroupScheduleRequest, handleTeacherScheduleRequest, SessionData, ScheduleState } from "./conversations/scheduleConversation";
+import { MyContext, UserState, IUser, UserRole } from "./schemas/User";
+import { StartCommand } from "./commands/slash/start";
+import { SettingsCommand } from "./commands/hears/settings";
+import { OtherSchedulesCommand } from "./commands/hears/otherSchedules";
+import { DayScheduleCommand } from "./commands/hears/daySchedule";
+import { WeekScheduleCommand } from "./commands/hears/weekSchedule";
+import { weeksHandler } from "./commands/actions/schedule/weeks";
+import { settingsHandler } from "./commands/actions/settings";
+import { classroomScheduleMasterHandler } from "./commands/actions/schedule/classrooms";
+import { subjectScheduleMasterHandler } from "./commands/actions/schedule/subjects";
+import { freeStorage } from "@grammyjs/storage-free";
+import { ScheduleService } from "./services/scheduleService";
 
 // Load environment variables
 dotenv.config();
@@ -11,92 +22,115 @@ if (!token) {
   throw new Error("BOT_TOKEN is not set in environment variables");
 }
 
-// Define context type with session
-type MyContext = Context & SessionFlavor<SessionData>;
-
 const bot = new Bot<MyContext>(token);
 
 // Install session middleware
 bot.use(session({
   initial: () => ({
-    scheduleState: ScheduleState.IDLE
-  } as SessionData)
+    telegramId: 0,
+    state: UserState.AskingFollowingEntity,
+    choosing_groups: [],
+    choosing_teachers: []
+  } as IUser)
 }));
 
-// Import command handlers
-import { startCommand } from "./commands/start";
-import { helpCommand } from "./commands/help";
+// Create command instances
+const startCommand = new StartCommand();
+const settingsCommand = new SettingsCommand();
+const otherSchedulesCommand = new OtherSchedulesCommand();
+const dayScheduleCommand = new DayScheduleCommand();
+const weekScheduleCommand = new WeekScheduleCommand();
 
 // Register command handlers
-bot.command("start", startCommand);
-bot.command("help", helpCommand);
-bot.command("schedule", startScheduleConversation);
+bot.command("start", (ctx) => startCommand.execute(ctx));
 
-// Handle callback queries from inline keyboards
-bot.callbackQuery("group_schedule", async (ctx) => {
-  // Answer the callback query to remove the loading animation
-  await ctx.answerCallbackQuery();
-  // Handle group schedule selection
-  await handleGroupChoice(ctx);
-});
+// Handle text messages for hears commands
+bot.hears("Сегодня", (ctx) => dayScheduleCommand.execute(ctx));
+bot.hears("Завтра", (ctx) => dayScheduleCommand.execute(ctx));
+bot.hears("Неделя", (ctx) => weekScheduleCommand.execute(ctx));
+bot.hears("Другие расписания", (ctx) => otherSchedulesCommand.execute(ctx));
+bot.hears("Настройки", (ctx) => settingsCommand.execute(ctx));
 
-bot.callbackQuery("teacher_schedule", async (ctx) => {
-  // Answer the callback query to remove the loading animation
-  await ctx.answerCallbackQuery();
-  // Handle teacher schedule selection
-  await handleTeacherChoice(ctx);
-});
-
-// Handle group selection
-bot.callbackQuery(/select_group_(\d+)/, async (ctx) => {
-  // Answer the callback query to remove the loading animation
-  await ctx.answerCallbackQuery();
-  
-  // Extract group ID from callback data
-  const groupId = parseInt(ctx.match[1]);
-  if (!isNaN(groupId)) {
-    // Handle group schedule request
-    await handleGroupScheduleRequest(ctx, groupId);
- } else {
-    await ctx.reply("❌ Ошибка: неверный ID группы.");
-  }
-});
-
-// Handle teacher selection
-bot.callbackQuery(/select_teacher_(\d+)/, async (ctx) => {
-  // Answer the callback query to remove the loading animation
-  await ctx.answerCallbackQuery();
-  
-  // Extract teacher ID from callback data
-  const teacherId = parseInt(ctx.match[1]);
-  if (!isNaN(teacherId)) {
-    // Handle teacher schedule request
-    await handleTeacherScheduleRequest(ctx, teacherId);
-  } else {
-    await ctx.reply("❌ Ошибка: неверный ID преподавателя.");
-  }
-});
-
-// Handle back button
-bot.callbackQuery("back_to_main", async (ctx) => {
-  // Answer the callback query to remove the loading animation
-  await ctx.answerCallbackQuery();
-  
-  // Restart the schedule conversation
-  await startScheduleConversation(ctx);
-});
+// Handle callback queries
+bot.use(weeksHandler);
+bot.use(settingsHandler);
+bot.use(classroomScheduleMasterHandler);
+bot.use(subjectScheduleMasterHandler);
 
 // Handle text messages
 bot.on("message:text", async (ctx) => {
-  // Check if we're in a schedule conversation and still need text input
-  if (ctx.session && ctx.session.scheduleState !== ScheduleState.IDLE) {
-    // For group/teacher ID input, we still need text input
-    // But we'll modify the handlers to use buttons for group/teacher selection too
-    await handleScheduleResponse(ctx);
-  } else {
-    // Regular message handling
-    await ctx.reply("❌ Извините, я не понимаю эту команду. Введите /help для получения списка доступных команд.");
+  if (!ctx.session) return;
+  
+  // Handle different states
+  switch (ctx.session.state) {
+    case UserState.AskingFollowingEntity: {
+      // Handle group or teacher input
+      if (ctx.session.role === undefined) {
+        await ctx.reply("Пожалуйста, сначала выберите роль (студент или преподаватель).");
+        return;
+      }
+      
+      // Process the user's group or teacher input
+      if (ctx.session.role === UserRole.Student) {
+        // Handle student group input
+        const groupNumber = ctx.message.text.trim();
+        if (groupNumber) {
+          try {
+            // Fetch the real group ID from the API
+            const scheduleService = new ScheduleService();
+            const groups = await scheduleService.getAllGroups();
+            const group = groups.find((g: any) => g.groupNumber === groupNumber);
+            
+            if (group && group.id !== undefined) {
+              // Save the group information to session
+              ctx.session.group = { id: group.id, groupNumber };
+              ctx.session.state = UserState.MainMenu;
+              await ctx.reply(`Спасибо! Теперь я буду показывать расписание для группы ${groupNumber}.`);
+            } else {
+              await ctx.reply(`Группа ${groupNumber} не найдена. Пожалуйста, введите правильный номер группы.`);
+              return;
+            }
+          } catch (error) {
+            console.error("Error fetching group information:", error);
+            await ctx.reply("Произошла ошибка при поиске группы. Пожалуйста, попробуйте позже.");
+            return;
+          }
+        } else {
+          await ctx.reply("Пожалуйста, введите номер группы.");
+          return;
+        }
+      } else {
+        // Handle teacher name input
+        const teacherName = ctx.message.text.trim();
+        if (teacherName) {
+          // Save the teacher name to session
+          ctx.session.teacher_name = teacherName;
+          ctx.session.state = UserState.MainMenu;
+          await ctx.reply(`Спасибо! Теперь я буду показывать расписание для преподавателя ${teacherName}.`);
+        } else {
+          await ctx.reply("Пожалуйста, введите инициалы преподавателя.");
+          return;
+        }
+      }
+      break;
+    }
+    case UserState.AskingWeekGroup:
+    case UserState.AskingWeekTeacher: {
+      // Handle week schedule input
+      await ctx.reply("Спасибо за информацию! Вы можете использовать меню для дальнейших действий.");
+      ctx.session.state = UserState.MainMenu;
+      break;
+    }
+    default: {
+      // Regular message handling
+      await ctx.reply("❌ Извините, я не понимаю эту команду. Используйте меню для взаимодействия с ботом.");
+    }
   }
+});
+
+// Error handling
+bot.catch((err) => {
+  console.error("Error in bot:", err);
 });
 
 // Start the bot
