@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   bsac-schedule-bot:
-    image: hlofiys/bsac-schedule-bot:latest
+    image: hlofiys/bsac-schedule-bot:master
     container_name: bsac-schedule-bot
     restart: unless-stopped
     volumes:
