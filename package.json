@@ -21,7 +21,6 @@
   "license": "MIT",
   "dependencies": {
     "@grammyjs/storage-file": "^2.5.1",
-    "@grammyjs/storage-free": "^2.5.1",
     "dotenv": "^17.2.1",
     "grammy": "^1.38.1",
     "openapi-fetch": "^0.14.0"
