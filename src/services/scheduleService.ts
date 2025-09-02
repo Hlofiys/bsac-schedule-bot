@@ -16,7 +16,7 @@ export class ScheduleService {
       return await getGroups();
     } catch (error) {
       console.error("Error fetching groups:", error);
-      throw new Error("❌ Не удалось получить список групп. Попробуйте позже.");
+      throw new Error("🤖 Не удалось получить список групп. Попробуйте позже.");
     }
   }
 
@@ -25,7 +25,7 @@ export class ScheduleService {
       return await getTeachers();
     } catch (error) {
       console.error("Error fetching teachers:", error);
-      throw new Error("❌ Не удалось получить список преподавателей. Попробуйте позже.");
+      throw new Error("🤖 Не удалось получить список преподавателей. Попробуйте позже.");
     }
   }
 
@@ -34,7 +34,7 @@ export class ScheduleService {
       return await getGroupSchedule(groupId, dates);
     } catch (error) {
       console.error("Error fetching group schedule:", error);
-      throw new Error("❌ Не удалось получить расписание для группы. Попробуйте позже.");
+      throw new Error("🤖 Не удалось получить расписание для группы. Попробуйте позже.");
     }
   }
 
@@ -47,14 +47,14 @@ export class ScheduleService {
       return await getTeacherSchedule(teacherId, dates);
     } catch (error) {
       console.error("Error fetching teacher schedule:", error);
-      throw new Error("❌ Не удалось получить расписание для преподавателя. Попробуйте позже.");
+      throw new Error("🤖 Не удалось получить расписание для преподавателя. Попробуйте позже.");
     }
   }
 
-  formatSchedule(schedule: GetScheduleForOneGroup[]): string {
+  formatSchedule(schedule: GetScheduleForOneGroup[], userSubgroup?: number, groupNumber?: string): string {
     // Handle case when no schedule data is available
     if (!schedule || schedule.length === 0) {
-      return "📋 Расписание не найдено. Возможно, расписание еще не сформировано или нет занятий на выбранные даты.";
+      return "😴 Расписание не найдено\n\nВозможно, расписание еще не сформировано или нет занятий на выбранные даты.";
     }
 
     // Check if any day has schedules
@@ -67,10 +67,10 @@ export class ScheduleService {
     }
     
     if (!hasAnySchedules) {
-      return "📋 Расписание не найдено. Возможно, расписание еще не сформировано или нет занятий на выбранные даты.";
+      return "😴 Расписание не найдено\n\nВозможно, расписание еще не сформировано или нет занятий на выбранные даты.";
     }
 
-    let message = "📅 Расписание занятий:\n\n";
+    let message = "";
     
     for (const day of schedule) {
       // Skip days with no schedules
@@ -78,25 +78,68 @@ export class ScheduleService {
         continue;
       }
       
-      message += `📆 ${day.date || 'Дата не указана'}\n`;
+      // Filter lessons by subgroup if specified
+      const filteredLessons = userSubgroup !== undefined 
+        ? day.schedules.filter(lesson => {
+            const lessonSubgroup = lesson.lessonSchedule?.subGroup;
+            // Show lesson if it's for all subgroups (0, null, undefined) or if it matches user's subgroup
+            return lessonSubgroup === 0 || lessonSubgroup === undefined || lessonSubgroup === null || lessonSubgroup === userSubgroup;
+          })
+        : day.schedules;
       
-      for (const lesson of day.schedules) {
+      // Skip day if no lessons after filtering
+      if (filteredLessons.length === 0) {
+        continue;
+      }
+      
+      // Format date nicely
+      let dayName = "Неизвестный день";
+      let formattedDate = "??.??";
+      
+      if (day.date) {
+        try {
+          const dateObj = new Date(day.date);
+          if (!isNaN(dateObj.getTime())) {
+            dayName = this.getDayName(dateObj.getDay());
+            formattedDate = this.formatDate(dateObj);
+          }
+        } catch (e) {
+          console.error('Error parsing date:', day.date, e);
+        }
+      }
+      
+      message += `📅 ${dayName}, ${formattedDate}\n`;
+      
+      // Sort lessons by lesson number
+      const sortedLessons = filteredLessons.sort((a, b) => {
+        const aNum = a.lessonSchedule?.lessonNumber || 0;
+        const bNum = b.lessonSchedule?.lessonNumber || 0;
+        return aNum - bNum;
+      });
+      
+      for (const lesson of sortedLessons) {
         // Add null checks for all properties
         const lessonName = (lesson.lessonSchedule?.lesson?.name) || "Не указано";
+        const shortLessonName = (lesson.lessonSchedule?.lesson?.subName) || lessonName;
         const teacherName = (lesson.lessonSchedule?.teacher?.fio) || "Не указано";
-        const lessonNumber = lesson.lessonSchedule?.lessonNumber !== undefined ? lesson.lessonSchedule?.lessonNumber : "Не указано";
-        const cabinet = lesson.lessonSchedule?.cabinet !== undefined ? lesson.lessonSchedule?.cabinet : "Не указано";
-        const block = lesson.lessonSchedule?.block !== undefined ? lesson.lessonSchedule?.block : "Не указано";
+        const lessonNumber = lesson.lessonSchedule?.lessonNumber !== undefined ? lesson.lessonSchedule?.lessonNumber : "?";
+        const cabinet = lesson.lessonSchedule?.cabinet !== undefined ? lesson.lessonSchedule?.cabinet : "?";
+        const block = lesson.lessonSchedule?.block !== undefined ? lesson.lessonSchedule?.block : "?";
         const lessonType = lesson.lessonSchedule?.staticLessonType || "Не указано";
         
-        message += `⏱ ${lessonNumber} пара (${lessonName})\n`;
-        message += `👨‍🏫 ${teacherName}\n`;
-        message += `📍 Кабинет: ${cabinet}, Корпус: ${block}\n`;
-        message += `📚 Тип: ${this.translateLessonType(lessonType)}\n\n`;
+        const translatedType = this.translateLessonType(lessonType);
+        const timeSlot = this.getLessonTime(lessonNumber);
+        
+        // Use short name if the full name is too long (more than 30 characters)
+        const displayName = lessonName.length > 30 ? shortLessonName : lessonName;
+        
+        message += `  🦑 ${timeSlot} | ${translatedType} | Ауд. ${cabinet} | ${displayName} | ${teacherName}\n`;
       }
+      
+      message += "\n";
     }
     
-    return message || "📋 Расписание не найдено. Возможно, расписание еще не сформировано или нет занятий на выбранные даты.";
+    return message.trim() || "😴 Расписание не найдено\n\nВозможно, расписание еще не сформировано или нет занятий на выбранные даты.";
  }
 
   private translateLessonType(type: string): string {
@@ -110,7 +153,34 @@ export class ScheduleService {
       default:
         return type || "Не указано";
     }
- }
+  }
+
+  private getDayName(dayOfWeek: number): string {
+    const days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
+    return days[dayOfWeek] || "Неизвестный день";
+  }
+
+  private formatDate(date: Date): string {
+    const day = date.getDate();
+    const monthNames = ["января", "февраля", "марта", "апреля", "мая", "июня", 
+                       "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+    const month = monthNames[date.getMonth()];
+    return `${day} ${month}`;
+  }
+
+  private getLessonTime(lessonNumber: number | string): string {
+    const times: { [key: string]: string } = {
+      "1": "08:30-10:00",
+      "2": "10:10-11:40", 
+      "3": "11:50-13:20",
+      "4": "14:00-15:30",
+      "5": "15:40-17:10",
+      "6": "17:20-18:50",
+      "7": "19:00-20:30",
+      "8": "20:40-22:10"
+    };
+    return times[lessonNumber.toString()] || "??:??-??:??";
+  }
 
   formatGroupsList(groups: Group[]): string {
     if (!groups || groups.length === 0) {

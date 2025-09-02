@@ -13,6 +13,11 @@ export class SettingsCommand {
       .text('Сменить роль', callbackIdBuild('settings', [ 'role' ]))
       .text(isStudent ? 'Сменить группу' : 'Сменить преподавателя',
         callbackIdBuild('settings', [ 'change_following' ]));
+    
+    // Add subgroup option for students
+    if (isStudent && ctx.session.group) {
+      settingsButtons.row().text('Сменить подгруппу', callbackIdBuild('settings', [ 'change_subgroup' ]));
+    }
 
     await ctx.reply('⚙️ Выбери что хочешь настроить', {
       reply_markup: settingsButtons

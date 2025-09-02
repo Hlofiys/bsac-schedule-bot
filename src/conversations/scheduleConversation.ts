@@ -1,5 +1,6 @@
 import { Context, InlineKeyboard } from "grammy";
 import { ScheduleService } from "../services/scheduleService";
+import { MyContext } from "../schemas/User";
 
 // Define conversation states
 export enum ScheduleState {
@@ -9,29 +10,22 @@ export enum ScheduleState {
   AWAITING_TEACHER_ID = "awaiting_teacher_id"
 }
 
-// Extend context with session data
-export interface SessionData {
-  scheduleState: ScheduleState;
-  selectedGroupId?: number;
-  selectedTeacherId?: number;
+// Extend the main session data with conversation-specific fields
+declare module "../schemas/User" {
+  interface IUser {
+    scheduleState?: ScheduleState;
+    selectedGroupId?: number;
+    selectedTeacherId?: number;
+  }
 }
-
-// Type for our context with session
-export type MyContext = Context & { 
-  session?: SessionData;
-};
 
 const API_BASE_URL = process.env.API_BASE_URL || "https://bsac.hlofiys.xyz";
 const scheduleService = new ScheduleService();
 
 // Function to start the schedule conversation
 export async function startScheduleConversation(ctx: MyContext) {
-  // Initialize session if it doesn't exist
-  if (!ctx.session) {
-    ctx.session = {
-      scheduleState: ScheduleState.AWAITING_CHOICE
-    };
-  } else {
+  // Initialize session conversation state
+  if (ctx.session) {
     ctx.session.scheduleState = ScheduleState.AWAITING_CHOICE;
   }
   
@@ -221,7 +215,7 @@ export async function handleGroupScheduleRequest(ctx: MyContext, groupId: number
     }
     
     const schedule = await scheduleService.getGroupSchedule(groupId, dates);
-    const scheduleMessage = scheduleService.formatSchedule(schedule);
+    const scheduleMessage = scheduleService.formatSchedule(schedule, ctx.session?.subgroup);
     
     // Send the schedule
     await ctx.reply(scheduleMessage);

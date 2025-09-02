@@ -10,8 +10,9 @@ import { weeksHandler } from "./commands/actions/schedule/weeks";
 import { settingsHandler } from "./commands/actions/settings";
 import { classroomScheduleMasterHandler } from "./commands/actions/schedule/classrooms";
 import { subjectScheduleMasterHandler } from "./commands/actions/schedule/subjects";
-import { freeStorage } from "@grammyjs/storage-free";
+import { FileAdapter } from "@grammyjs/storage-file";
 import { ScheduleService } from "./services/scheduleService";
+import { replyKeyboards } from "./utils/keyboards";
 
 // Load environment variables
 dotenv.config();
@@ -31,7 +32,10 @@ bot.use(session({
     state: UserState.AskingFollowingEntity,
     choosing_groups: [],
     choosing_teachers: []
-  } as IUser)
+  } as IUser),
+  storage: new FileAdapter<IUser>({
+    dirName: "sessions",
+  })
 }));
 
 // Create command instances
@@ -82,10 +86,12 @@ bot.on("message:text", async (ctx) => {
             const group = groups.find((g: any) => g.groupNumber === groupNumber);
             
             if (group && group.id !== undefined) {
-              // Save the group information to session
+              // Save the group information to session and ask for subgroup
               ctx.session.group = { id: group.id, groupNumber };
-              ctx.session.state = UserState.MainMenu;
-              await ctx.reply(`Спасибо! Теперь я буду показывать расписание для группы ${groupNumber}.`);
+              ctx.session.state = UserState.AskingSubgroup;
+              await ctx.reply(`Спасибо! Теперь выбери свою подгруппу:`, {
+                reply_markup: replyKeyboards[UserState.AskingSubgroup]
+              });
             } else {
               await ctx.reply(`Группа ${groupNumber} не найдена. Пожалуйста, введите правильный номер группы.`);
               return;
@@ -112,6 +118,34 @@ bot.on("message:text", async (ctx) => {
           return;
         }
       }
+      break;
+    }
+    case UserState.AskingSubgroup: {
+      // Handle subgroup selection
+      const text = ctx.message.text.trim();
+      
+      if (text === "Отмена") {
+        ctx.session.state = UserState.AskingFollowingEntity;
+        await ctx.reply("Отменено. Введите номер группы заново.");
+        return;
+      }
+      
+      let subgroup: number;
+      if (text === "1") {
+        subgroup = 1;
+      } else if (text === "2") {
+        subgroup = 2;
+      } else {
+        await ctx.reply("Пожалуйста, выберите подгруппу из предложенных вариантов.");
+        return;
+      }
+      
+      ctx.session.subgroup = subgroup;
+      ctx.session.state = UserState.MainMenu;
+      
+      await ctx.reply(`✅ Настройка завершена! Буду показывать расписание подгруппы ${subgroup} группы ${ctx.session.group?.groupNumber}.`, {
+        reply_markup: replyKeyboards[UserState.MainMenu]
+      });
       break;
     }
     case UserState.AskingWeekGroup:

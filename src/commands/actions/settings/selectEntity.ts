@@ -41,17 +41,18 @@ selectEntityHandler.callbackQuery(/select_entity.*/, async (ctx) => {
         return await ctx.reply('😵‍💫 Кажется произошла какая-то ошибка при выборе группы. Попробуй поискать новую группу, отправив её номер');
       }
       
-      // Update session with selected group
+      // Update session with selected group and ask for subgroup
       ctx.session.choosing_groups = [];
       ctx.session.choosing_teachers = [];
       ctx.session.teacher_name = undefined;
       ctx.session.group = { id: selectedGroup.id!, groupNumber: selectedGroup.groupNumber || '' };
-      ctx.session.state = UserState.MainMenu;
+      ctx.session.state = UserState.AskingSubgroup;
       
       await ctx.deleteMessage().catch(() => {});
       
-      return await ctx.reply(`🫔 Выбрана группа *${selectedGroup.groupNumber}*`, {
-        reply_markup: replyKeyboards[UserState.MainMenu]
+      await ctx.reply(`🫔 Выбрана группа *${selectedGroup.groupNumber}*`);
+      return await ctx.reply('🔢 Теперь выбери свою подгруппу:', {
+        reply_markup: replyKeyboards[UserState.AskingSubgroup]
       });
     } catch (error) {
       console.error("Error selecting group:", error);

@@ -16,16 +16,8 @@ export class DayScheduleCommand {
   
     // Get current date in Minsk time zone
     const now = new Date();
-    const offset = 3 * 60; // UTC+3 in minutes
-    const minskTime = new Date(now.getTime() + offset * 60 * 1000);
-    
-    // Create target date
-    const targetDate = new Date(minskTime);
-    targetDate.setDate(targetDate.getDate() + extraDays);
-    targetDate.setHours(0, 0, 0, 0);
-    
-    // Convert back to UTC for API request
-    const utcTargetDate = new Date(targetDate.getTime() - offset * 60 * 1000);
+    now.setDate(now.getDate() + extraDays);
+    const targetDate = now.toDateString();
 
     const isStudent = ctx.session.role !== UserRole.Teacher;
 
@@ -33,16 +25,16 @@ export class DayScheduleCommand {
       let scheduleMessage = '';
       
       if (isStudent && ctx.session.group) {
-        const dates = [utcTargetDate.toISOString().split('T')[0]];
+        const dates = [targetDate];
         const schedule = await scheduleService.getGroupSchedule(ctx.session.group.id, dates);
-        scheduleMessage = scheduleService.formatSchedule(schedule);
+        scheduleMessage = scheduleService.formatSchedule(schedule, ctx.session.subgroup, ctx.session.group.groupNumber);
       } else if (!isStudent && ctx.session.teacher_name) {
         // For teacher, we need to get the teacher ID first
         const teachers = await scheduleService.getAllTeachers();
         const teacher = teachers.find(t => t.fio === ctx.session.teacher_name);
         
         if (teacher && teacher.id !== undefined) {
-          const dates = [utcTargetDate.toISOString().split('T')[0]];
+          const dates = [targetDate];
           const schedule = await scheduleService.getTeacherSchedule(teacher.id, dates);
           scheduleMessage = scheduleService.formatSchedule(schedule);
         } else {
@@ -55,14 +47,15 @@ export class DayScheduleCommand {
       }
 
       if (scheduleMessage.includes('не найдено') || scheduleMessage.includes('нет занятий')) {
-        await ctx.reply(`🤩 На ${message.text.toLowerCase()} нет занятий`);
+        await ctx.reply(`🍹 На ${message.text.toLowerCase()} нет занятий`);
         return;
       }
 
-      await ctx.reply(`Расписание на ${message.text.toLowerCase()}\n\n${scheduleMessage}`);
+      const groupNumber = ctx.session.group?.groupNumber || 'Неизвестная группа';
+      await ctx.reply(`🎰 Расписание на ${message.text.toLowerCase()} для группы ${groupNumber}\n\n${scheduleMessage}`);
     } catch (error) {
       console.error("Error in day schedule handler:", error);
-      await ctx.reply("❌ Произошла ошибка при получении расписания. Пожалуйста, попробуйте позже.");
+      await ctx.reply("👾 Произошла ошибка при получении расписания. Пожалуйста, попробуйте позже.");
     }
   }
 }

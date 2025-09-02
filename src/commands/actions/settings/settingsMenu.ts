@@ -1,6 +1,6 @@
 import { Composer } from "grammy";
 import { MyContext, UserRole, UserState } from "../../../schemas/User";
-import { callbackIdParse, inlineKeyboards } from "../../../utils/keyboards";
+import { callbackIdParse, inlineKeyboards, replyKeyboards } from "../../../utils/keyboards";
 import { InlineKeyboard } from "grammy";
 import { ScheduleService } from "../../../services/scheduleService";
 
@@ -30,6 +30,7 @@ settingsMenuHandler.callbackQuery(/settings.*/, async (ctx) => {
         ctx.session.choosing_teachers = [];
         ctx.session.group = undefined;
         ctx.session.teacher_name = undefined;
+        ctx.session.subgroup = undefined;
         
         const askingText = role === UserRole.Student
           ? 'Теперь напиши свою группу'
@@ -54,6 +55,7 @@ settingsMenuHandler.callbackQuery(/settings.*/, async (ctx) => {
       ctx.session.choosing_teachers = [];
       ctx.session.group = undefined;
       ctx.session.teacher_name = undefined;
+      ctx.session.subgroup = undefined;
       
       const isStudent = ctx.session.role !== UserRole.Teacher;
       const askingText = isStudent
@@ -61,6 +63,18 @@ settingsMenuHandler.callbackQuery(/settings.*/, async (ctx) => {
         : 'Напиши инициалы преподавателя или их часть';
       
       return await ctx.editMessageText('🤺 ' + askingText);
+    }
+    case 'change_subgroup': {
+      if (ctx.session.role !== UserRole.Teacher && ctx.session.group) {
+        ctx.session.state = UserState.AskingSubgroup;
+        
+        await ctx.editMessageText('🔢 Выбери свою подгруппу:');
+        return await ctx.reply('Выбери подгруппу:', {
+          reply_markup: replyKeyboards[UserState.AskingSubgroup]
+        });
+      }
+      
+      return await ctx.editMessageText('❌ Ошибка: подгруппу можно менять только студентам с выбранной группой.');
     }
  }
 });

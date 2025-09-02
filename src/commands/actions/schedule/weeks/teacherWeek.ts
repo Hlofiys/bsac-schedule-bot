@@ -9,13 +9,11 @@ export const teacherWeekHandler = new Composer<MyContext>();
 
 const scheduleService = new ScheduleService();
 
-teacherWeekHandler.callbackQuery(/^teacher_week*/, async (ctx) => {
-  const match = ctx.match;
-  if (!match) return;
+teacherWeekHandler.callbackQuery(/^teacher_week/, async (ctx) => {
+  const callbackData = ctx.callbackQuery.data;
+  if (!callbackData) return;
   
-  // If match is an array (from regex), get the full match string
-  const matchString = Array.isArray(match) ? match[0] : match;
-  const [, ...args] = callbackIdParse(matchString);
+  const [, ...args] = callbackIdParse(callbackData);
   const [teacherId, weekStartRaw] = args;
 
   if (!teacherId) {
@@ -81,13 +79,14 @@ teacherWeekHandler.callbackQuery(/^teacher_week*/, async (ctx) => {
         return await ctx.reply('😭 Преподаватель не найден');
       }
 
-      const weekStart = new Date(weekStartRaw);
+      // Parse the date string properly
+      const weekStart = new Date(weekStartRaw + 'T00:00:00.000Z');
       const weekEnd = new Date(weekStart);
-      weekEnd.setDate(weekEnd.getDate() + 7);
+      weekEnd.setDate(weekEnd.getDate() + 6); // Changed from 7 to 6 to get exactly 7 days (0-6)
 
       // Get dates for the week
       const dates = [];
-      for (let d = new Date(weekStart); d < weekEnd; d.setDate(d.getDate() + 1)) {
+      for (let d = new Date(weekStart); d <= weekEnd; d.setDate(d.getDate() + 1)) {
         dates.push(d.toISOString().split('T')[0]);
       }
 
@@ -95,7 +94,9 @@ teacherWeekHandler.callbackQuery(/^teacher_week*/, async (ctx) => {
       const scheduleMessage = scheduleService.formatSchedule(schedule);
 
       await ctx.answerCallbackQuery();
-      await ctx.editMessageText(`Расписание на неделю для ${teacher.fio}\n\n${scheduleMessage}`);
+      await ctx.editMessageText(`Расписание на неделю для ${teacher.fio}\n\n${scheduleMessage}`, {
+        reply_markup: new InlineKeyboard()
+      });
     } catch (e) {
       await ctx.answerCallbackQuery();
       await ctx.editMessageReplyMarkup({ reply_markup: new InlineKeyboard() });

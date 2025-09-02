@@ -5,7 +5,8 @@ export enum UserState {
   AskingFollowingEntity = "AskingFollowingEntity",
   AskingWeekTeacher = "AskingWeekTeacher",
   AskingWeekGroup = "AskingWeekGroup",
-  ChoosingFollowingEntity = "ChoosingFollowingEntity"
+  ChoosingFollowingEntity = "ChoosingFollowingEntity",
+  AskingSubgroup = "AskingSubgroup"
 }
 
 export enum UserRole {
@@ -21,6 +22,7 @@ export interface IUser {
   
   choosing_groups: Array<{ id: number; groupNumber: string }>;
   group?: { id: number; groupNumber: string };
+  subgroup?: number;
   
   choosing_teachers: string[];
   teacher_name?: string;

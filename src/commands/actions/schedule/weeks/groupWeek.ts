@@ -9,27 +9,36 @@ export const groupWeekHandler = new Composer<MyContext>();
 
 const scheduleService = new ScheduleService();
 
-groupWeekHandler.callbackQuery(/^group_week*/, async (ctx) => {
-  const match = ctx.match;
-  if (!match) return;
+groupWeekHandler.callbackQuery(/^group_week/, async (ctx) => {
+  const callbackData = ctx.callbackQuery.data;
+  if (!callbackData) return;
   
-  // If match is an array (from regex), get the full match string
-  const matchString = Array.isArray(match) ? match[0] : match;
-  const [, ...args] = callbackIdParse(matchString);
-  const [groupId, weekStartRaw] = args;
+  const [, ...args] = callbackIdParse(callbackData);
+  let [groupId, weekStartRaw] = args; // Changed to let so we can reassign
 
   if (!groupId) {
-    if (ctx.session) {
-      ctx.session.state = UserState.AskingWeekGroup;
+    // Check if user already has a group set in their session
+    if (ctx.session?.group?.id) {
+      // Use the user's default group
+      groupId = ctx.session.group.id.toString(); // Now we can reassign groupId
+      // Fall through to the week selection logic below
+    } else {
+      // User doesn't have a group set, ask for group number
+      if (ctx.session) {
+        ctx.session.state = UserState.AskingWeekGroup;
+      }
+
+      await ctx.answerCallbackQuery();
+      // Clear the inline keyboard
+      await ctx.editMessageReplyMarkup({ reply_markup: new InlineKeyboard() });
+
+      await ctx.reply('🧐');
+      await ctx.reply('✏️ Напиши номер группы для поиска расписания');
+      return;
     }
-
-    await ctx.answerCallbackQuery();
-    // Clear the inline keyboard
-    await ctx.editMessageReplyMarkup({ reply_markup: new InlineKeyboard() });
-
-    await ctx.reply('🤨');
-    await ctx.reply('🥕 Напиши номер группы для поиска расписания');
-  } else if (!weekStartRaw) {
+  }
+  
+  if (!weekStartRaw) {
     // Get group info
     try {
       const groups = await scheduleService.getAllGroups();
@@ -38,7 +47,7 @@ groupWeekHandler.callbackQuery(/^group_week*/, async (ctx) => {
       if (!group) {
         await ctx.answerCallbackQuery();
         await ctx.editMessageReplyMarkup({ reply_markup: new InlineKeyboard() });
-        return await ctx.reply('😭 Группа не найдена');
+        return await ctx.reply('👻 Группа не найдена');
       }
 
       // Generate weeks for selection
@@ -62,12 +71,12 @@ groupWeekHandler.callbackQuery(/^group_week*/, async (ctx) => {
         buttons.text(weekLabel, callbackIdBuild('group_week', [groupId, dateToCallback(weekStart)])).row();
       }
 
-      await ctx.editMessageText('🛗 Выбери неделю');
+      await ctx.editMessageText('🌟 Выбери неделю');
       await ctx.editMessageReplyMarkup({ reply_markup: buttons });
     } catch (e) {
       await ctx.answerCallbackQuery();
       await ctx.editMessageReplyMarkup({ reply_markup: new InlineKeyboard() });
-      return await ctx.reply('📸 Произошла какая-то ошибка');
+      return await ctx.reply('🤖 Произошла какая-то ошибка');
     }
   } else {
     // Show schedule for the selected week
@@ -78,28 +87,31 @@ groupWeekHandler.callbackQuery(/^group_week*/, async (ctx) => {
       if (!group) {
         await ctx.answerCallbackQuery();
         await ctx.editMessageReplyMarkup({ reply_markup: new InlineKeyboard() });
-        return await ctx.reply('😭 Группа не найдена');
+        return await ctx.reply('👻 Группа не найдена');
       }
 
-      const weekStart = new Date(weekStartRaw);
+      // Parse the date string properly
+      const weekStart = new Date(weekStartRaw + 'T00:00:00.000Z');
       const weekEnd = new Date(weekStart);
-      weekEnd.setDate(weekEnd.getDate() + 7);
+      weekEnd.setDate(weekEnd.getDate() + 6); // Changed from 7 to 6 to get exactly 7 days (0-6)
 
       // Get dates for the week
       const dates = [];
-      for (let d = new Date(weekStart); d < weekEnd; d.setDate(d.getDate() + 1)) {
+      for (let d = new Date(weekStart); d <= weekEnd; d.setDate(d.getDate() + 1)) {
         dates.push(d.toISOString().split('T')[0]);
       }
 
       const schedule = await scheduleService.getGroupSchedule(parseInt(groupId), dates);
-      const scheduleMessage = scheduleService.formatSchedule(schedule);
+      const scheduleMessage = scheduleService.formatSchedule(schedule, ctx.session?.subgroup, group.groupNumber || undefined);
 
       await ctx.answerCallbackQuery();
-      await ctx.editMessageText(`Расписание на неделю для ${group.groupNumber}\n\n${scheduleMessage}`);
+      await ctx.editMessageText(`🎰 Расписание на неделю для группы ${group.groupNumber}\n\n${scheduleMessage}`, {
+        reply_markup: new InlineKeyboard()
+      });
     } catch (e) {
       await ctx.answerCallbackQuery();
       await ctx.editMessageReplyMarkup({ reply_markup: new InlineKeyboard() });
-      return await ctx.reply('🥥 Расписания на неделю для группы нету');
+      return await ctx.reply('🏖️ Расписания на неделю для группы нету');
     }
   }
 });

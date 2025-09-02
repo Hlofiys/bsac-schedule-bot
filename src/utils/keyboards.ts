@@ -27,7 +27,7 @@ export const callbackIdBuild = (command: string, args?: string[]): string => {
 export const callbackIdParse = (str: string) => str.split(CallbackIdSplitter);
 
 export const dateToCallback = (date: Date): string =>
-  `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate()}`;
+  `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 
 export const replyKeyboards = {
   [UserState.AskingFollowingEntity]: new Keyboard().resized(),
@@ -38,6 +38,11 @@ export const replyKeyboards = {
     .text('Отмена')
     .resized(),
   [UserState.AskingWeekGroup]: new Keyboard()
+    .text('Отмена')
+    .resized(),
+  [UserState.AskingSubgroup]: new Keyboard()
+    .text('1').text('2')
+    .row()
     .text('Отмена')
     .resized(),
   [UserState.MainMenu]: new Keyboard()
