@@ -19,7 +19,6 @@ declare module "../schemas/User" {
   }
 }
 
-const API_BASE_URL = process.env.API_BASE_URL || "https://bsac.hlofiys.xyz";
 const scheduleService = new ScheduleService();
 
 // Function to start the schedule conversation
@@ -72,7 +71,7 @@ async function handleGroupInput(ctx: MyContext, input: string) {
     
     // Filter groups that match the input
     const matchingGroups = groups.filter(group =>
-      group.groupNumber && group.groupNumber.includes(input)
+      group.groupNumber && group.groupNumber.toLowerCase().includes(input.toLowerCase())
     );
     
     if (matchingGroups.length === 0) {
@@ -95,7 +94,7 @@ async function handleGroupInput(ctx: MyContext, input: string) {
     // Add a back button
     keyboard.text("⬅️ Назад", "back_to_main");
     
-    await ctx.reply("Найдено несколько групп. Пожалуйста, выберите нужную:", { reply_markup: keyboard });
+    await ctx.reply("📋 Найдено несколько групп. Пожалуйста, выберите нужную:", { reply_markup: keyboard });
   } catch (error) {
     console.error("Error in group input handler:", error);
     await ctx.reply("❌ Произошла ошибка. Пожалуйста, попробуйте позже.");
@@ -138,7 +137,7 @@ async function handleTeacherInput(ctx: MyContext, input: string) {
     // Add a back button
     keyboard.text("⬅️ Назад", "back_to_main");
     
-    await ctx.reply("Найдено несколько преподавателей. Пожалуйста, выберите нужного:", { reply_markup: keyboard });
+    await ctx.reply("📋 Найдено несколько преподавателей. Пожалуйста, выберите нужного:", { reply_markup: keyboard });
   } catch (error) {
     console.error("Error in teacher input handler:", error);
     await ctx.reply("❌ Произошла ошибка. Пожалуйста, попробуйте позже.");
