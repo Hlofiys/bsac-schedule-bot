@@ -147,7 +147,7 @@ export class ScheduleService {
       case "Lecture":
         return "Лекция";
       case "Practical":
-        return "Практика";
+        return "Практическое";
       case "Laboratory":
         return "Лабораторная";
       default:
@@ -170,14 +170,12 @@ export class ScheduleService {
 
   private getLessonTime(lessonNumber: number | string): string {
     const times: { [key: string]: string } = {
-      "1": "08:30-10:00",
-      "2": "10:10-11:40", 
-      "3": "11:50-13:20",
-      "4": "14:00-15:30",
-      "5": "15:40-17:10",
-      "6": "17:20-18:50",
-      "7": "19:00-20:30",
-      "8": "20:40-22:10"
+      "1": "08:00-9:40",
+      "2": "09:55-11:35", 
+      "3": "12:15-13:55",
+      "4": "14:10-15:50",
+      "5": "16:20-18:00",
+      "6": "18:15-19:55"
     };
     return times[lessonNumber.toString()] || "??:??-??:??";
   }
