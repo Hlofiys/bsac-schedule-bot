@@ -1,7 +1,7 @@
-import { Context, SessionFlavor } from "grammy";
+import mongoose from "mongoose";
 
 export enum UserState {
- MainMenu = "MainMenu",
+  MainMenu = "MainMenu",
   AskingFollowingEntity = "AskingFollowingEntity",
   AskingWeekTeacher = "AskingWeekTeacher",
   AskingWeekGroup = "AskingWeekGroup",
@@ -14,19 +14,41 @@ export enum UserRole {
   Teacher = "Teacher"
 }
 
-export interface IUser {
+export interface User {
   telegramId: number;
   username?: string;
   state: UserState;
   role?: UserRole;
   
-  choosing_groups: Array<{ id: number; groupNumber: string }>;
-  group?: { id: number; groupNumber: string };
+  // Selected entities for schedule queries
+  selectedGroup?: string;
+  selectedTeacher?: string;
+  selectedSubject?: string;
   subgroup?: number;
   
-  choosing_teachers: string[];
-  teacher_name?: string;
+  // Temporary selection arrays for multi-step selection
+  choosing_groups?: Array<{ id: number; groupNumber: string }>;
+  choosing_teachers?: string[];
+  
+  // Mongoose document methods
+  save(): Promise<this>;
 }
 
-// Extend the context with our user data
-export type MyContext = Context & SessionFlavor<IUser>;
+const userSchema = new mongoose.Schema<User>({
+  telegramId: { type: Number, required: true, unique: true },
+  username: String,
+  state: { type: String, enum: Object.values(UserState), required: true },
+  role: { type: String, enum: Object.values(UserRole) },
+  
+  // Selected entities for schedule queries
+  selectedGroup: String,
+  selectedTeacher: String,
+  selectedSubject: String,
+  subgroup: Number,
+  
+  // Temporary selection arrays for multi-step selection
+  choosing_groups: [{ id: Number, groupNumber: String }],
+  choosing_teachers: [String]
+});
+
+export const User = mongoose.model<User>("User", userSchema);

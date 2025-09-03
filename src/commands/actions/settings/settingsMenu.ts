@@ -1,12 +1,10 @@
 import { Composer } from "grammy";
-import { MyContext, UserRole, UserState } from "../../../schemas/User";
+import { EnhancedContext } from "../../../utils/context";
+import { UserRole, UserState } from "../../../schemas/User";
 import { callbackIdParse, inlineKeyboards, replyKeyboards } from "../../../utils/keyboards";
 import { InlineKeyboard } from "grammy";
-import { ScheduleService } from "../../../services/scheduleService";
 
-export const settingsMenuHandler = new Composer<MyContext>();
-
-const scheduleService = new ScheduleService();
+export const settingsMenuHandler = new Composer<EnhancedContext>();
 
 settingsMenuHandler.callbackQuery(/settings.*/, async (ctx) => {
   const match = ctx.match;
@@ -17,20 +15,23 @@ settingsMenuHandler.callbackQuery(/settings.*/, async (ctx) => {
   const [, ...args] = callbackIdParse(matchString);
   const [settingName, chosenRole] = args;
   
-  if (!ctx.session) return;
+  if (!ctx.user) return;
 
   switch (settingName) {
     case 'role': {
       if (chosenRole?.length) {
         const role = chosenRole === 'teacher' ? UserRole.Teacher : UserRole.Student;
-        ctx.session.role = role;
-        ctx.session.state = UserState.AskingFollowingEntity;
-        // Initialize choosing arrays
-        ctx.session.choosing_groups = [];
-        ctx.session.choosing_teachers = [];
-        ctx.session.group = undefined;
-        ctx.session.teacher_name = undefined;
-        ctx.session.subgroup = undefined;
+        ctx.user.role = role;
+        ctx.user.state = UserState.AskingFollowingEntity;
+        // Clear selections
+        ctx.user.selectedGroup = undefined;
+        ctx.user.selectedTeacher = undefined;
+        ctx.user.selectedSubject = undefined;
+        ctx.user.subgroup = undefined;
+        // Clear temporary arrays
+        ctx.user.choosing_groups = [];
+        ctx.user.choosing_teachers = [];
+        await ctx.user.save();
         
         const askingText = role === UserRole.Student
           ? 'Теперь напиши свою группу'
@@ -49,15 +50,18 @@ settingsMenuHandler.callbackQuery(/settings.*/, async (ctx) => {
       });
     }
     case 'change_following': {
-      ctx.session.state = UserState.AskingFollowingEntity;
+      ctx.user.state = UserState.AskingFollowingEntity;
       // Clear previous selections
-      ctx.session.choosing_groups = [];
-      ctx.session.choosing_teachers = [];
-      ctx.session.group = undefined;
-      ctx.session.teacher_name = undefined;
-      ctx.session.subgroup = undefined;
+      ctx.user.selectedGroup = undefined;
+      ctx.user.selectedTeacher = undefined;
+      ctx.user.selectedSubject = undefined;
+      ctx.user.subgroup = undefined;
+      // Clear temporary arrays
+      ctx.user.choosing_groups = [];
+      ctx.user.choosing_teachers = [];
+      await ctx.user.save();
       
-      const isStudent = ctx.session.role !== UserRole.Teacher;
+      const isStudent = ctx.user.role !== UserRole.Teacher;
       const askingText = isStudent
         ? 'Напиши номер группы'
         : 'Напиши инициалы преподавателя или их часть';
@@ -65,8 +69,9 @@ settingsMenuHandler.callbackQuery(/settings.*/, async (ctx) => {
       return await ctx.editMessageText('🤺 ' + askingText);
     }
     case 'change_subgroup': {
-      if (ctx.session.role !== UserRole.Teacher && ctx.session.group) {
-        ctx.session.state = UserState.AskingSubgroup;
+      if (ctx.user.role !== UserRole.Teacher && ctx.user.selectedGroup) {
+        ctx.user.state = UserState.AskingSubgroup;
+        await ctx.user.save();
         
         await ctx.editMessageText('🔢 Выбери свою подгруппу:');
         return await ctx.reply('Выбери подгруппу:', {

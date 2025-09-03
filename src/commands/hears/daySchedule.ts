@@ -1,61 +1,110 @@
-import { MyContext } from "../../schemas/User";
-import { UserState, UserRole } from "../../schemas/User";
-import { ScheduleService } from "../../services/scheduleService";
+import { AbstractHearsCommand, CommandContext, CommandUtils } from "../../utils";
+import { UserState } from "../../schemas/User";
+import { GetScheduleForOneGroup, LessonSchedule } from "../../api";
 
-export class DayScheduleCommand {
-  async execute(ctx: MyContext) {
-    if (!ctx.session || ctx.session.state !== UserState.MainMenu) return;
+export class DayScheduleCommand extends AbstractHearsCommand {
+  constructor(utils: CommandUtils) {
+    super(["Сегодня", "Завтра"], utils);
+  }
 
-    const { message } = ctx;
-    if (!message || !message.text) return;
+  async execute(ctx: CommandContext) {
+    if (!ctx.user || ctx.user.state !== UserState.MainMenu) return;
 
-    const scheduleService = new ScheduleService();
-
-    // Determine if we're looking for today or tomorrow
-    const extraDays = message.text === 'Завтра' ? 1 : 0;
-  
-    // Get current date in Minsk time zone
-    const now = new Date();
-    now.setDate(now.getDate() + extraDays);
-    const targetDate = now.toDateString();
-
-    const isStudent = ctx.session.role !== UserRole.Teacher;
-
+    const { scheduleApi } = this.utils;
+    const isToday = ctx.message?.text === "Сегодня";
+    
     try {
-      let scheduleMessage = '';
+      const targetDate = new Date();
+      if (!isToday) {
+        targetDate.setDate(targetDate.getDate() + 1);
+      }
       
-      if (isStudent && ctx.session.group) {
-        const dates = [targetDate];
-        const schedule = await scheduleService.getGroupSchedule(ctx.session.group.id, dates);
-        scheduleMessage = scheduleService.formatSchedule(schedule, ctx.session.subgroup, ctx.session.group.groupNumber);
-      } else if (!isStudent && ctx.session.teacher_name) {
-        // For teacher, we need to get the teacher ID first
-        const teachers = await scheduleService.getAllTeachers();
-        const teacher = teachers.find(t => t.fio === ctx.session.teacher_name);
-        
-        if (teacher && teacher.id !== undefined) {
-          const dates = [targetDate];
-          const schedule = await scheduleService.getTeacherSchedule(teacher.id, dates);
-          scheduleMessage = scheduleService.formatSchedule(schedule);
-        } else {
-          await ctx.reply('🤔 Пожалуйста, сначала выберите преподавателя в настройках.');
-          return;
-        }
+      const dateString = targetDate.toISOString().split('T')[0];
+      
+      let scheduleForDay: GetScheduleForOneGroup[] = [];
+      if (ctx.user.selectedGroup) {
+        scheduleForDay = await scheduleApi.getScheduleForDates({
+          groupId: ctx.user.selectedGroup,
+          dates: [dateString]
+        });
+      } else if (ctx.user.selectedTeacher) {
+        scheduleForDay = await scheduleApi.getScheduleForDates({
+          teacherId: ctx.user.selectedTeacher,
+          dates: [dateString]
+        });
       } else {
-        await ctx.reply('🤔 Пожалуйста, сначала выберите группу или преподавателя в настройках.');
+        await ctx.reply("❗ Сначала выберите группу или преподавателя в настройках");
         return;
       }
 
-      if (scheduleMessage.includes('не найдено') || scheduleMessage.includes('нет занятий')) {
-        await ctx.reply(`🍹 На ${message.text.toLowerCase()} нет занятий`);
+      const lessons = scheduleForDay.flatMap(day => day.schedules || []);
+
+      if (lessons.length === 0) {
+        await ctx.reply(`🎉 На ${isToday ? "сегодня" : "завтра"} занятий нет!`);
         return;
       }
 
-      const groupNumber = ctx.session.group?.groupNumber || 'Неизвестная группа';
-      await ctx.reply(`🎰 Расписание на ${message.text.toLowerCase()} для группы ${groupNumber}\n\n${scheduleMessage}`);
+      const scheduleText = this.formatSchedule(lessons, isToday ? "сегодня" : "завтра", ctx.user.subgroup);
+      await ctx.reply(scheduleText, { parse_mode: "HTML" });
+
     } catch (error) {
-      console.error("Error in day schedule handler:", error);
-      await ctx.reply("👾 Произошла ошибка при получении расписания. Пожалуйста, попробуйте позже.");
+      console.error("Error fetching day schedule:", error);
+      await ctx.reply("❌ Произошла ошибка при получении расписания. Попробуйте позже.");
     }
+  }
+
+  private formatSchedule(lessonsWithWork: LessonSchedule[], dayText: string, subgroup?: number): string {
+    let message = `📅 <b>Расписание на ${dayText}</b>\n\n`;
+    
+    const lessons = lessonsWithWork.filter(lesson => !(subgroup && lesson.lessonSchedule?.subGroup && lesson.lessonSchedule.subGroup !== subgroup));
+
+    lessons.sort((a, b) => (a.lessonSchedule?.lessonNumber || 0) - (b.lessonSchedule?.lessonNumber || 0)).forEach((lessonWithWork, index) => {
+      const lesson = lessonWithWork.lessonSchedule;
+      if (!lesson) return;
+
+      const timeSlot = this.getLessonTime(lesson.lessonNumber);
+      const lessonName = lesson.lesson?.name || "Не указано";
+      const teacherName = lesson.teacher?.fio || "Не указано";
+      const cabinet = lesson.cabinet;
+      const lessonType = lesson.staticLessonType || "Не указано";
+      
+      const cabinetDisplay = cabinet === 0 ? "Спортзал" : (cabinet ? `Ауд. ${cabinet}`: "Ауд. ?");
+      const translatedType = this.translateLessonType(lessonType);
+      
+      message += `🔸 <b>${timeSlot}</b> | ${translatedType}\n`;
+      message += `   📚 ${lessonName}\n`;
+      message += `   👨‍🏫 ${teacherName}\n`;
+      message += `   🏢 ${cabinetDisplay}\n`;
+      
+      if (index < lessons.length - 1) {
+        message += "\n";
+      }
+    });
+    
+    return message;
+  }
+
+  private getLessonTime(lessonNumber: number | undefined): string {
+    const times: { [key: number]: string } = {
+      1: "08:00-09:35",
+      2: "09:45-11:20", 
+      3: "11:30-13:05",
+      4: "13:45-15:20",
+      5: "15:30-17:05",
+      6: "17:15-18:50",
+      7: "19:00-20:35"
+    };
+    
+    return lessonNumber ? times[lessonNumber] || "Время не указано" : "Время не указано";
+  }
+
+  private translateLessonType(type: string): string {
+    const translations: { [key: string]: string } = {
+        "Lecture": "Лекция",
+        "Practical": "Практика", 
+        "Laboratory": "Лабораторная"
+    };
+    
+    return translations[type] || type;
   }
 }

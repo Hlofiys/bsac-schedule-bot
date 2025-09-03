@@ -1,14 +1,17 @@
-import { MyContext } from "../../schemas/User";
+import { AbstractHearsCommand, CommandContext, CommandUtils } from "../../utils";
 import { UserState, UserRole } from "../../schemas/User";
 import { callbackIdBuild, dateToCallback } from "../../utils/keyboards";
 import { InlineKeyboard } from "grammy";
-import { ScheduleService } from "../../services/scheduleService";
 
-export class WeekScheduleCommand {
-  async execute(ctx: MyContext) {
-    if (!ctx.session || ctx.session.state !== UserState.MainMenu) return;
+export class WeekScheduleCommand extends AbstractHearsCommand {
+  constructor(utils: CommandUtils) {
+    super(["Неделя"], utils);
+  }
 
-    const scheduleService = new ScheduleService();
+  async execute(ctx: CommandContext) {
+    if (ctx.user?.state !== UserState.MainMenu) return;
+
+    const { scheduleApi } = this.utils;
 
     // Get current week start
     const today = new Date();
@@ -19,9 +22,9 @@ export class WeekScheduleCommand {
     currentWeekStart.setHours(0, 0, 0, 0);
 
     try {
-      const isStudent = ctx.session.role !== UserRole.Teacher;
+      const isStudent = ctx.user?.role !== UserRole.Teacher;
       
-      if (isStudent && ctx.session.group) {
+      if (isStudent && ctx.user?.selectedGroup) {
         // Create buttons for current and next few weeks
         const buttons = new InlineKeyboard();
         for (let i = 0; i < 4; i++) {
@@ -32,38 +35,32 @@ export class WeekScheduleCommand {
                            i === 1 ? 'Следующая неделя' :
                            `Через ${i} недели`;
           
-          buttons.text(weekLabel, callbackIdBuild('group_week', [ctx.session.group.id.toString(), dateToCallback(weekStart)])).row();
+          buttons.text(weekLabel, callbackIdBuild('group_week', [ctx.user.selectedGroup, dateToCallback(weekStart)])).row();
         }
 
         await ctx.reply('🧦 Выбери неделю', {
           reply_markup: buttons
         });
-      } else if (!isStudent && ctx.session.teacher_name) {
-        // For teacher, we need to get the teacher ID first
-        const teachers = await scheduleService.getAllTeachers();
-        const teacher = teachers.find(t => t.fio === ctx.session.teacher_name);
+      } else if (!isStudent && ctx.user?.selectedTeacher) {
+        // For teacher, create week buttons directly
+        const teacherId = ctx.user.selectedTeacher;
         
-        if (teacher && teacher.id !== undefined) {
-          // Create buttons for current and next few weeks
-          const buttons = new InlineKeyboard();
-          for (let i = 0; i < 4; i++) {
-            const weekStart = new Date(currentWeekStart);
-            weekStart.setDate(weekStart.getDate() + (i * 7));
-            
-            const weekLabel = i === 0 ? 'Текущая неделя' :
-                             i === 1 ? 'Следующая неделя' :
-                             `Через ${i} недели`;
-            
-            buttons.text(weekLabel, callbackIdBuild('teacher_week', [teacher.id.toString(), dateToCallback(weekStart)])).row();
-          }
-
-          await ctx.reply('🧦 Выбери неделю', {
-            reply_markup: buttons
-          });
-        } else {
-          await ctx.reply('🤔 Пожалуйста, сначала выберите группу или преподавателя в настройках.');
-          return;
+        // Create buttons for current and next few weeks
+        const buttons = new InlineKeyboard();
+        for (let i = 0; i < 4; i++) {
+          const weekStart = new Date(currentWeekStart);
+          weekStart.setDate(weekStart.getDate() + (i * 7));
+          
+          const weekLabel = i === 0 ? 'Текущая неделя' :
+                           i === 1 ? 'Следующая неделя' :
+                           `Через ${i} недели`;
+          
+          buttons.text(weekLabel, callbackIdBuild('teacher_week', [teacherId, dateToCallback(weekStart)])).row();
         }
+
+        await ctx.reply('🧦 Выбери неделю', {
+          reply_markup: buttons
+        });
       } else {
         await ctx.reply('🤔 Пожалуйста, сначала выберите группу или преподавателя в настройках.');
         return;

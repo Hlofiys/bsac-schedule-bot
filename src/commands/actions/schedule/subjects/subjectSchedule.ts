@@ -1,8 +1,8 @@
 import { Composer } from "grammy";
-import { MyContext } from "../../../../schemas/User";
+import { EnhancedContext } from "../../../../utils";
 import { InlineKeyboard } from "grammy";
 
-export const subjectScheduleHandler = new Composer<MyContext>();
+export const subjectScheduleHandler = new Composer<EnhancedContext>();
 
 subjectScheduleHandler.callbackQuery('subject_schedule', async (ctx) => {
   // For now, we'll just show a simple message about subjects

@@ -1,8 +1,8 @@
 import { Composer } from "grammy";
-import { MyContext } from "../../../../schemas/User";
+import { EnhancedContext } from "../../../../utils";
 import { subjectScheduleHandler } from './subjectSchedule';
 
-export const subjectScheduleMasterHandler = new Composer<MyContext>();
+export const subjectScheduleMasterHandler = new Composer<EnhancedContext>();
 
 subjectScheduleMasterHandler
   .use(subjectScheduleHandler);

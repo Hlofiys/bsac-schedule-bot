@@ -1,13 +1,17 @@
+import { AbstractHearsCommand, CommandContext, CommandUtils } from "../../utils";
 import { UserRole, UserState } from '../../schemas/User';
 import { callbackIdBuild } from '../../utils/keyboards';
-import { MyContext } from "../../schemas/User";
 import { InlineKeyboard } from "grammy";
 
-export class SettingsCommand {
-  async execute(ctx: MyContext) {
-    if (!ctx.session || ctx.session.state !== UserState.MainMenu) return;
+export class SettingsCommand extends AbstractHearsCommand {
+  constructor(utils: CommandUtils) {
+    super(["Настройки"], utils);
+  }
 
-    const isStudent = ctx.session.role !== UserRole.Teacher;
+  async execute(ctx: CommandContext) {
+    if (ctx.user?.state !== UserState.MainMenu) return;
+
+    const isStudent = ctx.user?.role !== UserRole.Teacher;
 
     const settingsButtons = new InlineKeyboard()
       .text('Сменить роль', callbackIdBuild('settings', [ 'role' ]))
@@ -15,7 +19,7 @@ export class SettingsCommand {
         callbackIdBuild('settings', [ 'change_following' ]));
     
     // Add subgroup option for students
-    if (isStudent && ctx.session.group) {
+    if (isStudent && ctx.user?.selectedGroup) {
       settingsButtons.row().text('Сменить подгруппу', callbackIdBuild('settings', [ 'change_subgroup' ]));
     }
 

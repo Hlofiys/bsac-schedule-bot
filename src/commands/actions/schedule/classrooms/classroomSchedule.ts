@@ -1,9 +1,9 @@
 import { Composer } from "grammy";
-import { MyContext } from "../../../../schemas/User";
+import { EnhancedContext } from "../../../../utils";
 import { callbackIdBuild, ClassroomScheduleType, inlineKeyboards } from "../../../../utils/keyboards";
 import { InlineKeyboard } from "grammy";
 
-export const classroomScheduleHandler = new Composer<MyContext>();
+export const classroomScheduleHandler = new Composer<EnhancedContext>();
 
 classroomScheduleHandler.callbackQuery('classroom_schedule', async (ctx) => {
   // For now, we'll just show the classroom schedule type options

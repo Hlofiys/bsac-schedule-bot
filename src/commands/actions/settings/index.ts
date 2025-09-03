@@ -1,9 +1,9 @@
 import { Composer } from "grammy";
-import { MyContext } from "../../../schemas/User";
+import { EnhancedContext } from "../../../utils";
 import { selectEntityHandler } from './selectEntity';
 import { settingsMenuHandler } from './settingsMenu';
 
-export const settingsHandler = new Composer<MyContext>();
+export const settingsHandler = new Composer<EnhancedContext>();
 
 settingsHandler
   .use(selectEntityHandler)
