@@ -25,13 +25,11 @@ COPY . .
 ENV NODE_ENV=production
 RUN bun run build
 
-# copy production dependencies and source code into final image
+# copy only the bundled application
 FROM base AS release
-COPY --from=install /temp/prod/node_modules node_modules
-COPY --from=prerelease /usr/src/app/index.ts .
-COPY --from=prerelease /usr/src/app/package.json .
+COPY --from=prerelease /usr/src/app/dist/index.js .
 
 # run the app
 USER bun
 EXPOSE 3000/tcp
-ENTRYPOINT [ "bun", "run", "index.ts" ]
+ENTRYPOINT [ "bun", "index.js" ]
