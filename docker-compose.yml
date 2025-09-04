@@ -15,7 +15,7 @@ services:
       - bsac-network
 
   bsac-schedule-bot:
-    image: hlofiys/bsac-schedule-bot:master
+    image: hlofiys/bsac-schedule-bot:latest
     container_name: bsac-schedule-bot
     restart: unless-stopped
     depends_on:

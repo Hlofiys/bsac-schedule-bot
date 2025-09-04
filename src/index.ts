@@ -94,6 +94,11 @@ process.on('unhandledRejection', console.error);
 
 bot.catch((err) => console.error('Bot error:', err));
 
+// Set bot commands for Telegram menu
+await bot.api.setMyCommands([
+  { command: "start", description: "🚀 Начать работу с ботом" }
+]);
+
 // Start bot
 if (process.env.NODE_ENV === 'production') {
   // Production webhook setup would go here
