@@ -86,7 +86,7 @@ chatHandler.on("message:text", async (ctx, next) => {
           ctx.user.state = UserState.AskingSubgroup;
           await ctx.user.save();
           
-          await ctx.reply(`🫔 Выбрана группа *${group.groupNumber}*`, { parse_mode: "Markdown" });
+          await ctx.reply(`🫔 Выбрана группа *${group.groupNumber || searchText}*`, { parse_mode: "Markdown" });
           return await ctx.reply('🔢 Теперь выбери свою подгруппу:', {
             reply_markup: replyKeyboards[UserState.AskingSubgroup]
           });

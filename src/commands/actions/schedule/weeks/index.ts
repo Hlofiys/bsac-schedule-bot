@@ -124,7 +124,7 @@ function generateWeekButtons(entityId: string, isGroup: boolean): InlineKeyboard
 }
 
 function formatWeekSchedule(scheduleForWeek: GetScheduleForOneGroup[], entityName: string, subgroup?: number): string {
-    let message = `📅 <b>Расписание на неделю для ${entityName}</b>\n\n`;
+    let message = `🎯 <b>Расписание на неделю для ${entityName}</b>\n\n`;
     
     const sortedDays = scheduleForWeek.sort((a, b) => new Date(a.date!).getTime() - new Date(b.date!).getTime());
 
@@ -132,7 +132,7 @@ function formatWeekSchedule(scheduleForWeek: GetScheduleForOneGroup[], entityNam
         if (!day.schedules || day.schedules.length === 0) continue;
 
         const displayDate = new Date(day.date!).toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' });
-        message += `<b>${displayDate}</b>\n`;
+        message += `📆 <b>${displayDate}</b>\n`;
 
         const lessons = day.schedules.filter(lesson => !(subgroup && lesson.lessonSchedule?.subGroup && lesson.lessonSchedule.subGroup !== subgroup));
         
@@ -144,12 +144,12 @@ function formatWeekSchedule(scheduleForWeek: GetScheduleForOneGroup[], entityNam
             const lessonName = lesson.lesson?.name || "Не указано";
             const teacherName = lesson.teacher?.fio || "Не указано";
             const cabinet = lesson.cabinet;
-            const cabinetDisplay = cabinet === 0 ? "Спортзал" : (cabinet ? `Ауд. ${cabinet}`: "Ауд. ?");
+            const cabinetDisplay = cabinet === 0 ? "🏃‍♂️ Спортзал" : (cabinet ? `🚪 Ауд. ${cabinet}`: "🚪 Ауд. ?");
             const lessonType = lesson.staticLessonType || "Не указано";
             const translatedType = translateLessonType(lessonType);
 
-            message += `  🔸 <b>${timeSlot}</b> ${lessonName} (${translatedType})\n`;
-            message += `     <i>${teacherName}</i>, ${cabinetDisplay}\n`;
+            message += `  ⚡ <b>${timeSlot}</b> 🧠 ${lessonName} (${translatedType})\n`;
+            message += `     🤓 <i>${teacherName}</i>, ${cabinetDisplay}\n`;
         });
         message += '\n';
     }

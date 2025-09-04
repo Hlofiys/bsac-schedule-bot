@@ -54,7 +54,7 @@ export class DayScheduleCommand extends AbstractHearsCommand {
   }
 
   private formatSchedule(lessonsWithWork: LessonSchedule[], dayText: string, subgroup?: number): string {
-    let message = `📅 <b>Расписание на ${dayText}</b>\n\n`;
+    let message = `🎯 <b>Расписание на ${dayText}</b>\n\n`;
     
     const lessons = lessonsWithWork.filter(lesson => !(subgroup && lesson.lessonSchedule?.subGroup && lesson.lessonSchedule.subGroup !== subgroup));
 
@@ -68,13 +68,13 @@ export class DayScheduleCommand extends AbstractHearsCommand {
       const cabinet = lesson.cabinet;
       const lessonType = lesson.staticLessonType || "Не указано";
       
-      const cabinetDisplay = cabinet === 0 ? "Спортзал" : (cabinet ? `Ауд. ${cabinet}`: "Ауд. ?");
+      const cabinetDisplay = cabinet === 0 ? "🏃‍♂️ Спортзал" : (cabinet ? `🚪 Ауд. ${cabinet}`: "🚪 Ауд. ?");
       const translatedType = this.translateLessonType(lessonType);
       
-      message += `🔸 <b>${timeSlot}</b> | ${translatedType}\n`;
-      message += `   📚 ${lessonName}\n`;
-      message += `   👨‍🏫 ${teacherName}\n`;
-      message += `   🏢 ${cabinetDisplay}\n`;
+      message += `⚡ <b>${timeSlot}</b> | ${translatedType}\n`;
+      message += `   🧠 ${lessonName}\n`;
+      message += `   🤓 ${teacherName}\n`;
+      message += `   ${cabinetDisplay}\n`;
       
       if (index < lessons.length - 1) {
         message += "\n";
