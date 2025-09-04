@@ -1,7 +1,7 @@
 import { Composer } from "grammy";
-import { EnhancedContext } from "../../../utils/context";
-import { UserRole, UserState } from "../../../schemas/User";
-import { callbackIdParse, inlineKeyboards, replyKeyboards } from "../../../utils/keyboards";
+import { EnhancedContext } from "../../../utils/context.js";
+import { UserRole, UserState } from "../../../schemas/User.js";
+import { callbackIdParse, inlineKeyboards, replyKeyboards } from "../../../utils/keyboards.js";
 import { InlineKeyboard } from "grammy";
 
 export const settingsMenuHandler = new Composer<EnhancedContext>();

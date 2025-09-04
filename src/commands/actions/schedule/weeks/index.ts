@@ -1,8 +1,8 @@
 import { Composer, InlineKeyboard } from "grammy";
-import { EnhancedContext } from "../../../../utils/context";
-import { callbackIdBuild, callbackIdParse, dateToCallback } from "../../../../utils/keyboards";
-import { UserState } from "../../../../schemas/User";
-import { ScheduleApi, GetScheduleForOneGroup, Group, Teacher, LessonSchedule } from "../../../../api";
+import { EnhancedContext } from "../../../../utils/context.js";
+import { callbackIdBuild, callbackIdParse, dateToCallback } from "../../../../utils/keyboards.js";
+import { UserState } from "../../../../schemas/User.js";
+import { ScheduleApi, GetScheduleForOneGroup} from "../../../../api/index.js";
 
 export const weeksHandler = new Composer<EnhancedContext>();
 

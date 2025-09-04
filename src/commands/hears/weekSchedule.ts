@@ -1,6 +1,6 @@
-import { AbstractHearsCommand, CommandContext, CommandUtils } from "../../utils";
-import { UserState, UserRole } from "../../schemas/User";
-import { callbackIdBuild, dateToCallback } from "../../utils/keyboards";
+import { AbstractHearsCommand, CommandContext, CommandUtils } from "../../utils/index.js";
+import { UserState, UserRole } from "../../schemas/User.js";
+import { callbackIdBuild, dateToCallback } from "../../utils/keyboards.js";
 import { InlineKeyboard } from "grammy";
 
 export class WeekScheduleCommand extends AbstractHearsCommand {

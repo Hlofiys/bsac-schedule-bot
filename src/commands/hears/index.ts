@@ -1,7 +1,7 @@
-import { DayScheduleCommand } from './daySchedule';
-import { WeekScheduleCommand } from './weekSchedule';
-import { OtherSchedulesCommand } from './otherSchedules';
-import { SettingsCommand } from './settings';
+import { DayScheduleCommand } from './daySchedule.js';
+import { WeekScheduleCommand } from './weekSchedule.js';
+import { OtherSchedulesCommand } from './otherSchedules.js';
+import { SettingsCommand } from './settings.js';
 
 export const hearsCommands = [
   DayScheduleCommand,

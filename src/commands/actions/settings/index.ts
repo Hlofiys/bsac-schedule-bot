@@ -1,7 +1,7 @@
 import { Composer } from "grammy";
-import { EnhancedContext } from "../../../utils";
-import { selectEntityHandler } from './selectEntity';
-import { settingsMenuHandler } from './settingsMenu';
+import { EnhancedContext } from "../../../utils/index.js";
+import { selectEntityHandler } from './selectEntity.js';
+import { settingsMenuHandler } from './settingsMenu.js';
 
 export const settingsHandler = new Composer<EnhancedContext>();
 

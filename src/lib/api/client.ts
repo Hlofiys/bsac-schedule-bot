@@ -1,5 +1,5 @@
 import createClient from "openapi-fetch";
-import type { paths } from "./scheme";
+import type { paths } from "./scheme.js";
 
 // Create a client instance
 const client = createClient<paths>({ baseUrl: process.env.API_BASE_URL || "https://bsac.hlofiys.xyz" });

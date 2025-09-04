@@ -1,6 +1,5 @@
 import { Composer } from "grammy";
-import { EnhancedContext } from "../../../../utils";
-import { InlineKeyboard } from "grammy";
+import { EnhancedContext } from "../../../../utils/index.js";
 
 export const subjectScheduleHandler = new Composer<EnhancedContext>();
 

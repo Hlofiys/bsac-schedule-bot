@@ -1,6 +1,6 @@
 import { MiddlewareFn } from "grammy";
-import { EnhancedContext } from "./context";
-import { ScheduleApi } from "../api/ScheduleApi";
+import { EnhancedContext } from "./context.js";
+import { ScheduleApi } from "../api/ScheduleApi.js";
 
 export type CommandMiddleware = MiddlewareFn<EnhancedContext>;
 export type CommandContext = Parameters<CommandMiddleware>[0];

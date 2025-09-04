@@ -1,13 +1,13 @@
 import { Bot } from "grammy";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { User, UserState } from "./schemas/User";
-import { EnhancedContext, CommandUtils } from "./utils";
-import { ScheduleApi } from "./api";
-import { hearsCommands } from "./commands/hears";
-import { slashCommands } from "./commands/slash";
-import { actionsHandler } from "./commands/actions";
-import { chatHandler } from "./commands/chatHandler";
+import { User, UserState } from "./schemas/User.js";
+import { EnhancedContext, CommandUtils } from "./utils/index.js";
+import { ScheduleApi } from "./api/ScheduleApi.js";
+import { hearsCommands } from "./commands/hears/index.js";
+import { slashCommands } from "./commands/slash/index.js";
+import { actionsHandler } from "./commands/actions/index.js";
+import { chatHandler } from "./commands/chatHandler.js";
 
 // Load environment variables
 dotenv.config();

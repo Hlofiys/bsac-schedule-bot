@@ -1,5 +1,4 @@
 // Simple test to verify the bot structure
-import { Bot } from "grammy";
 import dotenv from "dotenv";
 
 // Load environment variables

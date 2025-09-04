@@ -1,9 +1,9 @@
 import { Composer } from "grammy";
-import { EnhancedContext } from "../utils/context";
-import { UserRole, UserState } from "../schemas/User";
-import { replyKeyboards, batchButtons, callbackIdBuild, inlineKeyboards } from "../utils/keyboards";
+import { EnhancedContext } from "../utils/context.js";
+import { UserRole, UserState } from "../schemas/User.js";
+import { replyKeyboards, batchButtons, callbackIdBuild, inlineKeyboards } from "../utils/keyboards.js";
 import { InlineKeyboard } from "grammy";
-import { ScheduleApi } from "../api/ScheduleApi";
+import { ScheduleApi } from "../api/ScheduleApi.js";
 
 export const chatHandler = new Composer<EnhancedContext>();
 

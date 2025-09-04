@@ -1,6 +1,6 @@
-import { AbstractHearsCommand, CommandContext, CommandUtils } from "../../utils";
-import { UserState } from "../../schemas/User";
-import { GetScheduleForOneGroup, LessonSchedule } from "../../api";
+import { AbstractHearsCommand, CommandContext, CommandUtils } from "../../utils/index.js";
+import { UserState } from "../../schemas/User.js";
+import { GetScheduleForOneGroup, LessonSchedule } from "../../api/index.js";
 
 export class DayScheduleCommand extends AbstractHearsCommand {
   constructor(utils: CommandUtils) {

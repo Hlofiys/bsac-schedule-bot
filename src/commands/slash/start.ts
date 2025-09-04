@@ -1,6 +1,6 @@
-import { AbstractSlashCommand, CommandContext, CommandUtils } from "../../utils";
-import { UserState } from "../../schemas/User";
-import { inlineKeyboards, replyKeyboards } from "../../utils/keyboards";
+import { AbstractSlashCommand, CommandContext, CommandUtils } from "../../utils/index.js";
+import { UserState } from "../../schemas/User.js";
+import { inlineKeyboards, replyKeyboards } from "../../utils/keyboards.js";
 
 export class StartCommand extends AbstractSlashCommand {
   constructor(utils: CommandUtils) {

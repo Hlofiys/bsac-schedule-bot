@@ -1,6 +1,6 @@
-import { AbstractHearsCommand, CommandContext, CommandUtils } from "../../utils";
-import { UserRole, UserState } from '../../schemas/User';
-import { callbackIdBuild } from '../../utils/keyboards';
+import { AbstractHearsCommand, CommandContext, CommandUtils } from "../../utils/index.js";
+import { UserRole, UserState } from '../../schemas/User.js';
+import { callbackIdBuild } from '../../utils/keyboards.js';
 import { InlineKeyboard } from "grammy";
 
 export class SettingsCommand extends AbstractHearsCommand {

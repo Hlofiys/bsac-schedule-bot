@@ -1,6 +1,6 @@
-import { AbstractHearsCommand, CommandContext, CommandUtils } from "../../utils";
-import { UserState } from '../../schemas/User';
-import { inlineKeyboards } from '../../utils/keyboards';
+import { AbstractHearsCommand, CommandContext, CommandUtils } from "../../utils/index.js";
+import { UserState } from '../../schemas/User.js';
+import { inlineKeyboards } from '../../utils/keyboards.js';
 
 export class OtherSchedulesCommand extends AbstractHearsCommand {
   constructor(utils: CommandUtils) {

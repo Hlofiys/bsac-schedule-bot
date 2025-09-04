@@ -1,9 +1,7 @@
 import { Composer } from "grammy";
-import { EnhancedContext } from "../../../utils/context";
-import { UserRole, UserState } from "../../../schemas/User";
-import { callbackIdParse } from "../../../utils/keyboards";
-import { InlineKeyboard } from "grammy";
-import { replyKeyboards } from "../../../utils/keyboards";
+import { EnhancedContext } from "../../../utils/context.js";
+import { UserRole, UserState } from "../../../schemas/User.js";
+import { callbackIdParse, replyKeyboards } from "../../../utils/keyboards.js";
 
 export const selectEntityHandler = new Composer<EnhancedContext>();
 

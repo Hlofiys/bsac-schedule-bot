@@ -1,5 +1,5 @@
 import { InlineKeyboardButton } from "grammy/types";
-import { UserState, UserRole } from "../schemas/User";
+import { UserState } from "../schemas/User.js";
 import { InlineKeyboard, Keyboard } from "grammy";
 
 export enum WeeksArchiveAction {

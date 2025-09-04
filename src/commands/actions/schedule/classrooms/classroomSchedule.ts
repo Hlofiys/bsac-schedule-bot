@@ -1,7 +1,6 @@
 import { Composer } from "grammy";
-import { EnhancedContext } from "../../../../utils";
-import { callbackIdBuild, ClassroomScheduleType, inlineKeyboards } from "../../../../utils/keyboards";
-import { InlineKeyboard } from "grammy";
+import { EnhancedContext } from "../../../../utils/index.js";
+import { callbackIdBuild, ClassroomScheduleType, inlineKeyboards } from "../../../../utils/keyboards.js";
 
 export const classroomScheduleHandler = new Composer<EnhancedContext>();
 

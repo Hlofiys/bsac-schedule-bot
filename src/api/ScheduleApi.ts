@@ -1,5 +1,5 @@
-import { BaseApi } from "../utils/BaseApi";
-import { components } from "../lib/api/scheme";
+import { BaseApi } from "../utils/BaseApi.js";
+import { components } from "../lib/api/scheme.js";
 
 // Corrected type exports based on scheme.d.ts
 export type Group = components["schemas"]["Group"];

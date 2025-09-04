@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
-import { getGroups, getGroupSchedule } from "../lib/api/client";
-import type { components } from "../lib/api/scheme";
+import { getGroups, getGroupSchedule } from "../lib/api/client.js";
+import type { components } from "../lib/api/scheme.js";
 
 // Load environment variables
 dotenv.config();
