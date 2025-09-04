@@ -1,59 +1,37 @@
-# Multi-stage Dockerfile for BSAC Schedule Bot
+# use the official Bun image
+# see all versions at https://hub.docker.com/r/oven/bun/tags
+FROM oven/bun:latest AS base
+WORKDIR /usr/src/app
 
-# Builder stage
-FROM node:alpine AS builder
+# install dependencies into temp directory
+# this will cache them and speed up future builds
+FROM base AS install
+RUN mkdir -p /temp/dev
+COPY package.json bun.lock /temp/dev/
+RUN cd /temp/dev && bun install --frozen-lockfile
 
-# Set working directory
-WORKDIR /app
+# install with --production (exclude devDependencies)
+RUN mkdir -p /temp/prod
+COPY package.json bun.lock /temp/prod/
+RUN cd /temp/prod && bun install --frozen-lockfile --production
 
-# Copy package files
-COPY package*.json ./
+# copy node_modules from temp directory
+# then copy all (non-ignored) project files into the image
+FROM base AS prerelease
+COPY --from=install /temp/dev/node_modules node_modules
+COPY . .
 
-# Install dependencies including build tools
-RUN npm ci --only=production && \
-    npm install typescript --save-dev && \
-    npm cache clean --force
+# [optional] tests & build
+ENV NODE_ENV=production
+RUN bun run build
 
-# Copy source code
-COPY src/ ./src/
-COPY tsconfig.json ./
+# copy production dependencies and source code into final image
+FROM base AS release
+COPY --from=install /temp/prod/node_modules node_modules
+COPY --from=prerelease /usr/src/app/index.ts .
+COPY --from=prerelease /usr/src/app/package.json .
 
-# Compile TypeScript to JavaScript
-RUN npx tsc
-
-# Production stage
-FROM node:alpine AS production
-
-# Create non-root user
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nextjs -u 1001 -G nodejs
-
-# Set working directory
-WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install only production dependencies
-RUN npm ci --only=production && \
-    npm cache clean --force
-
-# Copy compiled JavaScript from builder stage
-COPY --from=builder --chown=nextjs:nodejs /app/dist ./dist
-
-# Create sessions directory with proper permissions
-RUN mkdir -p /app/sessions && \
-    chown -R nextjs:nodejs /app/sessions
-
-# Switch to non-root user
-USER nextjs
-
-# Expose port (if your bot has a web interface)
-# EXPOSE 3000
-
-# Health check (optional)
-# HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-#   CMD node healthcheck.js
-
-# Start the bot
-CMD ["node", "dist/index.js"]
+# run the app
+USER bun
+EXPOSE 3000/tcp
+ENTRYPOINT [ "bun", "run", "index.ts" ]
