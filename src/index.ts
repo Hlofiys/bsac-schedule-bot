@@ -108,4 +108,4 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 bot.start();
-console.log("BSAC Schedule Bot is running with optimized architecture...");
+console.log("BSAC Schedule Bot is running...");

@@ -86,13 +86,12 @@ export class DayScheduleCommand extends AbstractHearsCommand {
 
   private getLessonTime(lessonNumber: number | undefined): string {
     const times: { [key: number]: string } = {
-      1: "08:00-09:35",
-      2: "09:45-11:20", 
-      3: "11:30-13:05",
-      4: "13:45-15:20",
-      5: "15:30-17:05",
-      6: "17:15-18:50",
-      7: "19:00-20:35"
+      1: "08:00-09:40",
+      2: "09:55-11:35", 
+      3: "12:15-13:55",
+      4: "14:10-15:50",
+      5: "16:20-18:00",
+      6: "18:15-19:55"
     };
     
     return lessonNumber ? times[lessonNumber] || "Время не указано" : "Время не указано";
