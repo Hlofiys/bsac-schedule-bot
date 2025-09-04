@@ -1,9 +1,9 @@
 import { Composer } from "grammy";
 import { EnhancedContext } from "../../utils/index.js";
-import { settingsHandler } from './settings/index.js';
-import { weeksHandler } from './schedule/weeks/index.js';
-import { classroomScheduleMasterHandler } from './schedule/classrooms/index.js';
-import { subjectScheduleMasterHandler } from './schedule/subjects/index.js';
+import { settingsHandler } from "./settings/index.js";
+import { weeksHandler } from "./schedule/weeks/index.js";
+import { classroomScheduleMasterHandler } from "./schedule/classrooms/index.js";
+import { subjectScheduleMasterHandler } from "./schedule/subjects/index.js";
 
 export const actionsHandler = new Composer<EnhancedContext>();
 

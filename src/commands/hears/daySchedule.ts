@@ -1,4 +1,8 @@
-import { AbstractHearsCommand, CommandContext, CommandUtils } from "../../utils/index.js";
+import {
+  AbstractHearsCommand,
+  CommandContext,
+  CommandUtils,
+} from "../../utils/index.js";
 import { UserState } from "../../schemas/User.js";
 import { GetScheduleForOneGroup, LessonSchedule } from "../../api/index.js";
 
@@ -12,98 +16,129 @@ export class DayScheduleCommand extends AbstractHearsCommand {
 
     const { scheduleApi } = this.utils;
     const isToday = ctx.message?.text === "Сегодня";
-    
+
     try {
       const targetDate = new Date();
       if (!isToday) {
         targetDate.setDate(targetDate.getDate() + 1);
       }
-      
-      const dateString = targetDate.toISOString().split('T')[0];
-      
+
+      const dateString = targetDate.toISOString().split("T")[0];
+
       let scheduleForDay: GetScheduleForOneGroup[] = [];
       if (ctx.user.selectedGroup) {
         scheduleForDay = await scheduleApi.getScheduleForDates({
           groupId: ctx.user.selectedGroup,
-          dates: [dateString]
+          dates: [dateString],
         });
       } else if (ctx.user.selectedTeacher) {
         scheduleForDay = await scheduleApi.getScheduleForDates({
           teacherId: ctx.user.selectedTeacher,
-          dates: [dateString]
+          dates: [dateString],
         });
       } else {
-        await ctx.reply("❗ Сначала выберите группу или преподавателя в настройках");
+        await ctx.reply(
+          "❗ Сначала выберите группу или преподавателя в настройках",
+        );
         return;
       }
 
-      const lessons = scheduleForDay.flatMap(day => day.schedules || []);
+      const lessons = scheduleForDay.flatMap((day) => day.schedules || []);
 
       if (lessons.length === 0) {
         await ctx.reply(`🎉 На ${isToday ? "сегодня" : "завтра"} занятий нет!`);
         return;
       }
 
-      const scheduleText = this.formatSchedule(lessons, isToday ? "сегодня" : "завтра", ctx.user.subgroup);
+      const scheduleText = this.formatSchedule(
+        lessons,
+        isToday ? "сегодня" : "завтра",
+        ctx.user.subgroup,
+      );
       await ctx.reply(scheduleText, { parse_mode: "HTML" });
-
     } catch (error) {
       console.error("Error fetching day schedule:", error);
-      await ctx.reply("❌ Произошла ошибка при получении расписания. Попробуйте позже.");
+      await ctx.reply(
+        "❌ Произошла ошибка при получении расписания. Попробуйте позже.",
+      );
     }
   }
 
-  private formatSchedule(lessonsWithWork: LessonSchedule[], dayText: string, subgroup?: number): string {
+  private formatSchedule(
+    lessonsWithWork: LessonSchedule[],
+    dayText: string,
+    subgroup?: number,
+  ): string {
     let message = `🎯 <b>Расписание на ${dayText}</b>\n\n`;
-    
-    const lessons = lessonsWithWork.filter(lesson => !(subgroup && lesson.lessonSchedule?.subGroup && lesson.lessonSchedule.subGroup !== subgroup));
 
-    lessons.sort((a, b) => (a.lessonSchedule?.lessonNumber || 0) - (b.lessonSchedule?.lessonNumber || 0)).forEach((lessonWithWork, index) => {
-      const lesson = lessonWithWork.lessonSchedule;
-      if (!lesson) return;
+    const lessons = lessonsWithWork.filter(
+      (lesson) =>
+        !(
+          subgroup &&
+          lesson.lessonSchedule?.subGroup &&
+          lesson.lessonSchedule.subGroup !== subgroup
+        ),
+    );
 
-      const timeSlot = this.getLessonTime(lesson.lessonNumber);
-      const lessonName = lesson.lesson?.name || "Не указано";
-      const teacherName = lesson.teacher?.fio || "Не указано";
-      const cabinet = lesson.cabinet;
-      const lessonType = lesson.staticLessonType || "Не указано";
-      
-      const cabinetDisplay = cabinet === 0 ? "🏃‍♂️ Спортзал" : (cabinet ? `🚪 Ауд. ${cabinet}`: "🚪 Ауд. ?");
-      const translatedType = this.translateLessonType(lessonType);
-      
-      message += `⚡ <b>${timeSlot}</b> | ${translatedType}\n`;
-      message += `   🧠 ${lessonName}\n`;
-      message += `   🤓 ${teacherName}\n`;
-      message += `   ${cabinetDisplay}\n`;
-      
-      if (index < lessons.length - 1) {
-        message += "\n";
-      }
-    });
-    
+    lessons
+      .sort(
+        (a, b) =>
+          (a.lessonSchedule?.lessonNumber || 0) -
+          (b.lessonSchedule?.lessonNumber || 0),
+      )
+      .forEach((lessonWithWork, index) => {
+        const lesson = lessonWithWork.lessonSchedule;
+        if (!lesson) return;
+
+        const timeSlot = this.getLessonTime(lesson.lessonNumber);
+        const lessonName = lesson.lesson?.name || "Не указано";
+        const teacherName = lesson.teacher?.fio || "Не указано";
+        const cabinet = lesson.cabinet;
+        const lessonType = lesson.staticLessonType || "Не указано";
+
+        const cabinetDisplay =
+          cabinet === 0
+            ? "🏃‍♂️ Спортзал"
+            : cabinet
+              ? `🚪 Ауд. ${cabinet}`
+              : "🚪 Ауд. ?";
+        const translatedType = this.translateLessonType(lessonType);
+
+        message += `⚡ <b>${timeSlot}</b> | ${translatedType}\n`;
+        message += `   🧠 ${lessonName}\n`;
+        message += `   🤓 ${teacherName}\n`;
+        message += `   ${cabinetDisplay}\n`;
+
+        if (index < lessons.length - 1) {
+          message += "\n";
+        }
+      });
+
     return message;
   }
 
   private getLessonTime(lessonNumber: number | undefined): string {
     const times: { [key: number]: string } = {
       1: "08:00-09:40",
-      2: "09:55-11:35", 
+      2: "09:55-11:35",
       3: "12:15-13:55",
       4: "14:10-15:50",
       5: "16:20-18:00",
-      6: "18:15-19:55"
+      6: "18:15-19:55",
     };
-    
-    return lessonNumber ? times[lessonNumber] || "Время не указано" : "Время не указано";
+
+    return lessonNumber
+      ? times[lessonNumber] || "Время не указано"
+      : "Время не указано";
   }
 
   private translateLessonType(type: string): string {
     const translations: { [key: string]: string } = {
-        "Lecture": "Лекция",
-        "Practical": "Практика", 
-        "Laboratory": "Лабораторная"
+      Lecture: "Лекция",
+      Practical: "Практика",
+      Laboratory: "Лабораторная",
     };
-    
+
     return translations[type] || type;
   }
 }

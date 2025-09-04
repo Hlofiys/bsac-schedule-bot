@@ -13,8 +13,8 @@ import { chatHandler } from "./commands/chatHandler.js";
 dotenv.config();
 
 // Validate required environment variables
-const requiredEnvVars = ['BOT_TOKEN', 'API_BASE_URL', 'MONGODB_URI'];
-requiredEnvVars.forEach(key => {
+const requiredEnvVars = ["BOT_TOKEN", "API_BASE_URL", "MONGODB_URI"];
+requiredEnvVars.forEach((key) => {
   if (!process.env[key]) {
     throw new Error(`${key} is not set`);
   }
@@ -22,7 +22,7 @@ requiredEnvVars.forEach(key => {
 
 // Connect to MongoDB
 await mongoose.connect(process.env.MONGODB_URI!, {
-  dbName: 'bsac-bot' // Explicitly set database name
+  dbName: "bsac-bot", // Explicitly set database name
 });
 
 // Initialize bot and API
@@ -31,12 +31,16 @@ const scheduleApi = new ScheduleApi(process.env.API_BASE_URL!);
 
 // Command utils object
 const commandUtils: CommandUtils = {
-  scheduleApi
+  scheduleApi,
 };
 
 // Initialize commands
-const registeredHearsCommands = hearsCommands.map(CommandClass => new CommandClass(commandUtils));
-const registeredSlashCommands = slashCommands.map(CommandClass => new CommandClass(commandUtils));
+const registeredHearsCommands = hearsCommands.map(
+  (CommandClass) => new CommandClass(commandUtils),
+);
+const registeredSlashCommands = slashCommands.map(
+  (CommandClass) => new CommandClass(commandUtils),
+);
 
 // No session middleware needed - using MongoDB for persistence
 
@@ -51,7 +55,7 @@ bot.use(async (ctx, next) => {
     user = new User({
       telegramId,
       username: ctx.from.username,
-      state: UserState.AskingFollowingEntity
+      state: UserState.AskingFollowingEntity,
     });
     await user.save();
     ctx.newUser = true;
@@ -76,31 +80,29 @@ bot.use(chatHandler);
 
 // Register hears commands
 for (const command of registeredHearsCommands) {
-  console.log('Registering HEARS command with triggers:', command.triggers);
+  console.log("Registering HEARS command with triggers:", command.triggers);
   bot.hears(command.triggers, command.execute.bind(command));
 }
 
 // Register slash commands
 for (const command of registeredSlashCommands) {
-  console.log('Registering SLASH command with triggers:', command.triggers);
+  console.log("Registering SLASH command with triggers:", command.triggers);
   bot.command(command.triggers as string, command.execute.bind(command));
 }
 
-
-
 // Error handling
-process.on('uncaughtException', console.error);
-process.on('unhandledRejection', console.error);
+process.on("uncaughtException", console.error);
+process.on("unhandledRejection", console.error);
 
-bot.catch((err) => console.error('Bot error:', err));
+bot.catch((err) => console.error("Bot error:", err));
 
 // Set bot commands for Telegram menu
 await bot.api.setMyCommands([
-  { command: "start", description: "🚀 Начать работу с ботом" }
+  { command: "start", description: "🚀 Начать работу с ботом" },
 ]);
 
 // Start bot
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   // Production webhook setup would go here
   console.log("Starting bot in production mode...");
 } else {

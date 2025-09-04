@@ -1,17 +1,20 @@
 export class BaseApi {
-  protected readonly baseUrl: string
+  protected readonly baseUrl: string;
 
   constructor(baseUrl: string) {
-    this.baseUrl = baseUrl
+    this.baseUrl = baseUrl;
   }
 
-    protected async request<T = any>(endpoint: string, options?: RequestInit): Promise<T> {
+  protected async request<T = unknown>(
+    endpoint: string,
+    options?: RequestInit,
+  ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
-    
+
     try {
       const response = await fetch(url, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           ...options?.headers,
         },
         ...options,
@@ -21,12 +24,16 @@ export class BaseApi {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const serviceResponse = await response.json() as { success: boolean, data: T, message?: string };
+      const serviceResponse = (await response.json()) as {
+        success: boolean;
+        data: T;
+        message?: string;
+      };
 
       if (serviceResponse.success) {
         return serviceResponse.data as T;
       } else {
-        throw new Error(serviceResponse.message || 'API request failed');
+        throw new Error(serviceResponse.message || "API request failed");
       }
     } catch (error) {
       console.error(`API request failed: ${url}`, error);
@@ -34,19 +41,19 @@ export class BaseApi {
     }
   }
 
-  protected buildQueryString(params: Record<string, any>): string {
-    const searchParams = new URLSearchParams()
-    
+  protected buildQueryString(params: Record<string, unknown>): string {
+    const searchParams = new URLSearchParams();
+
     Object.entries(params).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
         if (Array.isArray(value)) {
-          value.forEach(item => searchParams.append(key, String(item)))
+          value.forEach((item) => searchParams.append(key, String(item)));
         } else {
-          searchParams.set(key, String(value))
+          searchParams.set(key, String(value));
         }
       }
-    })
-    
-    return searchParams.toString()
+    });
+
+    return searchParams.toString();
   }
 }

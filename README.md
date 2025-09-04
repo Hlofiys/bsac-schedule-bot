@@ -93,6 +93,7 @@ src/
 ### Command Structure
 
 Commands are organized into:
+
 - **Hears Commands**: Respond to specific text messages
 - **Action Commands**: Handle inline keyboard callbacks
 - **Chat Handler**: Processes general text input for entity selection

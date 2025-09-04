@@ -4,2534 +4,2602 @@
  */
 
 export interface paths {
-    "/api/exams": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Adds new exam */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["AddExamDto"];
-                    "text/json": components["schemas"]["AddExamDto"];
-                    "application/*+json": components["schemas"]["AddExamDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["ExamServiceResponse"];
-                        "application/json": components["schemas"]["ExamServiceResponse"];
-                        "text/json": components["schemas"]["ExamServiceResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+  "/api/exams": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/exams/{groupId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    get?: never;
+    put?: never;
+    /** Adds new exam */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["AddExamDto"];
+          "text/json": components["schemas"]["AddExamDto"];
+          "application/*+json": components["schemas"]["AddExamDto"];
         };
-        /** Gets all exams for group */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    groupId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["ExamListServiceResponse"];
-                        "application/json": components["schemas"]["ExamListServiceResponse"];
-                        "text/json": components["schemas"]["ExamListServiceResponse"];
-                    };
-                };
-            };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["ExamServiceResponse"];
+            "application/json": components["schemas"]["ExamServiceResponse"];
+            "text/json": components["schemas"]["ExamServiceResponse"];
+          };
         };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/exams/{examId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Deletes exam */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    examId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["StringServiceResponse"];
-                        "application/json": components["schemas"]["StringServiceResponse"];
-                        "text/json": components["schemas"]["StringServiceResponse"];
-                    };
-                };
-            };
-        };
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/exams/{groupId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/groups": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    /** Gets all exams for group */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          groupId: number;
         };
-        /** Gets all groups */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["GroupListServiceResponse"];
-                        "application/json": components["schemas"]["GroupListServiceResponse"];
-                        "text/json": components["schemas"]["GroupListServiceResponse"];
-                    };
-                };
-            };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["ExamListServiceResponse"];
+            "application/json": components["schemas"]["ExamListServiceResponse"];
+            "text/json": components["schemas"]["ExamListServiceResponse"];
+          };
         };
-        put?: never;
-        /** Adds new group */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["AddGroupDto"];
-                    "text/json": components["schemas"]["AddGroupDto"];
-                    "application/*+json": components["schemas"]["AddGroupDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["GroupServiceResponse"];
-                        "application/json": components["schemas"]["GroupServiceResponse"];
-                        "text/json": components["schemas"]["GroupServiceResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/groups/{groupId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Deletes group */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    groupId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["StringServiceResponse"];
-                        "application/json": components["schemas"]["StringServiceResponse"];
-                        "text/json": components["schemas"]["StringServiceResponse"];
-                    };
-                };
-            };
-        };
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/exams/{examId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/groups/semesterstart": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    /** Deletes exam */
+    delete: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          examId: number;
         };
-        get?: never;
-        /** Sets group semester start date */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["SetSemesterDto"];
-                    "text/json": components["schemas"]["SetSemesterDto"];
-                    "application/*+json": components["schemas"]["SetSemesterDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["DateOnlyServiceResponse"];
-                        "application/json": components["schemas"]["DateOnlyServiceResponse"];
-                        "text/json": components["schemas"]["DateOnlyServiceResponse"];
-                    };
-                };
-            };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["StringServiceResponse"];
+            "application/json": components["schemas"]["StringServiceResponse"];
+            "text/json": components["schemas"]["StringServiceResponse"];
+          };
         };
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/groups/semesterend": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Sets group semester end date */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["SetSemesterDto"];
-                    "text/json": components["schemas"]["SetSemesterDto"];
-                    "application/*+json": components["schemas"]["SetSemesterDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["DateOnlyServiceResponse"];
-                        "application/json": components["schemas"]["DateOnlyServiceResponse"];
-                        "text/json": components["schemas"]["DateOnlyServiceResponse"];
-                    };
-                };
-            };
-        };
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/groups": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/ktp/works": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    /** Gets all groups */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["GroupListServiceResponse"];
+            "application/json": components["schemas"]["GroupListServiceResponse"];
+            "text/json": components["schemas"]["GroupListServiceResponse"];
+          };
         };
-        get?: never;
-        put?: never;
-        /** Adds new work for ktp */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["AddKtpWorkDto"];
-                    "text/json": components["schemas"]["AddKtpWorkDto"];
-                    "application/*+json": components["schemas"]["AddKtpWorkDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["WorkListServiceResponse"];
-                        "application/json": components["schemas"]["WorkListServiceResponse"];
-                        "text/json": components["schemas"]["WorkListServiceResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/ktp": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    put?: never;
+    /** Adds new group */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["AddGroupDto"];
+          "text/json": components["schemas"]["AddGroupDto"];
+          "application/*+json": components["schemas"]["AddGroupDto"];
         };
-        get?: never;
-        put?: never;
-        /** Adds ktp */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["AddKtpDto"];
-                    "text/json": components["schemas"]["AddKtpDto"];
-                    "application/*+json": components["schemas"]["AddKtpDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["KtpServiceResponse"];
-                        "application/json": components["schemas"]["KtpServiceResponse"];
-                        "text/json": components["schemas"]["KtpServiceResponse"];
-                    };
-                };
-            };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["GroupServiceResponse"];
+            "application/json": components["schemas"]["GroupServiceResponse"];
+            "text/json": components["schemas"]["GroupServiceResponse"];
+          };
         };
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Change ktp hours */
-        patch: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["UpdateKtpDto"];
-                    "text/json": components["schemas"]["UpdateKtpDto"];
-                    "application/*+json": components["schemas"]["UpdateKtpDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["StringServiceResponse"];
-                        "application/json": components["schemas"]["StringServiceResponse"];
-                        "text/json": components["schemas"]["StringServiceResponse"];
-                    };
-                };
-            };
-        };
-        trace?: never;
+      };
     };
-    "/api/ktp/{lessonId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Gets all ktps */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    lessonId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["GetKtpDtoListServiceResponse"];
-                        "application/json": components["schemas"]["GetKtpDtoListServiceResponse"];
-                        "text/json": components["schemas"]["GetKtpDtoListServiceResponse"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/groups/{groupId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/ktp/{ktpId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    /** Deletes group */
+    delete: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          groupId: number;
         };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Deletes lesson work */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    ktpId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["StringServiceResponse"];
-                        "application/json": components["schemas"]["StringServiceResponse"];
-                        "text/json": components["schemas"]["StringServiceResponse"];
-                    };
-                };
-            };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["StringServiceResponse"];
+            "application/json": components["schemas"]["StringServiceResponse"];
+            "text/json": components["schemas"]["StringServiceResponse"];
+          };
         };
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/ktp/works/{ktpId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Calculates works and hours for all groups with this ktp */
-        patch: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    ktpId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["StringServiceResponse"];
-                        "application/json": components["schemas"]["StringServiceResponse"];
-                        "text/json": components["schemas"]["StringServiceResponse"];
-                    };
-                };
-            };
-        };
-        trace?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/groups/semesterstart": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/lessons": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    get?: never;
+    /** Sets group semester start date */
+    put: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["SetSemesterDto"];
+          "text/json": components["schemas"]["SetSemesterDto"];
+          "application/*+json": components["schemas"]["SetSemesterDto"];
         };
-        /** Gets all lessons */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["GroupListServiceResponse"];
-                        "application/json": components["schemas"]["GroupListServiceResponse"];
-                        "text/json": components["schemas"]["GroupListServiceResponse"];
-                    };
-                };
-            };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["DateOnlyServiceResponse"];
+            "application/json": components["schemas"]["DateOnlyServiceResponse"];
+            "text/json": components["schemas"]["DateOnlyServiceResponse"];
+          };
         };
-        put?: never;
-        /** Adds new lesson */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["AddLessonDto"];
-                    "text/json": components["schemas"]["AddLessonDto"];
-                    "application/*+json": components["schemas"]["AddLessonDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["LessonServiceResponse"];
-                        "application/json": components["schemas"]["LessonServiceResponse"];
-                        "text/json": components["schemas"]["LessonServiceResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Updates lesson */
-        patch: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["UpdateLessonDto"];
-                    "text/json": components["schemas"]["UpdateLessonDto"];
-                    "application/*+json": components["schemas"]["UpdateLessonDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["LessonServiceResponse"];
-                        "application/json": components["schemas"]["LessonServiceResponse"];
-                        "text/json": components["schemas"]["LessonServiceResponse"];
-                    };
-                };
-            };
-        };
-        trace?: never;
+      };
     };
-    "/api/practices": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Gets all practices for group */
-        get: {
-            parameters: {
-                query?: {
-                    groupId?: number;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["PracticeListServiceResponse"];
-                        "application/json": components["schemas"]["PracticeListServiceResponse"];
-                        "text/json": components["schemas"]["PracticeListServiceResponse"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        /** Adds new practice */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["AddPracticeDto"];
-                    "text/json": components["schemas"]["AddPracticeDto"];
-                    "application/*+json": components["schemas"]["AddPracticeDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["PracticeServiceResponse"];
-                        "application/json": components["schemas"]["PracticeServiceResponse"];
-                        "text/json": components["schemas"]["PracticeServiceResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/groups/semesterend": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/practices/{practiceId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    get?: never;
+    /** Sets group semester end date */
+    put: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["SetSemesterDto"];
+          "text/json": components["schemas"]["SetSemesterDto"];
+          "application/*+json": components["schemas"]["SetSemesterDto"];
         };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Deletes practice */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    practiceId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["StringServiceResponse"];
-                        "application/json": components["schemas"]["StringServiceResponse"];
-                        "text/json": components["schemas"]["StringServiceResponse"];
-                    };
-                };
-            };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["DateOnlyServiceResponse"];
+            "application/json": components["schemas"]["DateOnlyServiceResponse"];
+            "text/json": components["schemas"]["DateOnlyServiceResponse"];
+          };
         };
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/schedulechange/additions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Adds new schedule addition */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["ScheduleAddDto"];
-                    "text/json": components["schemas"]["ScheduleAddDto"];
-                    "application/*+json": components["schemas"]["ScheduleAddDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["ScheduleAddServiceResponse"];
-                        "application/json": components["schemas"]["ScheduleAddServiceResponse"];
-                        "text/json": components["schemas"]["ScheduleAddServiceResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/ktp/works": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/schedulechange/additions/{groupId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    get?: never;
+    put?: never;
+    /** Adds new work for ktp */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["AddKtpWorkDto"];
+          "text/json": components["schemas"]["AddKtpWorkDto"];
+          "application/*+json": components["schemas"]["AddKtpWorkDto"];
         };
-        /** Gets all schedule additions for group */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    groupId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["ScheduleAddListServiceResponse"];
-                        "application/json": components["schemas"]["ScheduleAddListServiceResponse"];
-                        "text/json": components["schemas"]["ScheduleAddListServiceResponse"];
-                    };
-                };
-            };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["WorkListServiceResponse"];
+            "application/json": components["schemas"]["WorkListServiceResponse"];
+            "text/json": components["schemas"]["WorkListServiceResponse"];
+          };
         };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/schedulechange/additions/{scheduleAddId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Deletes schedule addition */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    scheduleAddId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["StringServiceResponse"];
-                        "application/json": components["schemas"]["StringServiceResponse"];
-                        "text/json": components["schemas"]["StringServiceResponse"];
-                    };
-                };
-            };
-        };
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/ktp": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/schedulechange/move": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    get?: never;
+    put?: never;
+    /** Adds ktp */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["AddKtpDto"];
+          "text/json": components["schemas"]["AddKtpDto"];
+          "application/*+json": components["schemas"]["AddKtpDto"];
         };
-        get?: never;
-        put?: never;
-        /** Adds new schedule move */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["ScheduleMoveDto"];
-                    "text/json": components["schemas"]["ScheduleMoveDto"];
-                    "application/*+json": components["schemas"]["ScheduleMoveDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["ScheduleMoveServiceResponse"];
-                        "application/json": components["schemas"]["ScheduleMoveServiceResponse"];
-                        "text/json": components["schemas"]["ScheduleMoveServiceResponse"];
-                    };
-                };
-            };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["KtpServiceResponse"];
+            "application/json": components["schemas"]["KtpServiceResponse"];
+            "text/json": components["schemas"]["KtpServiceResponse"];
+          };
         };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/schedulechange/move/{groupId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /** Change ktp hours */
+    patch: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["UpdateKtpDto"];
+          "text/json": components["schemas"]["UpdateKtpDto"];
+          "application/*+json": components["schemas"]["UpdateKtpDto"];
         };
-        /** Gets all schedule moves for group */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    groupId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["ScheduleAddListServiceResponse"];
-                        "application/json": components["schemas"]["ScheduleAddListServiceResponse"];
-                        "text/json": components["schemas"]["ScheduleAddListServiceResponse"];
-                    };
-                };
-            };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["StringServiceResponse"];
+            "application/json": components["schemas"]["StringServiceResponse"];
+            "text/json": components["schemas"]["StringServiceResponse"];
+          };
         };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/schedulechange/move/{scheduleMoveId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Deletes schedule move */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    scheduleMoveId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["StringServiceResponse"];
-                        "application/json": components["schemas"]["StringServiceResponse"];
-                        "text/json": components["schemas"]["StringServiceResponse"];
-                    };
-                };
-            };
-        };
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    trace?: never;
+  };
+  "/api/ktp/{lessonId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/schedules/week": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    /** Gets all ktps */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          lessonId: number;
         };
-        /** Gets current week */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["Int32ServiceResponse"];
-                        "application/json": components["schemas"]["Int32ServiceResponse"];
-                        "text/json": components["schemas"]["Int32ServiceResponse"];
-                    };
-                };
-            };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["GetKtpDtoListServiceResponse"];
+            "application/json": components["schemas"]["GetKtpDtoListServiceResponse"];
+            "text/json": components["schemas"]["GetKtpDtoListServiceResponse"];
+          };
         };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/schedules/groups": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Gets schedule for users subscribed groups */
-        get: {
-            parameters: {
-                query?: {
-                    groupsIds?: number[];
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["GetScheduleForListOfGroupsListServiceResponse"];
-                        "application/json": components["schemas"]["GetScheduleForListOfGroupsListServiceResponse"];
-                        "text/json": components["schemas"]["GetScheduleForListOfGroupsListServiceResponse"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/ktp/{ktpId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/schedules/teachers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    /** Deletes lesson work */
+    delete: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          ktpId: number;
         };
-        /** Gets schedule for user subscribed teachers */
-        get: {
-            parameters: {
-                query?: {
-                    teachersIds?: number[];
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["GetScheduleForListOfGroupsListServiceResponse"];
-                        "application/json": components["schemas"]["GetScheduleForListOfGroupsListServiceResponse"];
-                        "text/json": components["schemas"]["GetScheduleForListOfGroupsListServiceResponse"];
-                    };
-                };
-            };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["StringServiceResponse"];
+            "application/json": components["schemas"]["StringServiceResponse"];
+            "text/json": components["schemas"]["StringServiceResponse"];
+          };
         };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/schedules/admin/{groupNumber}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Gets schedule for admin */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    groupNumber: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["GetScheduleAdminListServiceResponse"];
-                        "application/json": components["schemas"]["GetScheduleAdminListServiceResponse"];
-                        "text/json": components["schemas"]["GetScheduleAdminListServiceResponse"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/ktp/works/{ktpId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/schedules": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /** Calculates works and hours for all groups with this ktp */
+    patch: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          ktpId: number;
         };
-        get?: never;
-        put?: never;
-        /** Adds schedule */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["AddScheduleDto"];
-                    "text/json": components["schemas"]["AddScheduleDto"];
-                    "application/*+json": components["schemas"]["AddScheduleDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["LessonScheduleServiceResponse"];
-                        "application/json": components["schemas"]["LessonScheduleServiceResponse"];
-                        "text/json": components["schemas"]["LessonScheduleServiceResponse"];
-                    };
-                };
-            };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["StringServiceResponse"];
+            "application/json": components["schemas"]["StringServiceResponse"];
+            "text/json": components["schemas"]["StringServiceResponse"];
+          };
         };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/schedules/{scheduleId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Deletes schedule */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    scheduleId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["StringServiceResponse"];
-                        "application/json": components["schemas"]["StringServiceResponse"];
-                        "text/json": components["schemas"]["StringServiceResponse"];
-                    };
-                };
-            };
-        };
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    trace?: never;
+  };
+  "/api/lessons": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/schedules/works": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    /** Gets all lessons */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["GroupListServiceResponse"];
+            "application/json": components["schemas"]["GroupListServiceResponse"];
+            "text/json": components["schemas"]["GroupListServiceResponse"];
+          };
         };
-        /** Get works schedule */
-        get: {
-            parameters: {
-                query?: {
-                    teacherId?: number;
-                    groupId?: number;
-                    lessonId?: number;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["GetWorksScheduleDtoListServiceResponse"];
-                        "application/json": components["schemas"]["GetWorksScheduleDtoListServiceResponse"];
-                        "text/json": components["schemas"]["GetWorksScheduleDtoListServiceResponse"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/schedules/actuality": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    put?: never;
+    /** Adds new lesson */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["AddLessonDto"];
+          "text/json": components["schemas"]["AddLessonDto"];
+          "application/*+json": components["schemas"]["AddLessonDto"];
         };
-        /** Gets the schedule actuality */
-        get: {
-            parameters: {
-                query?: {
-                    lastInteract?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["BooleanServiceResponse"];
-                        "application/json": components["schemas"]["BooleanServiceResponse"];
-                        "text/json": components["schemas"]["BooleanServiceResponse"];
-                    };
-                };
-            };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["LessonServiceResponse"];
+            "application/json": components["schemas"]["LessonServiceResponse"];
+            "text/json": components["schemas"]["LessonServiceResponse"];
+          };
         };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/schedules/groups/{groupId}/date": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /** Updates lesson */
+    patch: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["UpdateLessonDto"];
+          "text/json": components["schemas"]["UpdateLessonDto"];
+          "application/*+json": components["schemas"]["UpdateLessonDto"];
         };
-        /** Get group schedule for date */
-        get: {
-            parameters: {
-                query?: {
-                    dates?: string[];
-                };
-                header?: never;
-                path: {
-                    groupId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["GetScheduleForOneGroupListServiceResponse"];
-                        "application/json": components["schemas"]["GetScheduleForOneGroupListServiceResponse"];
-                        "text/json": components["schemas"]["GetScheduleForOneGroupListServiceResponse"];
-                    };
-                };
-            };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["LessonServiceResponse"];
+            "application/json": components["schemas"]["LessonServiceResponse"];
+            "text/json": components["schemas"]["LessonServiceResponse"];
+          };
         };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/schedules/teachers/{teacherId}/date": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get teacher schedule for date */
-        get: {
-            parameters: {
-                query?: {
-                    dates?: string[];
-                };
-                header?: never;
-                path: {
-                    teacherId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["GetScheduleForOneGroupListServiceResponse"];
-                        "application/json": components["schemas"]["GetScheduleForOneGroupListServiceResponse"];
-                        "text/json": components["schemas"]["GetScheduleForOneGroupListServiceResponse"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    trace?: never;
+  };
+  "/api/practices": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/teachers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    /** Gets all practices for group */
+    get: {
+      parameters: {
+        query?: {
+          groupId?: number;
         };
-        /** Gets all teachers */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["TeacherListServiceResponse"];
-                        "application/json": components["schemas"]["TeacherListServiceResponse"];
-                        "text/json": components["schemas"]["TeacherListServiceResponse"];
-                    };
-                };
-            };
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["PracticeListServiceResponse"];
+            "application/json": components["schemas"]["PracticeListServiceResponse"];
+            "text/json": components["schemas"]["PracticeListServiceResponse"];
+          };
         };
-        put?: never;
-        /** Adds new teacher */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["AddTeacherDto"];
-                    "text/json": components["schemas"]["AddTeacherDto"];
-                    "application/*+json": components["schemas"]["AddTeacherDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["TeacherServiceResponse"];
-                        "application/json": components["schemas"]["TeacherServiceResponse"];
-                        "text/json": components["schemas"]["TeacherServiceResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Updates teacher */
-        patch: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["UpdateTeacherDto"];
-                    "text/json": components["schemas"]["UpdateTeacherDto"];
-                    "application/*+json": components["schemas"]["UpdateTeacherDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["TeacherServiceResponse"];
-                        "application/json": components["schemas"]["TeacherServiceResponse"];
-                        "text/json": components["schemas"]["TeacherServiceResponse"];
-                    };
-                };
-            };
-        };
-        trace?: never;
+      };
     };
-    "/api/updates": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    put?: never;
+    /** Adds new practice */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["AddPracticeDto"];
+          "text/json": components["schemas"]["AddPracticeDto"];
+          "application/*+json": components["schemas"]["AddPracticeDto"];
         };
-        /** Get Current version */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["CheckForUpdate"];
-                        "application/json": components["schemas"]["CheckForUpdate"];
-                        "text/json": components["schemas"]["CheckForUpdate"];
-                    };
-                };
-            };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["PracticeServiceResponse"];
+            "application/json": components["schemas"]["PracticeServiceResponse"];
+            "text/json": components["schemas"]["PracticeServiceResponse"];
+          };
         };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/users": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Creates new user */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["AddUserDto"];
-                    "text/json": components["schemas"]["AddUserDto"];
-                    "application/*+json": components["schemas"]["AddUserDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["UserServiceResponse"];
-                        "application/json": components["schemas"]["UserServiceResponse"];
-                        "text/json": components["schemas"]["UserServiceResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Update user */
-        patch: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["AddUserDto"];
-                    "text/json": components["schemas"]["AddUserDto"];
-                    "application/*+json": components["schemas"]["AddUserDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["UserServiceResponse"];
-                        "application/json": components["schemas"]["UserServiceResponse"];
-                        "text/json": components["schemas"]["UserServiceResponse"];
-                    };
-                };
-            };
-        };
-        trace?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/practices/{practiceId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/users/{deviceId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    get?: never;
+    put?: never;
+    post?: never;
+    /** Deletes practice */
+    delete: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          practiceId: number;
         };
-        /** Gets user */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    deviceId: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["UserServiceResponse"];
-                        "application/json": components["schemas"]["UserServiceResponse"];
-                        "text/json": components["schemas"]["UserServiceResponse"];
-                    };
-                };
-            };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["StringServiceResponse"];
+            "application/json": components["schemas"]["StringServiceResponse"];
+            "text/json": components["schemas"]["StringServiceResponse"];
+          };
         };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/users/{deviceId}/skipped": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get skipped lessons */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    deviceId: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["GetSkippedLessonsDtoServiceResponse"];
-                        "application/json": components["schemas"]["GetSkippedLessonsDtoServiceResponse"];
-                        "text/json": components["schemas"]["GetSkippedLessonsDtoServiceResponse"];
-                    };
-                };
-            };
-        };
-        /** Sync skipped lessons */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    deviceId: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["SyncSkippedLessonsDto"][];
-                    "text/json": components["schemas"]["SyncSkippedLessonsDto"][];
-                    "application/*+json": components["schemas"]["SyncSkippedLessonsDto"][];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["StringServiceResponse"];
-                        "application/json": components["schemas"]["StringServiceResponse"];
-                        "text/json": components["schemas"]["StringServiceResponse"];
-                    };
-                };
-            };
-        };
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedulechange/additions": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/users/{deviceId}/tasks": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    get?: never;
+    put?: never;
+    /** Adds new schedule addition */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["ScheduleAddDto"];
+          "text/json": components["schemas"]["ScheduleAddDto"];
+          "application/*+json": components["schemas"]["ScheduleAddDto"];
         };
-        /** Get lesson tasks */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    deviceId: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["GetLessonTasksDtoServiceResponse"];
-                        "application/json": components["schemas"]["GetLessonTasksDtoServiceResponse"];
-                        "text/json": components["schemas"]["GetLessonTasksDtoServiceResponse"];
-                    };
-                };
-            };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["ScheduleAddServiceResponse"];
+            "application/json": components["schemas"]["ScheduleAddServiceResponse"];
+            "text/json": components["schemas"]["ScheduleAddServiceResponse"];
+          };
         };
-        /** Sync lesson tasks */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    deviceId: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["SyncLessonTasksDto"][];
-                    "text/json": components["schemas"]["SyncLessonTasksDto"][];
-                    "application/*+json": components["schemas"]["SyncLessonTasksDto"][];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["StringServiceResponse"];
-                        "application/json": components["schemas"]["StringServiceResponse"];
-                        "text/json": components["schemas"]["StringServiceResponse"];
-                    };
-                };
-            };
-        };
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/works": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Adds new work for group */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["AddWorkGroupDto"];
-                    "text/json": components["schemas"]["AddWorkGroupDto"];
-                    "application/*+json": components["schemas"]["AddWorkGroupDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["WorkListServiceResponse"];
-                        "application/json": components["schemas"]["WorkListServiceResponse"];
-                        "text/json": components["schemas"]["WorkListServiceResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedulechange/additions/{groupId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/works/{groupId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    /** Gets all schedule additions for group */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          groupId: number;
         };
-        /** Gets all works for group */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    groupId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["GetWorksForAllLessonsGroupDtoListServiceResponse"];
-                        "application/json": components["schemas"]["GetWorksForAllLessonsGroupDtoListServiceResponse"];
-                        "text/json": components["schemas"]["GetWorksForAllLessonsGroupDtoListServiceResponse"];
-                    };
-                };
-            };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["ScheduleAddListServiceResponse"];
+            "application/json": components["schemas"]["ScheduleAddListServiceResponse"];
+            "text/json": components["schemas"]["ScheduleAddListServiceResponse"];
+          };
         };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/api/works/{groupId}/{lessonId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Deletes group work */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    groupId: number;
-                    lessonId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["StringServiceResponse"];
-                        "application/json": components["schemas"]["StringServiceResponse"];
-                        "text/json": components["schemas"]["StringServiceResponse"];
-                    };
-                };
-            };
-        };
-        options?: never;
-        head?: never;
-        /** Calculates group ktp */
-        patch: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    groupId: number;
-                    lessonId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["StringServiceResponse"];
-                        "application/json": components["schemas"]["StringServiceResponse"];
-                        "text/json": components["schemas"]["StringServiceResponse"];
-                    };
-                };
-            };
-        };
-        trace?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedulechange/additions/{scheduleAddId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
+    get?: never;
+    put?: never;
+    post?: never;
+    /** Deletes schedule addition */
+    delete: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          scheduleAddId: number;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["StringServiceResponse"];
+            "application/json": components["schemas"]["StringServiceResponse"];
+            "text/json": components["schemas"]["StringServiceResponse"];
+          };
+        };
+      };
+    };
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedulechange/move": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Adds new schedule move */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["ScheduleMoveDto"];
+          "text/json": components["schemas"]["ScheduleMoveDto"];
+          "application/*+json": components["schemas"]["ScheduleMoveDto"];
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["ScheduleMoveServiceResponse"];
+            "application/json": components["schemas"]["ScheduleMoveServiceResponse"];
+            "text/json": components["schemas"]["ScheduleMoveServiceResponse"];
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedulechange/move/{groupId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Gets all schedule moves for group */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          groupId: number;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["ScheduleAddListServiceResponse"];
+            "application/json": components["schemas"]["ScheduleAddListServiceResponse"];
+            "text/json": components["schemas"]["ScheduleAddListServiceResponse"];
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedulechange/move/{scheduleMoveId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    /** Deletes schedule move */
+    delete: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          scheduleMoveId: number;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["StringServiceResponse"];
+            "application/json": components["schemas"]["StringServiceResponse"];
+            "text/json": components["schemas"]["StringServiceResponse"];
+          };
+        };
+      };
+    };
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedules/week": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Gets current week */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["Int32ServiceResponse"];
+            "application/json": components["schemas"]["Int32ServiceResponse"];
+            "text/json": components["schemas"]["Int32ServiceResponse"];
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedules/groups": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Gets schedule for users subscribed groups */
+    get: {
+      parameters: {
+        query?: {
+          groupsIds?: number[];
+        };
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["GetScheduleForListOfGroupsListServiceResponse"];
+            "application/json": components["schemas"]["GetScheduleForListOfGroupsListServiceResponse"];
+            "text/json": components["schemas"]["GetScheduleForListOfGroupsListServiceResponse"];
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedules/teachers": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Gets schedule for user subscribed teachers */
+    get: {
+      parameters: {
+        query?: {
+          teachersIds?: number[];
+        };
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["GetScheduleForListOfGroupsListServiceResponse"];
+            "application/json": components["schemas"]["GetScheduleForListOfGroupsListServiceResponse"];
+            "text/json": components["schemas"]["GetScheduleForListOfGroupsListServiceResponse"];
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedules/admin/{groupNumber}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Gets schedule for admin */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          groupNumber: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["GetScheduleAdminListServiceResponse"];
+            "application/json": components["schemas"]["GetScheduleAdminListServiceResponse"];
+            "text/json": components["schemas"]["GetScheduleAdminListServiceResponse"];
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedules": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Adds schedule */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["AddScheduleDto"];
+          "text/json": components["schemas"]["AddScheduleDto"];
+          "application/*+json": components["schemas"]["AddScheduleDto"];
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["LessonScheduleServiceResponse"];
+            "application/json": components["schemas"]["LessonScheduleServiceResponse"];
+            "text/json": components["schemas"]["LessonScheduleServiceResponse"];
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedules/{scheduleId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    /** Deletes schedule */
+    delete: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          scheduleId: number;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["StringServiceResponse"];
+            "application/json": components["schemas"]["StringServiceResponse"];
+            "text/json": components["schemas"]["StringServiceResponse"];
+          };
+        };
+      };
+    };
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedules/works": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get works schedule */
+    get: {
+      parameters: {
+        query?: {
+          teacherId?: number;
+          groupId?: number;
+          lessonId?: number;
+        };
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["GetWorksScheduleDtoListServiceResponse"];
+            "application/json": components["schemas"]["GetWorksScheduleDtoListServiceResponse"];
+            "text/json": components["schemas"]["GetWorksScheduleDtoListServiceResponse"];
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedules/actuality": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Gets the schedule actuality */
+    get: {
+      parameters: {
+        query?: {
+          lastInteract?: string;
+        };
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["BooleanServiceResponse"];
+            "application/json": components["schemas"]["BooleanServiceResponse"];
+            "text/json": components["schemas"]["BooleanServiceResponse"];
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedules/groups/{groupId}/date": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get group schedule for date */
+    get: {
+      parameters: {
+        query?: {
+          dates?: string[];
+        };
+        header?: never;
+        path: {
+          groupId: number;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["GetScheduleForOneGroupListServiceResponse"];
+            "application/json": components["schemas"]["GetScheduleForOneGroupListServiceResponse"];
+            "text/json": components["schemas"]["GetScheduleForOneGroupListServiceResponse"];
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/schedules/teachers/{teacherId}/date": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get teacher schedule for date */
+    get: {
+      parameters: {
+        query?: {
+          dates?: string[];
+        };
+        header?: never;
+        path: {
+          teacherId: number;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["GetScheduleForOneGroupListServiceResponse"];
+            "application/json": components["schemas"]["GetScheduleForOneGroupListServiceResponse"];
+            "text/json": components["schemas"]["GetScheduleForOneGroupListServiceResponse"];
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/teachers": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Gets all teachers */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["TeacherListServiceResponse"];
+            "application/json": components["schemas"]["TeacherListServiceResponse"];
+            "text/json": components["schemas"]["TeacherListServiceResponse"];
+          };
+        };
+      };
+    };
+    put?: never;
+    /** Adds new teacher */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["AddTeacherDto"];
+          "text/json": components["schemas"]["AddTeacherDto"];
+          "application/*+json": components["schemas"]["AddTeacherDto"];
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["TeacherServiceResponse"];
+            "application/json": components["schemas"]["TeacherServiceResponse"];
+            "text/json": components["schemas"]["TeacherServiceResponse"];
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    /** Updates teacher */
+    patch: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["UpdateTeacherDto"];
+          "text/json": components["schemas"]["UpdateTeacherDto"];
+          "application/*+json": components["schemas"]["UpdateTeacherDto"];
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["TeacherServiceResponse"];
+            "application/json": components["schemas"]["TeacherServiceResponse"];
+            "text/json": components["schemas"]["TeacherServiceResponse"];
+          };
+        };
+      };
+    };
+    trace?: never;
+  };
+  "/api/updates": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get Current version */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["CheckForUpdate"];
+            "application/json": components["schemas"]["CheckForUpdate"];
+            "text/json": components["schemas"]["CheckForUpdate"];
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/users": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Creates new user */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["AddUserDto"];
+          "text/json": components["schemas"]["AddUserDto"];
+          "application/*+json": components["schemas"]["AddUserDto"];
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["UserServiceResponse"];
+            "application/json": components["schemas"]["UserServiceResponse"];
+            "text/json": components["schemas"]["UserServiceResponse"];
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    /** Update user */
+    patch: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["AddUserDto"];
+          "text/json": components["schemas"]["AddUserDto"];
+          "application/*+json": components["schemas"]["AddUserDto"];
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["UserServiceResponse"];
+            "application/json": components["schemas"]["UserServiceResponse"];
+            "text/json": components["schemas"]["UserServiceResponse"];
+          };
+        };
+      };
+    };
+    trace?: never;
+  };
+  "/api/users/{deviceId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Gets user */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          deviceId: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["UserServiceResponse"];
+            "application/json": components["schemas"]["UserServiceResponse"];
+            "text/json": components["schemas"]["UserServiceResponse"];
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/users/{deviceId}/skipped": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get skipped lessons */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          deviceId: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["GetSkippedLessonsDtoServiceResponse"];
+            "application/json": components["schemas"]["GetSkippedLessonsDtoServiceResponse"];
+            "text/json": components["schemas"]["GetSkippedLessonsDtoServiceResponse"];
+          };
+        };
+      };
+    };
+    /** Sync skipped lessons */
+    put: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          deviceId: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["SyncSkippedLessonsDto"][];
+          "text/json": components["schemas"]["SyncSkippedLessonsDto"][];
+          "application/*+json": components["schemas"]["SyncSkippedLessonsDto"][];
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["StringServiceResponse"];
+            "application/json": components["schemas"]["StringServiceResponse"];
+            "text/json": components["schemas"]["StringServiceResponse"];
+          };
+        };
+      };
+    };
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/users/{deviceId}/tasks": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get lesson tasks */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          deviceId: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["GetLessonTasksDtoServiceResponse"];
+            "application/json": components["schemas"]["GetLessonTasksDtoServiceResponse"];
+            "text/json": components["schemas"]["GetLessonTasksDtoServiceResponse"];
+          };
+        };
+      };
+    };
+    /** Sync lesson tasks */
+    put: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          deviceId: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["SyncLessonTasksDto"][];
+          "text/json": components["schemas"]["SyncLessonTasksDto"][];
+          "application/*+json": components["schemas"]["SyncLessonTasksDto"][];
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["StringServiceResponse"];
+            "application/json": components["schemas"]["StringServiceResponse"];
+            "text/json": components["schemas"]["StringServiceResponse"];
+          };
+        };
+      };
+    };
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/works": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Adds new work for group */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["AddWorkGroupDto"];
+          "text/json": components["schemas"]["AddWorkGroupDto"];
+          "application/*+json": components["schemas"]["AddWorkGroupDto"];
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["WorkListServiceResponse"];
+            "application/json": components["schemas"]["WorkListServiceResponse"];
+            "text/json": components["schemas"]["WorkListServiceResponse"];
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/works/{groupId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Gets all works for group */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          groupId: number;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["GetWorksForAllLessonsGroupDtoListServiceResponse"];
+            "application/json": components["schemas"]["GetWorksForAllLessonsGroupDtoListServiceResponse"];
+            "text/json": components["schemas"]["GetWorksForAllLessonsGroupDtoListServiceResponse"];
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/works/{groupId}/{lessonId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    /** Deletes group work */
+    delete: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          groupId: number;
+          lessonId: number;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["StringServiceResponse"];
+            "application/json": components["schemas"]["StringServiceResponse"];
+            "text/json": components["schemas"]["StringServiceResponse"];
+          };
+        };
+      };
+    };
+    options?: never;
+    head?: never;
+    /** Calculates group ktp */
+    patch: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          groupId: number;
+          lessonId: number;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": components["schemas"]["StringServiceResponse"];
+            "application/json": components["schemas"]["StringServiceResponse"];
+            "text/json": components["schemas"]["StringServiceResponse"];
+          };
+        };
+      };
+    };
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: {
-        AddExamDto: {
-            examStart?: string | null;
-            /** Format: int32 */
-            teacherId?: number;
-            /** Format: int32 */
-            lessonId?: number;
-            /** Format: int32 */
-            groupId?: number;
-            /** Format: int32 */
-            cabinet?: number;
-            /** Format: int32 */
-            block?: number;
-        };
-        AddGroupDto: {
-            groupNumber?: string | null;
-            /** Format: int32 */
-            course?: number;
-            educationType?: components["schemas"]["EducationTypes"];
-        };
-        AddKtpDto: {
-            /** Format: int32 */
-            lessonId?: number;
-            /** Format: int32 */
-            lessonHours?: number;
-            educationType?: components["schemas"]["EducationTypes"];
-            /** Format: int32 */
-            course?: number;
-        };
-        AddKtpWorkDto: {
-            /** Format: int32 */
-            ktpId?: number;
-            workType?: components["schemas"]["WorkTypeEnum"];
-            lessons?: number[] | null;
-        };
-        AddLessonDto: {
-            lessonName?: string | null;
-            subLessonName?: string | null;
-        };
-        AddPracticeDto: {
-            startDate?: string | null;
-            endDate?: string | null;
-            name?: string | null;
-            startTime?: string | null;
-            endTime?: string | null;
-            /** Format: int32 */
-            groupId?: number;
-            /** Format: int32 */
-            teacherId?: number | null;
-            /** Format: int32 */
-            cabinet?: number;
-            /** Format: int32 */
-            block?: number;
-        };
-        AddScheduleDto: {
-            dayOfWeek?: string | null;
-            week?: string | null;
-            /** Format: int32 */
-            lessonNumber?: number;
-            /** Format: int32 */
-            subNumber?: number;
-            /** Format: int32 */
-            lessonId?: number;
-            /** Format: int32 */
-            cabinet?: number;
-            /** Format: int32 */
-            block?: number;
-            /** Format: int32 */
-            teacherId?: number;
-            /** Format: int32 */
-            groupId?: number;
-            /** Format: int32 */
-            subGroup?: number;
-            staticLessonType?: components["schemas"]["LessonType"];
-        };
-        AddTeacherDto: {
-            teacherFio?: string | null;
-            initials?: string | null;
-        };
-        AddUserDto: {
-            deviceId: string | null;
-            /** Format: int32 */
-            groupId?: number | null;
-        };
-        AddWorkGroupDto: {
-            /** Format: int32 */
-            groupId?: number;
-            /** Format: int32 */
-            lessonId?: number;
-            workType?: components["schemas"]["WorkTypeEnum"];
-            lessons?: number[] | null;
-        };
-        BooleanServiceResponse: {
-            data?: boolean;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        CheckForUpdate: {
-            version?: string | null;
-            url?: string | null;
-        };
-        DateOnlyServiceResponse: {
-            /** Format: date */
-            data?: string;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        /** @enum {string} */
-        DayOfWeek: "Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday";
-        /** @enum {string} */
-        EducationTypes: "Sso" | "Vo" | "Zaoch";
-        Exam: {
-            /** Format: int32 */
-            id?: number;
-            /** Format: int32 */
-            lessonId?: number;
-            lesson?: components["schemas"]["Lesson"];
-            /** Format: int32 */
-            teacherId?: number;
-            teacher?: components["schemas"]["Teacher"];
-            /** Format: int32 */
-            groupId?: number;
-            group?: components["schemas"]["Group"];
-            /** Format: int32 */
-            cabinet?: number;
-            /** Format: int32 */
-            block?: number;
-            /** Format: date-time */
-            examStart?: string;
-        };
-        ExamListServiceResponse: {
-            data?: components["schemas"]["Exam"][] | null;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        ExamServiceResponse: {
-            data?: components["schemas"]["Exam"];
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        GetKtpDto: {
-            ktp?: components["schemas"]["Ktp"];
-            works?: components["schemas"]["GetKtpWorksDto"];
-        };
-        GetKtpDtoListServiceResponse: {
-            data?: components["schemas"]["GetKtpDto"][] | null;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        GetKtpWorksDto: {
-            worksList?: components["schemas"]["GetWorksGroupDto"][] | null;
-            calculated?: boolean;
-        };
-        GetLessonTasksDto: {
-            lessonSchedule?: components["schemas"]["LessonSchedule"];
-            name?: string | null;
-            description?: string | null;
-            /** Format: date */
-            date?: string;
-        };
-        GetLessonTasksDtoServiceResponse: {
-            data?: components["schemas"]["GetLessonTasksDto"];
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        GetScheduleAdmin: {
-            dayOfWeek?: components["schemas"]["DayOfWeek"];
-            schedules?: components["schemas"]["LessonSchedule"][] | null;
-        };
-        GetScheduleAdminListServiceResponse: {
-            data?: components["schemas"]["GetScheduleAdmin"][] | null;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        GetScheduleForListOfGroups: {
-            schedule?: components["schemas"]["GetScheduleForOneGroup"][] | null;
-            group?: components["schemas"]["Group"];
-        };
-        GetScheduleForListOfGroupsListServiceResponse: {
-            data?: components["schemas"]["GetScheduleForListOfGroups"][] | null;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        GetScheduleForOneGroup: {
-            date?: string | null;
-            schedules?: components["schemas"]["LessonScheduleWithWork"][] | null;
-            practice?: components["schemas"]["Practice"];
-            exam?: components["schemas"]["Exam"][] | null;
-        };
-        GetScheduleForOneGroupListServiceResponse: {
-            data?: components["schemas"]["GetScheduleForOneGroup"][] | null;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        GetSkippedLessonsDto: {
-            lessonSchedule?: components["schemas"]["LessonSchedule"];
-            work?: components["schemas"]["Work"];
-            practice?: components["schemas"]["Practice"];
-            /** Format: date */
-            date?: string;
-        };
-        GetSkippedLessonsDtoServiceResponse: {
-            data?: components["schemas"]["GetSkippedLessonsDto"];
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        GetWorksForAllLessonsGroupDto: {
-            worksList?: components["schemas"]["GetWorksGroupDto"][] | null;
-            lesson?: components["schemas"]["Lesson"];
-            calculated?: boolean;
-        };
-        GetWorksForAllLessonsGroupDtoListServiceResponse: {
-            data?: components["schemas"]["GetWorksForAllLessonsGroupDto"][] | null;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        GetWorksGroupDto: {
-            workType?: components["schemas"]["WorkTypeEnum"];
-            lessonNumbers?: number[] | null;
-        };
-        GetWorksScheduleDto: {
-            workType?: components["schemas"]["WorkTypeEnum"];
-            /** Format: date */
-            date?: string;
-        };
-        GetWorksScheduleDtoListServiceResponse: {
-            data?: components["schemas"]["GetWorksScheduleDto"][] | null;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        Group: {
-            /** Format: int32 */
-            id?: number;
-            groupNumber: string | null;
-            /** Format: int32 */
-            course?: number;
-            educationType?: components["schemas"]["EducationTypes"];
-            removable?: boolean;
-            /** Format: date */
-            semesterStart?: string;
-            /** Format: date */
-            semesterEnd?: string;
-        };
-        GroupListServiceResponse: {
-            data?: components["schemas"]["Group"][] | null;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        GroupServiceResponse: {
-            data?: components["schemas"]["Group"];
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        /** @enum {string} */
-        HttpStatusCode: "Continue" | "SwitchingProtocols" | "Processing" | "EarlyHints" | "OK" | "Created" | "Accepted" | "NonAuthoritativeInformation" | "NoContent" | "ResetContent" | "PartialContent" | "MultiStatus" | "AlreadyReported" | "IMUsed" | "MultipleChoices" | "MovedPermanently" | "Found" | "SeeOther" | "NotModified" | "UseProxy" | "Unused" | "TemporaryRedirect" | "PermanentRedirect" | "BadRequest" | "Unauthorized" | "PaymentRequired" | "Forbidden" | "NotFound" | "MethodNotAllowed" | "NotAcceptable" | "ProxyAuthenticationRequired" | "RequestTimeout" | "Conflict" | "Gone" | "LengthRequired" | "PreconditionFailed" | "RequestEntityTooLarge" | "RequestUriTooLong" | "UnsupportedMediaType" | "RequestedRangeNotSatisfiable" | "ExpectationFailed" | "MisdirectedRequest" | "UnprocessableEntity" | "Locked" | "FailedDependency" | "UpgradeRequired" | "PreconditionRequired" | "TooManyRequests" | "RequestHeaderFieldsTooLarge" | "UnavailableForLegalReasons" | "InternalServerError" | "NotImplemented" | "BadGateway" | "ServiceUnavailable" | "GatewayTimeout" | "HttpVersionNotSupported" | "VariantAlsoNegotiates" | "InsufficientStorage" | "LoopDetected" | "NotExtended" | "NetworkAuthenticationRequired";
-        Int32ServiceResponse: {
-            /** Format: int32 */
-            data?: number;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        Ktp: {
-            /** Format: int32 */
-            id?: number;
-            /** Format: int32 */
-            lessonId?: number;
-            lesson?: components["schemas"]["Lesson"];
-            /** Format: int32 */
-            course?: number;
-            educationType?: components["schemas"]["EducationTypes"];
-            /** Format: int32 */
-            lessonHours?: number;
-        };
-        KtpServiceResponse: {
-            data?: components["schemas"]["Ktp"];
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        Lesson: {
-            /** Format: int32 */
-            id?: number;
-            name?: string | null;
-            subName?: string | null;
-        };
-        LessonSchedule: {
-            /** Format: int32 */
-            id?: number;
-            /** Format: int32 */
-            lessonId?: number;
-            lesson?: components["schemas"]["Lesson"];
-            /** Format: int32 */
-            cabinet?: number;
-            /** Format: int32 */
-            block?: number;
-            week?: string | null;
-            /** Format: int32 */
-            teacherId?: number;
-            teacher?: components["schemas"]["Teacher"];
-            dayOfWeek?: components["schemas"]["DayOfWeek"];
-            /** Format: int32 */
-            subNumber?: number;
-            /** Format: int32 */
-            lessonNumber?: number;
-            /** Format: int32 */
-            groupId?: number;
-            group?: components["schemas"]["Group"];
-            staticLessonType?: components["schemas"]["LessonType"];
-            /** Format: int32 */
-            subGroup?: number;
-        };
-        LessonScheduleServiceResponse: {
-            data?: components["schemas"]["LessonSchedule"];
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        LessonScheduleWithWork: {
-            lessonSchedule?: components["schemas"]["LessonSchedule"];
-            work?: components["schemas"]["Work"];
-            scheduleMove?: components["schemas"]["ScheduleMove"];
-            scheduleAdd?: components["schemas"]["ScheduleAdd"];
-        };
-        LessonServiceResponse: {
-            data?: components["schemas"]["Lesson"];
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        /** @enum {string} */
-        LessonType: "Lecture" | "Practical" | "Laboratory";
-        Practice: {
-            /** Format: int32 */
-            id?: number;
-            name?: string | null;
-            /** Format: int32 */
-            groupId?: number;
-            group?: components["schemas"]["Group"];
-            /** Format: int32 */
-            teacherId?: number | null;
-            teacher?: components["schemas"]["Teacher"];
-            /** Format: int32 */
-            cabinet?: number;
-            /** Format: int32 */
-            block?: number;
-            /** Format: date */
-            startDate?: string;
-            /** Format: date */
-            endDate?: string;
-            /** Format: time */
-            startTime?: string;
-            /** Format: time */
-            endTime?: string;
-        };
-        PracticeListServiceResponse: {
-            data?: components["schemas"]["Practice"][] | null;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        PracticeServiceResponse: {
-            data?: components["schemas"]["Practice"];
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        ScheduleAdd: {
-            /** Format: int32 */
-            id?: number;
-            /** Format: date */
-            toDate?: string;
-            /** Format: int32 */
-            toLessonNumber?: number;
-            /** Format: int32 */
-            toSubLessonNumber?: number;
-            /** Format: int32 */
-            toSubGroup?: number;
-            /** Format: int32 */
-            groupId?: number;
-            group?: components["schemas"]["Group"];
-            /** Format: int32 */
-            lessonId?: number;
-            lesson?: components["schemas"]["Lesson"];
-            /** Format: int32 */
-            teacherId?: number;
-            teacher?: components["schemas"]["Teacher"];
-            /** Format: int32 */
-            cabinet?: number;
-            /** Format: int32 */
-            block?: number;
-        };
-        ScheduleAddDto: {
-            /** Format: date */
-            toDate?: string;
-            /** Format: int32 */
-            toLessonNumber?: number;
-            /** Format: int32 */
-            toSubLessonNumber?: number;
-            /** Format: int32 */
-            toSubGroup?: number;
-            /** Format: int32 */
-            groupId?: number;
-            /** Format: int32 */
-            lessonId?: number;
-            /** Format: int32 */
-            teacherId?: number;
-            /** Format: int32 */
-            cabinet?: number;
-            /** Format: int32 */
-            block?: number;
-        };
-        ScheduleAddListServiceResponse: {
-            data?: components["schemas"]["ScheduleAdd"][] | null;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        ScheduleAddServiceResponse: {
-            data?: components["schemas"]["ScheduleAdd"];
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        ScheduleMove: {
-            /** Format: int32 */
-            id?: number;
-            /** Format: int32 */
-            fromLessonScheduleId?: number;
-            fromLessonSchedule?: components["schemas"]["LessonSchedule"];
-            /** Format: date */
-            fromDate?: string;
-            /** Format: date */
-            toDate?: string;
-            /** Format: int32 */
-            toLessonNumber?: number;
-            /** Format: int32 */
-            toSubLessonNumber?: number;
-        };
-        ScheduleMoveDto: {
-            /** Format: int32 */
-            fromLessonScheduleId?: number;
-            /** Format: date */
-            fromDate?: string;
-            /** Format: date */
-            toDate?: string;
-            /** Format: int32 */
-            toLessonNumber?: number;
-            /** Format: int32 */
-            toSubLessonNumber?: number;
-        };
-        ScheduleMoveServiceResponse: {
-            data?: components["schemas"]["ScheduleMove"];
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        SetSemesterDto: {
-            /** Format: int32 */
-            groupId?: number;
-            /** Format: int32 */
-            year?: number;
-            /** Format: int32 */
-            month?: number;
-            /** Format: int32 */
-            day?: number;
-        };
-        StringServiceResponse: {
-            data?: string | null;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        SyncLessonTasksDto: {
-            /** Format: int32 */
-            lessonScheduleId?: number;
-            name?: string | null;
-            description?: string | null;
-            /** Format: date */
-            date?: string;
-        };
-        SyncSkippedLessonsDto: {
-            /** Format: int32 */
-            lessonScheduleId?: number | null;
-            /** Format: int32 */
-            practiceId?: number | null;
-            /** Format: date */
-            date?: string;
-        };
-        Teacher: {
-            /** Format: int32 */
-            id?: number;
-            fio?: string | null;
-            initials?: string | null;
-        };
-        TeacherListServiceResponse: {
-            data?: components["schemas"]["Teacher"][] | null;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        TeacherServiceResponse: {
-            data?: components["schemas"]["Teacher"];
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        UpdateKtpDto: {
-            /** Format: int32 */
-            ktpId?: number;
-            /** Format: int32 */
-            lessonHours?: number;
-        };
-        UpdateLessonDto: {
-            /** Format: int32 */
-            lessonId?: number;
-            lessonName?: string | null;
-            subLessonName?: string | null;
-        };
-        UpdateTeacherDto: {
-            /** Format: int32 */
-            teacherId?: number;
-            teacherFio?: string | null;
-            initials?: string | null;
-        };
-        User: {
-            deviceId?: string | null;
-            /** Format: int32 */
-            groupId?: number | null;
-            /** Format: date-time */
-            registerDate?: string;
-        };
-        UserServiceResponse: {
-            data?: components["schemas"]["User"];
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        Work: {
-            /** Format: int32 */
-            id?: number;
-            workType?: components["schemas"]["WorkTypeEnum"];
-            /** Format: int32 */
-            groupKtpId?: number;
-            /** Format: int32 */
-            lessonScheduleId?: number;
-            /** Format: date */
-            date?: string;
-            /** Format: int32 */
-            lessonNumber?: number;
-        };
-        WorkListServiceResponse: {
-            data?: components["schemas"]["Work"][] | null;
-            success?: boolean;
-            message?: string | null;
-            responseCode?: components["schemas"]["HttpStatusCode"];
-        };
-        /** @enum {string} */
-        WorkTypeEnum: "Laboratory" | "Practical" | "Okr" | "DifferentiatedTest";
+  schemas: {
+    AddExamDto: {
+      examStart?: string | null;
+      /** Format: int32 */
+      teacherId?: number;
+      /** Format: int32 */
+      lessonId?: number;
+      /** Format: int32 */
+      groupId?: number;
+      /** Format: int32 */
+      cabinet?: number;
+      /** Format: int32 */
+      block?: number;
     };
-    responses: never;
-    parameters: never;
-    requestBodies: never;
-    headers: never;
-    pathItems: never;
+    AddGroupDto: {
+      groupNumber?: string | null;
+      /** Format: int32 */
+      course?: number;
+      educationType?: components["schemas"]["EducationTypes"];
+    };
+    AddKtpDto: {
+      /** Format: int32 */
+      lessonId?: number;
+      /** Format: int32 */
+      lessonHours?: number;
+      educationType?: components["schemas"]["EducationTypes"];
+      /** Format: int32 */
+      course?: number;
+    };
+    AddKtpWorkDto: {
+      /** Format: int32 */
+      ktpId?: number;
+      workType?: components["schemas"]["WorkTypeEnum"];
+      lessons?: number[] | null;
+    };
+    AddLessonDto: {
+      lessonName?: string | null;
+      subLessonName?: string | null;
+    };
+    AddPracticeDto: {
+      startDate?: string | null;
+      endDate?: string | null;
+      name?: string | null;
+      startTime?: string | null;
+      endTime?: string | null;
+      /** Format: int32 */
+      groupId?: number;
+      /** Format: int32 */
+      teacherId?: number | null;
+      /** Format: int32 */
+      cabinet?: number;
+      /** Format: int32 */
+      block?: number;
+    };
+    AddScheduleDto: {
+      dayOfWeek?: string | null;
+      week?: string | null;
+      /** Format: int32 */
+      lessonNumber?: number;
+      /** Format: int32 */
+      subNumber?: number;
+      /** Format: int32 */
+      lessonId?: number;
+      /** Format: int32 */
+      cabinet?: number;
+      /** Format: int32 */
+      block?: number;
+      /** Format: int32 */
+      teacherId?: number;
+      /** Format: int32 */
+      groupId?: number;
+      /** Format: int32 */
+      subGroup?: number;
+      staticLessonType?: components["schemas"]["LessonType"];
+    };
+    AddTeacherDto: {
+      teacherFio?: string | null;
+      initials?: string | null;
+    };
+    AddUserDto: {
+      deviceId: string | null;
+      /** Format: int32 */
+      groupId?: number | null;
+    };
+    AddWorkGroupDto: {
+      /** Format: int32 */
+      groupId?: number;
+      /** Format: int32 */
+      lessonId?: number;
+      workType?: components["schemas"]["WorkTypeEnum"];
+      lessons?: number[] | null;
+    };
+    BooleanServiceResponse: {
+      data?: boolean;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    CheckForUpdate: {
+      version?: string | null;
+      url?: string | null;
+    };
+    DateOnlyServiceResponse: {
+      /** Format: date */
+      data?: string;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    /** @enum {string} */
+    DayOfWeek:
+      | "Sunday"
+      | "Monday"
+      | "Tuesday"
+      | "Wednesday"
+      | "Thursday"
+      | "Friday"
+      | "Saturday";
+    /** @enum {string} */
+    EducationTypes: "Sso" | "Vo" | "Zaoch";
+    Exam: {
+      /** Format: int32 */
+      id?: number;
+      /** Format: int32 */
+      lessonId?: number;
+      lesson?: components["schemas"]["Lesson"];
+      /** Format: int32 */
+      teacherId?: number;
+      teacher?: components["schemas"]["Teacher"];
+      /** Format: int32 */
+      groupId?: number;
+      group?: components["schemas"]["Group"];
+      /** Format: int32 */
+      cabinet?: number;
+      /** Format: int32 */
+      block?: number;
+      /** Format: date-time */
+      examStart?: string;
+    };
+    ExamListServiceResponse: {
+      data?: components["schemas"]["Exam"][] | null;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    ExamServiceResponse: {
+      data?: components["schemas"]["Exam"];
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    GetKtpDto: {
+      ktp?: components["schemas"]["Ktp"];
+      works?: components["schemas"]["GetKtpWorksDto"];
+    };
+    GetKtpDtoListServiceResponse: {
+      data?: components["schemas"]["GetKtpDto"][] | null;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    GetKtpWorksDto: {
+      worksList?: components["schemas"]["GetWorksGroupDto"][] | null;
+      calculated?: boolean;
+    };
+    GetLessonTasksDto: {
+      lessonSchedule?: components["schemas"]["LessonSchedule"];
+      name?: string | null;
+      description?: string | null;
+      /** Format: date */
+      date?: string;
+    };
+    GetLessonTasksDtoServiceResponse: {
+      data?: components["schemas"]["GetLessonTasksDto"];
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    GetScheduleAdmin: {
+      dayOfWeek?: components["schemas"]["DayOfWeek"];
+      schedules?: components["schemas"]["LessonSchedule"][] | null;
+    };
+    GetScheduleAdminListServiceResponse: {
+      data?: components["schemas"]["GetScheduleAdmin"][] | null;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    GetScheduleForListOfGroups: {
+      schedule?: components["schemas"]["GetScheduleForOneGroup"][] | null;
+      group?: components["schemas"]["Group"];
+    };
+    GetScheduleForListOfGroupsListServiceResponse: {
+      data?: components["schemas"]["GetScheduleForListOfGroups"][] | null;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    GetScheduleForOneGroup: {
+      date?: string | null;
+      schedules?: components["schemas"]["LessonScheduleWithWork"][] | null;
+      practice?: components["schemas"]["Practice"];
+      exam?: components["schemas"]["Exam"][] | null;
+    };
+    GetScheduleForOneGroupListServiceResponse: {
+      data?: components["schemas"]["GetScheduleForOneGroup"][] | null;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    GetSkippedLessonsDto: {
+      lessonSchedule?: components["schemas"]["LessonSchedule"];
+      work?: components["schemas"]["Work"];
+      practice?: components["schemas"]["Practice"];
+      /** Format: date */
+      date?: string;
+    };
+    GetSkippedLessonsDtoServiceResponse: {
+      data?: components["schemas"]["GetSkippedLessonsDto"];
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    GetWorksForAllLessonsGroupDto: {
+      worksList?: components["schemas"]["GetWorksGroupDto"][] | null;
+      lesson?: components["schemas"]["Lesson"];
+      calculated?: boolean;
+    };
+    GetWorksForAllLessonsGroupDtoListServiceResponse: {
+      data?: components["schemas"]["GetWorksForAllLessonsGroupDto"][] | null;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    GetWorksGroupDto: {
+      workType?: components["schemas"]["WorkTypeEnum"];
+      lessonNumbers?: number[] | null;
+    };
+    GetWorksScheduleDto: {
+      workType?: components["schemas"]["WorkTypeEnum"];
+      /** Format: date */
+      date?: string;
+    };
+    GetWorksScheduleDtoListServiceResponse: {
+      data?: components["schemas"]["GetWorksScheduleDto"][] | null;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    Group: {
+      /** Format: int32 */
+      id?: number;
+      groupNumber: string | null;
+      /** Format: int32 */
+      course?: number;
+      educationType?: components["schemas"]["EducationTypes"];
+      removable?: boolean;
+      /** Format: date */
+      semesterStart?: string;
+      /** Format: date */
+      semesterEnd?: string;
+    };
+    GroupListServiceResponse: {
+      data?: components["schemas"]["Group"][] | null;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    GroupServiceResponse: {
+      data?: components["schemas"]["Group"];
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    /** @enum {string} */
+    HttpStatusCode:
+      | "Continue"
+      | "SwitchingProtocols"
+      | "Processing"
+      | "EarlyHints"
+      | "OK"
+      | "Created"
+      | "Accepted"
+      | "NonAuthoritativeInformation"
+      | "NoContent"
+      | "ResetContent"
+      | "PartialContent"
+      | "MultiStatus"
+      | "AlreadyReported"
+      | "IMUsed"
+      | "MultipleChoices"
+      | "MovedPermanently"
+      | "Found"
+      | "SeeOther"
+      | "NotModified"
+      | "UseProxy"
+      | "Unused"
+      | "TemporaryRedirect"
+      | "PermanentRedirect"
+      | "BadRequest"
+      | "Unauthorized"
+      | "PaymentRequired"
+      | "Forbidden"
+      | "NotFound"
+      | "MethodNotAllowed"
+      | "NotAcceptable"
+      | "ProxyAuthenticationRequired"
+      | "RequestTimeout"
+      | "Conflict"
+      | "Gone"
+      | "LengthRequired"
+      | "PreconditionFailed"
+      | "RequestEntityTooLarge"
+      | "RequestUriTooLong"
+      | "UnsupportedMediaType"
+      | "RequestedRangeNotSatisfiable"
+      | "ExpectationFailed"
+      | "MisdirectedRequest"
+      | "UnprocessableEntity"
+      | "Locked"
+      | "FailedDependency"
+      | "UpgradeRequired"
+      | "PreconditionRequired"
+      | "TooManyRequests"
+      | "RequestHeaderFieldsTooLarge"
+      | "UnavailableForLegalReasons"
+      | "InternalServerError"
+      | "NotImplemented"
+      | "BadGateway"
+      | "ServiceUnavailable"
+      | "GatewayTimeout"
+      | "HttpVersionNotSupported"
+      | "VariantAlsoNegotiates"
+      | "InsufficientStorage"
+      | "LoopDetected"
+      | "NotExtended"
+      | "NetworkAuthenticationRequired";
+    Int32ServiceResponse: {
+      /** Format: int32 */
+      data?: number;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    Ktp: {
+      /** Format: int32 */
+      id?: number;
+      /** Format: int32 */
+      lessonId?: number;
+      lesson?: components["schemas"]["Lesson"];
+      /** Format: int32 */
+      course?: number;
+      educationType?: components["schemas"]["EducationTypes"];
+      /** Format: int32 */
+      lessonHours?: number;
+    };
+    KtpServiceResponse: {
+      data?: components["schemas"]["Ktp"];
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    Lesson: {
+      /** Format: int32 */
+      id?: number;
+      name?: string | null;
+      subName?: string | null;
+    };
+    LessonSchedule: {
+      /** Format: int32 */
+      id?: number;
+      /** Format: int32 */
+      lessonId?: number;
+      lesson?: components["schemas"]["Lesson"];
+      /** Format: int32 */
+      cabinet?: number;
+      /** Format: int32 */
+      block?: number;
+      week?: string | null;
+      /** Format: int32 */
+      teacherId?: number;
+      teacher?: components["schemas"]["Teacher"];
+      dayOfWeek?: components["schemas"]["DayOfWeek"];
+      /** Format: int32 */
+      subNumber?: number;
+      /** Format: int32 */
+      lessonNumber?: number;
+      /** Format: int32 */
+      groupId?: number;
+      group?: components["schemas"]["Group"];
+      staticLessonType?: components["schemas"]["LessonType"];
+      /** Format: int32 */
+      subGroup?: number;
+    };
+    LessonScheduleServiceResponse: {
+      data?: components["schemas"]["LessonSchedule"];
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    LessonScheduleWithWork: {
+      lessonSchedule?: components["schemas"]["LessonSchedule"];
+      work?: components["schemas"]["Work"];
+      scheduleMove?: components["schemas"]["ScheduleMove"];
+      scheduleAdd?: components["schemas"]["ScheduleAdd"];
+    };
+    LessonServiceResponse: {
+      data?: components["schemas"]["Lesson"];
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    /** @enum {string} */
+    LessonType: "Lecture" | "Practical" | "Laboratory";
+    Practice: {
+      /** Format: int32 */
+      id?: number;
+      name?: string | null;
+      /** Format: int32 */
+      groupId?: number;
+      group?: components["schemas"]["Group"];
+      /** Format: int32 */
+      teacherId?: number | null;
+      teacher?: components["schemas"]["Teacher"];
+      /** Format: int32 */
+      cabinet?: number;
+      /** Format: int32 */
+      block?: number;
+      /** Format: date */
+      startDate?: string;
+      /** Format: date */
+      endDate?: string;
+      /** Format: time */
+      startTime?: string;
+      /** Format: time */
+      endTime?: string;
+    };
+    PracticeListServiceResponse: {
+      data?: components["schemas"]["Practice"][] | null;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    PracticeServiceResponse: {
+      data?: components["schemas"]["Practice"];
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    ScheduleAdd: {
+      /** Format: int32 */
+      id?: number;
+      /** Format: date */
+      toDate?: string;
+      /** Format: int32 */
+      toLessonNumber?: number;
+      /** Format: int32 */
+      toSubLessonNumber?: number;
+      /** Format: int32 */
+      toSubGroup?: number;
+      /** Format: int32 */
+      groupId?: number;
+      group?: components["schemas"]["Group"];
+      /** Format: int32 */
+      lessonId?: number;
+      lesson?: components["schemas"]["Lesson"];
+      /** Format: int32 */
+      teacherId?: number;
+      teacher?: components["schemas"]["Teacher"];
+      /** Format: int32 */
+      cabinet?: number;
+      /** Format: int32 */
+      block?: number;
+    };
+    ScheduleAddDto: {
+      /** Format: date */
+      toDate?: string;
+      /** Format: int32 */
+      toLessonNumber?: number;
+      /** Format: int32 */
+      toSubLessonNumber?: number;
+      /** Format: int32 */
+      toSubGroup?: number;
+      /** Format: int32 */
+      groupId?: number;
+      /** Format: int32 */
+      lessonId?: number;
+      /** Format: int32 */
+      teacherId?: number;
+      /** Format: int32 */
+      cabinet?: number;
+      /** Format: int32 */
+      block?: number;
+    };
+    ScheduleAddListServiceResponse: {
+      data?: components["schemas"]["ScheduleAdd"][] | null;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    ScheduleAddServiceResponse: {
+      data?: components["schemas"]["ScheduleAdd"];
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    ScheduleMove: {
+      /** Format: int32 */
+      id?: number;
+      /** Format: int32 */
+      fromLessonScheduleId?: number;
+      fromLessonSchedule?: components["schemas"]["LessonSchedule"];
+      /** Format: date */
+      fromDate?: string;
+      /** Format: date */
+      toDate?: string;
+      /** Format: int32 */
+      toLessonNumber?: number;
+      /** Format: int32 */
+      toSubLessonNumber?: number;
+    };
+    ScheduleMoveDto: {
+      /** Format: int32 */
+      fromLessonScheduleId?: number;
+      /** Format: date */
+      fromDate?: string;
+      /** Format: date */
+      toDate?: string;
+      /** Format: int32 */
+      toLessonNumber?: number;
+      /** Format: int32 */
+      toSubLessonNumber?: number;
+    };
+    ScheduleMoveServiceResponse: {
+      data?: components["schemas"]["ScheduleMove"];
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    SetSemesterDto: {
+      /** Format: int32 */
+      groupId?: number;
+      /** Format: int32 */
+      year?: number;
+      /** Format: int32 */
+      month?: number;
+      /** Format: int32 */
+      day?: number;
+    };
+    StringServiceResponse: {
+      data?: string | null;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    SyncLessonTasksDto: {
+      /** Format: int32 */
+      lessonScheduleId?: number;
+      name?: string | null;
+      description?: string | null;
+      /** Format: date */
+      date?: string;
+    };
+    SyncSkippedLessonsDto: {
+      /** Format: int32 */
+      lessonScheduleId?: number | null;
+      /** Format: int32 */
+      practiceId?: number | null;
+      /** Format: date */
+      date?: string;
+    };
+    Teacher: {
+      /** Format: int32 */
+      id?: number;
+      fio?: string | null;
+      initials?: string | null;
+    };
+    TeacherListServiceResponse: {
+      data?: components["schemas"]["Teacher"][] | null;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    TeacherServiceResponse: {
+      data?: components["schemas"]["Teacher"];
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    UpdateKtpDto: {
+      /** Format: int32 */
+      ktpId?: number;
+      /** Format: int32 */
+      lessonHours?: number;
+    };
+    UpdateLessonDto: {
+      /** Format: int32 */
+      lessonId?: number;
+      lessonName?: string | null;
+      subLessonName?: string | null;
+    };
+    UpdateTeacherDto: {
+      /** Format: int32 */
+      teacherId?: number;
+      teacherFio?: string | null;
+      initials?: string | null;
+    };
+    User: {
+      deviceId?: string | null;
+      /** Format: int32 */
+      groupId?: number | null;
+      /** Format: date-time */
+      registerDate?: string;
+    };
+    UserServiceResponse: {
+      data?: components["schemas"]["User"];
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    Work: {
+      /** Format: int32 */
+      id?: number;
+      workType?: components["schemas"]["WorkTypeEnum"];
+      /** Format: int32 */
+      groupKtpId?: number;
+      /** Format: int32 */
+      lessonScheduleId?: number;
+      /** Format: date */
+      date?: string;
+      /** Format: int32 */
+      lessonNumber?: number;
+    };
+    WorkListServiceResponse: {
+      data?: components["schemas"]["Work"][] | null;
+      success?: boolean;
+      message?: string | null;
+      responseCode?: components["schemas"]["HttpStatusCode"];
+    };
+    /** @enum {string} */
+    WorkTypeEnum: "Laboratory" | "Practical" | "Okr" | "DifferentiatedTest";
+  };
+  responses: never;
+  parameters: never;
+  requestBodies: never;
+  headers: never;
+  pathItems: never;
 }
 export type $defs = Record<string, never>;
 export type operations = Record<string, never>;

@@ -2,7 +2,9 @@ import createClient from "openapi-fetch";
 import type { paths } from "./scheme.js";
 
 // Create a client instance
-const client = createClient<paths>({ baseUrl: process.env.API_BASE_URL || "https://bsac.hlofiys.xyz" });
+const client = createClient<paths>({
+  baseUrl: process.env.API_BASE_URL || "https://bsac.hlofiys.xyz",
+});
 
 export async function getGroups() {
   const { data, error } = await client.GET("/api/groups");
@@ -21,12 +23,15 @@ export async function getTeachers() {
 }
 
 export async function getGroupSchedule(groupId: number, dates?: string[]) {
-  const { data, error } = await client.GET("/api/schedules/groups/{groupId}/date", {
-    params: {
-      path: { groupId },
-      query: { dates }
-    }
-  });
+  const { data, error } = await client.GET(
+    "/api/schedules/groups/{groupId}/date",
+    {
+      params: {
+        path: { groupId },
+        query: { dates },
+      },
+    },
+  );
   if (error) {
     throw new Error(`Failed to fetch group schedule: ${JSON.stringify(error)}`);
   }
@@ -34,14 +39,19 @@ export async function getGroupSchedule(groupId: number, dates?: string[]) {
 }
 
 export async function getTeacherSchedule(teacherId: number, dates?: string[]) {
-  const { data, error } = await client.GET("/api/schedules/teachers/{teacherId}/date", {
-    params: {
-      path: { teacherId },
-      query: { dates }
-    }
-  });
+  const { data, error } = await client.GET(
+    "/api/schedules/teachers/{teacherId}/date",
+    {
+      params: {
+        path: { teacherId },
+        query: { dates },
+      },
+    },
+  );
   if (error) {
-    throw new Error(`Failed to fetch teacher schedule: ${JSON.stringify(error)}`);
+    throw new Error(
+      `Failed to fetch teacher schedule: ${JSON.stringify(error)}`,
+    );
   }
   return data?.data || [];
 }

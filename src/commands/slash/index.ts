@@ -1,5 +1,3 @@
-import { StartCommand } from './start.js';
+import { StartCommand } from "./start.js";
 
-export const slashCommands = [
-  StartCommand
-];
+export const slashCommands = [StartCommand];

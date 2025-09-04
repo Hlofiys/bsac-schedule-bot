@@ -16,10 +16,10 @@ export interface CommandEntity {
 }
 
 export abstract class AbstractCommand implements CommandEntity {
-  triggers: CommandEntity['triggers'];
+  triggers: CommandEntity["triggers"];
   utils: CommandUtils;
 
-  constructor(triggers: CommandEntity['triggers'], utils: CommandUtils) {
+  constructor(triggers: CommandEntity["triggers"], utils: CommandUtils) {
     this.triggers = triggers;
     this.utils = utils;
   }

@@ -7,9 +7,7 @@
   "paths": {
     "/api/exams": {
       "post": {
-        "tags": [
-          "Exams"
-        ],
+        "tags": ["Exams"],
         "summary": "Adds new exam",
         "requestBody": {
           "content": {
@@ -56,9 +54,7 @@
     },
     "/api/exams/{groupId}": {
       "get": {
-        "tags": [
-          "Exams"
-        ],
+        "tags": ["Exams"],
         "summary": "Gets all exams for group",
         "parameters": [
           {
@@ -97,9 +93,7 @@
     },
     "/api/exams/{examId}": {
       "delete": {
-        "tags": [
-          "Exams"
-        ],
+        "tags": ["Exams"],
         "summary": "Deletes exam",
         "parameters": [
           {
@@ -138,9 +132,7 @@
     },
     "/api/groups": {
       "get": {
-        "tags": [
-          "Groups"
-        ],
+        "tags": ["Groups"],
         "summary": "Gets all groups",
         "responses": {
           "200": {
@@ -166,9 +158,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Groups"
-        ],
+        "tags": ["Groups"],
         "summary": "Adds new group",
         "requestBody": {
           "content": {
@@ -215,9 +205,7 @@
     },
     "/api/groups/{groupId}": {
       "delete": {
-        "tags": [
-          "Groups"
-        ],
+        "tags": ["Groups"],
         "summary": "Deletes group",
         "parameters": [
           {
@@ -256,9 +244,7 @@
     },
     "/api/groups/semesterstart": {
       "put": {
-        "tags": [
-          "Groups"
-        ],
+        "tags": ["Groups"],
         "summary": "Sets group semester start date",
         "requestBody": {
           "content": {
@@ -305,9 +291,7 @@
     },
     "/api/groups/semesterend": {
       "put": {
-        "tags": [
-          "Groups"
-        ],
+        "tags": ["Groups"],
         "summary": "Sets group semester end date",
         "requestBody": {
           "content": {
@@ -354,9 +338,7 @@
     },
     "/api/ktp/works": {
       "post": {
-        "tags": [
-          "Ktp"
-        ],
+        "tags": ["Ktp"],
         "summary": "Adds new work for ktp",
         "requestBody": {
           "content": {
@@ -403,9 +385,7 @@
     },
     "/api/ktp": {
       "post": {
-        "tags": [
-          "Ktp"
-        ],
+        "tags": ["Ktp"],
         "summary": "Adds ktp",
         "requestBody": {
           "content": {
@@ -450,9 +430,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Ktp"
-        ],
+        "tags": ["Ktp"],
         "summary": "Change ktp hours",
         "requestBody": {
           "content": {
@@ -499,9 +477,7 @@
     },
     "/api/ktp/{lessonId}": {
       "get": {
-        "tags": [
-          "Ktp"
-        ],
+        "tags": ["Ktp"],
         "summary": "Gets all ktps",
         "parameters": [
           {
@@ -540,9 +516,7 @@
     },
     "/api/ktp/{ktpId}": {
       "delete": {
-        "tags": [
-          "Ktp"
-        ],
+        "tags": ["Ktp"],
         "summary": "Deletes lesson work",
         "parameters": [
           {
@@ -581,9 +555,7 @@
     },
     "/api/ktp/works/{ktpId}": {
       "patch": {
-        "tags": [
-          "Ktp"
-        ],
+        "tags": ["Ktp"],
         "summary": "Calculates works and hours for all groups with this ktp",
         "parameters": [
           {
@@ -622,9 +594,7 @@
     },
     "/api/lessons": {
       "get": {
-        "tags": [
-          "Lessons"
-        ],
+        "tags": ["Lessons"],
         "summary": "Gets all lessons",
         "responses": {
           "200": {
@@ -650,9 +620,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Lessons"
-        ],
+        "tags": ["Lessons"],
         "summary": "Adds new lesson",
         "requestBody": {
           "content": {
@@ -697,9 +665,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Lessons"
-        ],
+        "tags": ["Lessons"],
         "summary": "Updates lesson",
         "requestBody": {
           "content": {
@@ -746,9 +712,7 @@
     },
     "/api/practices": {
       "post": {
-        "tags": [
-          "Practices"
-        ],
+        "tags": ["Practices"],
         "summary": "Adds new practice",
         "requestBody": {
           "content": {
@@ -793,9 +757,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Practices"
-        ],
+        "tags": ["Practices"],
         "summary": "Gets all practices for group",
         "parameters": [
           {
@@ -833,9 +795,7 @@
     },
     "/api/practices/{practiceId}": {
       "delete": {
-        "tags": [
-          "Practices"
-        ],
+        "tags": ["Practices"],
         "summary": "Deletes practice",
         "parameters": [
           {
@@ -874,9 +834,7 @@
     },
     "/api/schedulechange/additions": {
       "post": {
-        "tags": [
-          "ScheduleChange"
-        ],
+        "tags": ["ScheduleChange"],
         "summary": "Adds new schedule addition",
         "requestBody": {
           "content": {
@@ -923,9 +881,7 @@
     },
     "/api/schedulechange/additions/{groupId}": {
       "get": {
-        "tags": [
-          "ScheduleChange"
-        ],
+        "tags": ["ScheduleChange"],
         "summary": "Gets all schedule additions for group",
         "parameters": [
           {
@@ -964,9 +920,7 @@
     },
     "/api/schedulechange/additions/{scheduleAddId}": {
       "delete": {
-        "tags": [
-          "ScheduleChange"
-        ],
+        "tags": ["ScheduleChange"],
         "summary": "Deletes schedule addition",
         "parameters": [
           {
@@ -1005,9 +959,7 @@
     },
     "/api/schedulechange/move": {
       "post": {
-        "tags": [
-          "ScheduleChange"
-        ],
+        "tags": ["ScheduleChange"],
         "summary": "Adds new schedule move",
         "requestBody": {
           "content": {
@@ -1054,9 +1006,7 @@
     },
     "/api/schedulechange/move/{groupId}": {
       "get": {
-        "tags": [
-          "ScheduleChange"
-        ],
+        "tags": ["ScheduleChange"],
         "summary": "Gets all schedule moves for group",
         "parameters": [
           {
@@ -1095,9 +1045,7 @@
     },
     "/api/schedulechange/move/{scheduleMoveId}": {
       "delete": {
-        "tags": [
-          "ScheduleChange"
-        ],
+        "tags": ["ScheduleChange"],
         "summary": "Deletes schedule move",
         "parameters": [
           {
@@ -1136,9 +1084,7 @@
     },
     "/api/schedules/week": {
       "get": {
-        "tags": [
-          "Schedules"
-        ],
+        "tags": ["Schedules"],
         "summary": "Gets current week",
         "responses": {
           "200": {
@@ -1166,9 +1112,7 @@
     },
     "/api/schedules/groups": {
       "get": {
-        "tags": [
-          "Schedules"
-        ],
+        "tags": ["Schedules"],
         "summary": "Gets schedule for users subscribed groups",
         "parameters": [
           {
@@ -1209,9 +1153,7 @@
     },
     "/api/schedules/teachers": {
       "get": {
-        "tags": [
-          "Schedules"
-        ],
+        "tags": ["Schedules"],
         "summary": "Gets schedule for user subscribed teachers",
         "parameters": [
           {
@@ -1252,9 +1194,7 @@
     },
     "/api/schedules/admin/{groupNumber}": {
       "get": {
-        "tags": [
-          "Schedules"
-        ],
+        "tags": ["Schedules"],
         "summary": "Gets schedule for admin",
         "parameters": [
           {
@@ -1292,9 +1232,7 @@
     },
     "/api/schedules": {
       "post": {
-        "tags": [
-          "Schedules"
-        ],
+        "tags": ["Schedules"],
         "summary": "Adds schedule",
         "requestBody": {
           "content": {
@@ -1341,9 +1279,7 @@
     },
     "/api/schedules/{scheduleId}": {
       "delete": {
-        "tags": [
-          "Schedules"
-        ],
+        "tags": ["Schedules"],
         "summary": "Deletes schedule",
         "parameters": [
           {
@@ -1382,9 +1318,7 @@
     },
     "/api/schedules/works": {
       "get": {
-        "tags": [
-          "Schedules"
-        ],
+        "tags": ["Schedules"],
         "summary": "Get works schedule",
         "parameters": [
           {
@@ -1438,9 +1372,7 @@
     },
     "/api/schedules/actuality": {
       "get": {
-        "tags": [
-          "Schedules"
-        ],
+        "tags": ["Schedules"],
         "summary": "Gets the schedule actuality",
         "parameters": [
           {
@@ -1478,9 +1410,7 @@
     },
     "/api/schedules/groups/{groupId}/date": {
       "get": {
-        "tags": [
-          "Schedules"
-        ],
+        "tags": ["Schedules"],
         "summary": "Get group schedule for date",
         "parameters": [
           {
@@ -1530,9 +1460,7 @@
     },
     "/api/schedules/teachers/{teacherId}/date": {
       "get": {
-        "tags": [
-          "Schedules"
-        ],
+        "tags": ["Schedules"],
         "summary": "Get teacher schedule for date",
         "parameters": [
           {
@@ -1582,9 +1510,7 @@
     },
     "/api/teachers": {
       "get": {
-        "tags": [
-          "Teachers"
-        ],
+        "tags": ["Teachers"],
         "summary": "Gets all teachers",
         "responses": {
           "200": {
@@ -1610,9 +1536,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Teachers"
-        ],
+        "tags": ["Teachers"],
         "summary": "Adds new teacher",
         "requestBody": {
           "content": {
@@ -1657,9 +1581,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Teachers"
-        ],
+        "tags": ["Teachers"],
         "summary": "Updates teacher",
         "requestBody": {
           "content": {
@@ -1706,9 +1628,7 @@
     },
     "/api/updates": {
       "get": {
-        "tags": [
-          "Updates"
-        ],
+        "tags": ["Updates"],
         "summary": "Get Current version",
         "responses": {
           "200": {
@@ -1736,9 +1656,7 @@
     },
     "/api/users": {
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Creates new user",
         "requestBody": {
           "content": {
@@ -1783,9 +1701,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Update user",
         "requestBody": {
           "content": {
@@ -1832,9 +1748,7 @@
     },
     "/api/users/{deviceId}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Gets user",
         "parameters": [
           {
@@ -1872,9 +1786,7 @@
     },
     "/api/users/{deviceId}/skipped": {
       "put": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Sync skipped lessons",
         "parameters": [
           {
@@ -1938,9 +1850,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get skipped lessons",
         "parameters": [
           {
@@ -1978,9 +1888,7 @@
     },
     "/api/users/{deviceId}/tasks": {
       "put": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Sync lesson tasks",
         "parameters": [
           {
@@ -2044,9 +1952,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get lesson tasks",
         "parameters": [
           {
@@ -2084,9 +1990,7 @@
     },
     "/api/works": {
       "post": {
-        "tags": [
-          "Works"
-        ],
+        "tags": ["Works"],
         "summary": "Adds new work for group",
         "requestBody": {
           "content": {
@@ -2133,9 +2037,7 @@
     },
     "/api/works/{groupId}": {
       "get": {
-        "tags": [
-          "Works"
-        ],
+        "tags": ["Works"],
         "summary": "Gets all works for group",
         "parameters": [
           {
@@ -2174,9 +2076,7 @@
     },
     "/api/works/{groupId}/{lessonId}": {
       "delete": {
-        "tags": [
-          "Works"
-        ],
+        "tags": ["Works"],
         "summary": "Deletes group work",
         "parameters": [
           {
@@ -2222,9 +2122,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Works"
-        ],
+        "tags": ["Works"],
         "summary": "Calculates group ktp",
         "parameters": [
           {
@@ -2489,9 +2387,7 @@
         "additionalProperties": false
       },
       "AddUserDto": {
-        "required": [
-          "deviceId"
-        ],
+        "required": ["deviceId"],
         "type": "object",
         "properties": {
           "deviceId": {
@@ -2597,11 +2493,7 @@
         "type": "string"
       },
       "EducationTypes": {
-        "enum": [
-          "Sso",
-          "Vo",
-          "Zaoch"
-        ],
+        "enum": ["Sso", "Vo", "Zaoch"],
         "type": "string"
       },
       "Exam": {
@@ -3044,9 +2936,7 @@
         "additionalProperties": false
       },
       "Group": {
-        "required": [
-          "groupNumber"
-        ],
+        "required": ["groupNumber"],
         "type": "object",
         "properties": {
           "id": {
@@ -3391,11 +3281,7 @@
         "additionalProperties": false
       },
       "LessonType": {
-        "enum": [
-          "Lecture",
-          "Practical",
-          "Laboratory"
-        ],
+        "enum": ["Lecture", "Practical", "Laboratory"],
         "type": "string"
       },
       "Practice": {
@@ -4001,12 +3887,7 @@
         "additionalProperties": false
       },
       "WorkTypeEnum": {
-        "enum": [
-          "Laboratory",
-          "Practical",
-          "Okr",
-          "DifferentiatedTest"
-        ],
+        "enum": ["Laboratory", "Practical", "Okr", "DifferentiatedTest"],
         "type": "string"
       }
     }

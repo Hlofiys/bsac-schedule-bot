@@ -1,1 +1,1 @@
-export * from './ScheduleApi.js'
+export * from "./ScheduleApi.js";

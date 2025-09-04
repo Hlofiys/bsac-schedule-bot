@@ -1,7 +1,11 @@
 import { Composer } from "grammy";
 import { EnhancedContext } from "../../../utils/context.js";
 import { UserRole, UserState } from "../../../schemas/User.js";
-import { callbackIdParse, inlineKeyboards, replyKeyboards } from "../../../utils/keyboards.js";
+import {
+  callbackIdParse,
+  inlineKeyboards,
+  replyKeyboards,
+} from "../../../utils/keyboards.js";
 import { InlineKeyboard } from "grammy";
 
 export const settingsMenuHandler = new Composer<EnhancedContext>();
@@ -9,18 +13,19 @@ export const settingsMenuHandler = new Composer<EnhancedContext>();
 settingsMenuHandler.callbackQuery(/settings.*/, async (ctx) => {
   const match = ctx.match;
   if (!match) return;
-  
+
   // If match is an array (from regex), get the full match string
   const matchString = Array.isArray(match) ? match[0] : match;
   const [, ...args] = callbackIdParse(matchString);
   const [settingName, chosenRole] = args;
-  
+
   if (!ctx.user) return;
 
   switch (settingName) {
-    case 'role': {
+    case "role": {
       if (chosenRole?.length) {
-        const role = chosenRole === 'teacher' ? UserRole.Teacher : UserRole.Student;
+        const role =
+          chosenRole === "teacher" ? UserRole.Teacher : UserRole.Student;
         ctx.user.role = role;
         ctx.user.state = UserState.AskingFollowingEntity;
         // Clear selections
@@ -32,24 +37,25 @@ settingsMenuHandler.callbackQuery(/settings.*/, async (ctx) => {
         ctx.user.choosing_groups = [];
         ctx.user.choosing_teachers = [];
         await ctx.user.save();
-        
-        const askingText = role === UserRole.Student
-          ? 'Теперь напиши свою группу'
-          : 'Теперь напиши инициалы преподавателя (или их часть)';
-        
+
+        const askingText =
+          role === UserRole.Student
+            ? "Теперь напиши свою группу"
+            : "Теперь напиши инициалы преподавателя (или их часть)";
+
         // Remove keyboard
-        await ctx.reply('🤨', {
-          reply_markup: new InlineKeyboard()
+        await ctx.reply("🤨", {
+          reply_markup: new InlineKeyboard(),
         });
-        
-        return await ctx.editMessageText('🦫 ' + askingText);
+
+        return await ctx.editMessageText("🦫 " + askingText);
       }
-      
-      return await ctx.editMessageText('🤸 Выбери новую роль', {
-        reply_markup: inlineKeyboards.chooseRole
+
+      return await ctx.editMessageText("🤸 Выбери новую роль", {
+        reply_markup: inlineKeyboards.chooseRole,
       });
     }
-    case 'change_following': {
+    case "change_following": {
       ctx.user.state = UserState.AskingFollowingEntity;
       // Clear previous selections
       ctx.user.selectedGroup = undefined;
@@ -60,26 +66,28 @@ settingsMenuHandler.callbackQuery(/settings.*/, async (ctx) => {
       ctx.user.choosing_groups = [];
       ctx.user.choosing_teachers = [];
       await ctx.user.save();
-      
+
       const isStudent = ctx.user.role !== UserRole.Teacher;
       const askingText = isStudent
-        ? 'Напиши номер группы'
-        : 'Напиши инициалы преподавателя или их часть';
-      
-      return await ctx.editMessageText('🤺 ' + askingText);
+        ? "Напиши номер группы"
+        : "Напиши инициалы преподавателя или их часть";
+
+      return await ctx.editMessageText("🤺 " + askingText);
     }
-    case 'change_subgroup': {
+    case "change_subgroup": {
       if (ctx.user.role !== UserRole.Teacher && ctx.user.selectedGroup) {
         ctx.user.state = UserState.AskingSubgroup;
         await ctx.user.save();
-        
-        await ctx.editMessageText('🔢 Выбери свою подгруппу:');
-        return await ctx.reply('Выбери подгруппу:', {
-          reply_markup: replyKeyboards[UserState.AskingSubgroup]
+
+        await ctx.editMessageText("🔢 Выбери свою подгруппу:");
+        return await ctx.reply("Выбери подгруппу:", {
+          reply_markup: replyKeyboards[UserState.AskingSubgroup],
         });
       }
-      
-      return await ctx.editMessageText('❌ Ошибка: подгруппу можно менять только студентам с выбранной группой.');
+
+      return await ctx.editMessageText(
+        "❌ Ошибка: подгруппу можно менять только студентам с выбранной группой.",
+      );
     }
- }
+  }
 });

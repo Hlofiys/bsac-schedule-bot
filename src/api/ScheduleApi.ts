@@ -6,7 +6,8 @@ export type Group = components["schemas"]["Group"];
 export type Teacher = components["schemas"]["Teacher"];
 export type Lesson = components["schemas"]["Lesson"];
 export type LessonSchedule = components["schemas"]["LessonScheduleWithWork"];
-export type GetScheduleForOneGroup = components["schemas"]["GetScheduleForOneGroup"];
+export type GetScheduleForOneGroup =
+  components["schemas"]["GetScheduleForOneGroup"];
 
 export interface GetGroupsOptions {
   search?: string;
@@ -31,21 +32,25 @@ export class ScheduleApi extends BaseApi {
 
   async getGroups(options?: GetGroupsOptions): Promise<Group[]> {
     const queryString = this.buildQueryString(options || {});
-    const endpoint = `/api/groups${queryString ? `?${queryString}` : ''}`;
+    const endpoint = `/api/groups${queryString ? `?${queryString}` : ""}`;
     return this.request<Group[]>(endpoint);
   }
 
   async getTeachers(options?: GetTeachersOptions): Promise<Teacher[]> {
     const queryString = this.buildQueryString(options || {});
-    const endpoint = `/api/teachers${queryString ? `?${queryString}` : ''}`;
+    const endpoint = `/api/teachers${queryString ? `?${queryString}` : ""}`;
     return this.request<Teacher[]>(endpoint);
   }
 
-  async getScheduleForDates(options: GetScheduleForDatesOptions): Promise<GetScheduleForOneGroup[]> {
+  async getScheduleForDates(
+    options: GetScheduleForDatesOptions,
+  ): Promise<GetScheduleForOneGroup[]> {
     const { groupId, teacherId, dates } = options;
-    const datesQuery = dates.map(d => `dates=${encodeURIComponent(d)}`).join('&');
+    const datesQuery = dates
+      .map((d) => `dates=${encodeURIComponent(d)}`)
+      .join("&");
 
-    let endpoint = '';
+    let endpoint = "";
     if (groupId) {
       endpoint = `/api/schedules/groups/${groupId}/date?${datesQuery}`;
     } else if (teacherId) {
