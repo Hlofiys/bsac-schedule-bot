@@ -1,7 +1,0 @@
-dist/
-node_modules/
-*.min.js
-coverage/
-.env
-.env.*
-!.env.example
