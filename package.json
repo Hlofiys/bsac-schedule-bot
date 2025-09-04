@@ -6,8 +6,8 @@
   "type": "module",
   "module": "src/index.ts",
   "scripts": {
-    "build": "node build.mjs",
-    "start": "node dist/index.js",
+    "start": "bun run dist/index.js",
+    "build": "bun build --target=bun src/index.js --outfile=dist/index.js",
     "dev": "tsx src/index.ts",
     "validate": "ts-node src/scripts/validateEnv.ts",
     "test:api": "ts-node src/test/apiTest.ts",

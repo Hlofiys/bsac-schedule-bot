@@ -3,10 +3,11 @@ import { EnhancedContext } from "../utils/context";
 import { UserRole, UserState } from "../schemas/User";
 import { replyKeyboards, batchButtons, callbackIdBuild } from "../utils/keyboards";
 import { InlineKeyboard } from "grammy";
+import { ScheduleApi } from "../api/ScheduleApi";
 
 export const chatHandler = new Composer<EnhancedContext>();
 
-chatHandler.on("message:text", async (ctx) => {
+chatHandler.on("message:text", async (ctx, next) => {
   if (!ctx.user) return;
 
   // Handle new user setup
@@ -28,7 +29,7 @@ chatHandler.on("message:text", async (ctx) => {
     return;
   }
 
-  // Handle entity selection states
+  // Only handle specific states, let other messages pass through to hears commands
   if (ctx.user.state === UserState.AskingFollowingEntity) {
     const searchText = ctx.message.text;
     
@@ -41,34 +42,72 @@ chatHandler.on("message:text", async (ctx) => {
     if (isStudent) {
       // Handle group search
       try {
-        // For now, create a mock group selection
-        // In real implementation, you would call the API to search groups
-        const mockGroups = [
-          { id: searchText, name: searchText },
-          { id: searchText + "А", name: searchText + "А" },
-          { id: searchText + "Б", name: searchText + "Б" }
-        ];
+        const scheduleApi = new ScheduleApi(process.env.API_BASE_URL!);
+        // Try both with and without search parameter to see if API search works
+        const allGroups = await scheduleApi.getGroups({ limit: 100 });
+        
+        // Filter groups client-side to ensure proper matching
+        const searchLower = searchText.toLowerCase();
+        let groups = allGroups.filter(g => 
+          g.groupNumber?.toLowerCase().includes(searchLower)
+        );
 
-        if (mockGroups.length === 0) {
+        // Sort by relevance: exact matches first, then starts with, then contains
+        groups.sort((a, b) => {
+          const aGroup = a.groupNumber?.toLowerCase() || '';
+          const bGroup = b.groupNumber?.toLowerCase() || '';
+          
+          // Exact match gets highest priority
+          if (aGroup === searchLower) return -1;
+          if (bGroup === searchLower) return 1;
+          
+          // Starts with gets second priority
+          if (aGroup.startsWith(searchLower) && !bGroup.startsWith(searchLower)) return -1;
+          if (bGroup.startsWith(searchLower) && !aGroup.startsWith(searchLower)) return 1;
+          
+          // Otherwise alphabetical
+          return aGroup.localeCompare(bGroup);
+        });
+
+        // Limit results to top 10 most relevant
+        groups = groups.slice(0, 10);
+        
+        if (groups.length === 0) {
           return await ctx.reply("🩼 Таких групп я не видал. Попробуй другой номер");
         }
 
-        ctx.user.choosing_groups = mockGroups.map(g => ({ id: parseInt(g.id) || 0, groupNumber: g.name }));
+        // If only one group found, select it automatically
+        if (groups.length === 1) {
+          const group = groups[0];
+          ctx.user.selectedGroup = group.id?.toString() || searchText;
+          ctx.user.choosing_groups = [];
+          ctx.user.choosing_teachers = [];
+          ctx.user.selectedTeacher = undefined;
+          ctx.user.state = UserState.AskingSubgroup;
+          await ctx.user.save();
+          
+          await ctx.reply(`🫔 Выбрана группа *${group.groupNumber}*`, { parse_mode: "Markdown" });
+          return await ctx.reply('🔢 Теперь выбери свою подгруппу:', {
+            reply_markup: replyKeyboards[UserState.AskingSubgroup]
+          });
+        }
+
+        // Multiple groups found, show selection
+        ctx.user.choosing_groups = groups.map(g => ({ 
+          id: g.id || 0, 
+          groupNumber: g.groupNumber || searchText 
+        }));
         ctx.user.state = UserState.ChoosingFollowingEntity;
         await ctx.user.save();
 
         const buttons = batchButtons(
-          mockGroups.map(g => 
-            InlineKeyboard.text(g.name, callbackIdBuild("select_entity", [g.id]))
+          groups.map(g => 
+            InlineKeyboard.text(g.groupNumber || 'Группа', callbackIdBuild("select_entity", [g.id?.toString() || searchText]))
           )
         );
 
-        await ctx.reply("👞 Выбери группу", {
+        return await ctx.reply("👞 Найдено несколько групп, выбери нужную:", {
           reply_markup: buttons
-        });
-
-        await ctx.reply("🤨", {
-          reply_markup: replyKeyboards[ctx.user.state]
         });
 
       } catch (error) {
@@ -78,25 +117,20 @@ chatHandler.on("message:text", async (ctx) => {
     } else {
       // Handle teacher search
       try {
-        // For now, create a mock teacher selection
-        // In real implementation, you would call the API to search teachers
-        const mockTeachers = [
-          searchText,
-          searchText + " И.И.",
-          searchText + " П.П."
-        ];
+        const scheduleApi = new ScheduleApi(process.env.API_BASE_URL!);
+        const teachers = await scheduleApi.getTeachers({ search: searchText, limit: 10 });
 
-        if (mockTeachers.length === 0) {
+        if (teachers.length === 0) {
           return await ctx.reply("🫐 Таких я не видал. Попробуй написать другого преподавателя");
         }
 
-        ctx.user.choosing_teachers = mockTeachers;
+        ctx.user.choosing_teachers = teachers.map(t => t.fio || searchText);
         ctx.user.state = UserState.ChoosingFollowingEntity;
         await ctx.user.save();
 
         const buttons = batchButtons(
-          mockTeachers.map(t => 
-            InlineKeyboard.text(t, callbackIdBuild("select_entity", [t]))
+          teachers.map(t => 
+            InlineKeyboard.text(t.fio || 'Преподаватель', callbackIdBuild("select_entity", [t.fio || searchText]))
           )
         );
 
@@ -113,6 +147,7 @@ chatHandler.on("message:text", async (ctx) => {
         return await ctx.reply("🫐 Поиск преподавателей временно недоступен");
       }
     }
+    return;
   }
 
   // Handle subgroup selection
@@ -137,6 +172,7 @@ chatHandler.on("message:text", async (ctx) => {
     } else {
       await ctx.reply("🔢 Пожалуйста, выберите 1 или 2");
     }
+    return;
   }
 
   // Handle week group/teacher search
@@ -173,6 +209,7 @@ chatHandler.on("message:text", async (ctx) => {
     await ctx.reply("🍍 Выбери группу", {
       reply_markup: buttons
     });
+    return;
   }
 
   if (ctx.user.state === UserState.AskingWeekTeacher) {
@@ -206,5 +243,9 @@ chatHandler.on("message:text", async (ctx) => {
     await ctx.reply("🍍 Выбери преподавателя", {
       reply_markup: buttons
     });
+    return;
   }
+
+  // Let other messages pass through to hears commands
+  await next();
 });

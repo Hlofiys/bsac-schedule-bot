@@ -6,6 +6,8 @@ import { EnhancedContext, CommandUtils } from "./utils";
 import { ScheduleApi } from "./api";
 import { hearsCommands } from "./commands/hears";
 import { slashCommands } from "./commands/slash";
+import { actionsHandler } from "./commands/actions";
+import { chatHandler } from "./commands/chatHandler";
 
 // Load environment variables
 dotenv.config();
@@ -63,6 +65,12 @@ bot.use(async (ctx, next) => {
 
   return next();
 });
+
+// Register action handlers (callback queries)
+bot.use(actionsHandler);
+
+// Register chat handler (text messages)
+bot.use(chatHandler);
 
 // Register hears commands
 for (const command of registeredHearsCommands) {
