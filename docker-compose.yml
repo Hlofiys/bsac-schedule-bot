@@ -1,16 +1,39 @@
 version: '3.8'
 
 services:
+  mongodb:
+    image: mongo:latest
+    container_name: bsac-mongodb
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongo
+      - MONGO_INITDB_ROOT_PASSWORD=mongo
+      - MONGO_INITDB_DATABASE=bsac-bot
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - bsac-network
+
   bsac-schedule-bot:
     image: hlofiys/bsac-schedule-bot:master
     container_name: bsac-schedule-bot
     restart: unless-stopped
+    depends_on:
+      - mongodb
     volumes:
       - sessions:/app/sessions
     environment:
       - NODE_ENV=production
       - BOT_TOKEN=${BOT_TOKEN}
       - API_BASE_URL=${API_BASE_URL}
+      - MONGODB_URI=mongodb://mongo:mongo@mongodb:27017/bsac-bot?authSource=admin
+    networks:
+      - bsac-network
 
 volumes:
   sessions:
+  mongodb_data:
+
+networks:
+  bsac-network:
+    driver: bridge

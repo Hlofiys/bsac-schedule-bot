@@ -1,7 +1,7 @@
 import { Composer } from "grammy";
 import { EnhancedContext } from "../utils/context";
 import { UserRole, UserState } from "../schemas/User";
-import { replyKeyboards, batchButtons, callbackIdBuild } from "../utils/keyboards";
+import { replyKeyboards, batchButtons, callbackIdBuild, inlineKeyboards } from "../utils/keyboards";
 import { InlineKeyboard } from "grammy";
 import { ScheduleApi } from "../api/ScheduleApi";
 
@@ -13,17 +13,10 @@ chatHandler.on("message:text", async (ctx, next) => {
   // Handle new user setup
   if (ctx.newUser) {
     await ctx.reply(
-      "👋 Добро пожаловать в бот расписания БГЭУ!\n\n" +
+      "👋 Добро пожаловать в бот расписания БГАС!\n\n" +
       "Для начала работы выберите свою роль:",
       {
-        reply_markup: {
-          inline_keyboard: [
-            [
-              { text: "👨‍🎓 Студент", callback_data: "role:student" },
-              { text: "👨‍🏫 Преподаватель", callback_data: "role:teacher" }
-            ]
-          ]
-        }
+        reply_markup: inlineKeyboards.chooseRole
       }
     );
     return;

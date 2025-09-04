@@ -49,6 +49,8 @@ const userSchema = new mongoose.Schema<User>({
   // Temporary selection arrays for multi-step selection
   choosing_groups: [{ id: Number, groupNumber: String }],
   choosing_teachers: [String]
+}, {
+  collection: 'users' // Explicitly set collection name
 });
 
 export const User = mongoose.model<User>("User", userSchema);

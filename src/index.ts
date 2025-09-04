@@ -21,7 +21,9 @@ requiredEnvVars.forEach(key => {
 });
 
 // Connect to MongoDB
-await mongoose.connect(process.env.MONGODB_URI!);
+await mongoose.connect(process.env.MONGODB_URI!, {
+  dbName: 'bsac-bot' // Explicitly set database name
+});
 
 // Initialize bot and API
 const bot = new Bot<EnhancedContext>(process.env.BOT_TOKEN!);
