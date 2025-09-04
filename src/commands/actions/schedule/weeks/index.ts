@@ -15,7 +15,7 @@ const scheduleApi = new ScheduleApi(process.env.API_BASE_URL!);
 // Note: This is inefficient as it fetches all entities, but the current API doesn't support fetching a single one by ID.
 async function findEntityName(
   entityId: string,
-  isGroup: boolean,
+  isGroup: boolean
 ): Promise<string | undefined> {
   if (isGroup) {
     const groups = await scheduleApi.getGroups();
@@ -112,14 +112,14 @@ weeksHandler.callbackQuery(/^(group_week|teacher_week)/, async (ctx) => {
       if (!scheduleForWeek || scheduleForWeek.length === 0) {
         await ctx.answerCallbackQuery();
         return await ctx.editMessageText(
-          `🏖️ Расписания на неделю для ${entityName} нету`,
+          `🏖️ Расписания на неделю для ${entityName} нету`
         );
       }
 
       const scheduleMessage = formatWeekSchedule(
         scheduleForWeek,
         entityName,
-        ctx.user.subgroup,
+        ctx.user.subgroup
       );
       await ctx.answerCallbackQuery();
       await ctx.editMessageText(scheduleMessage, {
@@ -138,7 +138,7 @@ weeksHandler.callbackQuery(/^(group_week|teacher_week)/, async (ctx) => {
 
 function generateWeekButtons(
   entityId: string,
-  isGroup: boolean,
+  isGroup: boolean
 ): InlineKeyboard {
   const today = new Date();
   const currentWeekStart = new Date(today);
@@ -163,7 +163,7 @@ function generateWeekButtons(
     buttons
       .text(
         weekLabel,
-        callbackIdBuild(action, [entityId, dateToCallback(weekStart)]),
+        callbackIdBuild(action, [entityId, dateToCallback(weekStart)])
       )
       .row();
   }
@@ -173,12 +173,12 @@ function generateWeekButtons(
 function formatWeekSchedule(
   scheduleForWeek: GetScheduleForOneGroup[],
   entityName: string,
-  subgroup?: number,
+  subgroup?: number
 ): string {
   let message = `🎯 <b>Расписание на неделю для ${entityName}</b>\n\n`;
 
   const sortedDays = scheduleForWeek.sort(
-    (a, b) => new Date(a.date!).getTime() - new Date(b.date!).getTime(),
+    (a, b) => new Date(a.date!).getTime() - new Date(b.date!).getTime()
   );
 
   for (const day of sortedDays) {
@@ -197,14 +197,14 @@ function formatWeekSchedule(
           subgroup &&
           lesson.lessonSchedule?.subGroup &&
           lesson.lessonSchedule.subGroup !== subgroup
-        ),
+        )
     );
 
     lessons
       .sort(
         (a, b) =>
           (a.lessonSchedule?.lessonNumber || 0) -
-          (b.lessonSchedule?.lessonNumber || 0),
+          (b.lessonSchedule?.lessonNumber || 0)
       )
       .forEach((lessonWithWork) => {
         const lesson = lessonWithWork.lessonSchedule;

@@ -36,10 +36,10 @@ const commandUtils: CommandUtils = {
 
 // Initialize commands
 const registeredHearsCommands = hearsCommands.map(
-  (CommandClass) => new CommandClass(commandUtils),
+  (CommandClass) => new CommandClass(commandUtils)
 );
 const registeredSlashCommands = slashCommands.map(
-  (CommandClass) => new CommandClass(commandUtils),
+  (CommandClass) => new CommandClass(commandUtils)
 );
 
 // No session middleware needed - using MongoDB for persistence

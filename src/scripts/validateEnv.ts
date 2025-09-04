@@ -12,7 +12,7 @@ if (!botToken) {
   process.exit(1);
 } else if (botToken === "your_telegram_bot_token_here") {
   console.error(
-    "❌ BOT_TOKEN is still set to the placeholder value. Please update it with your actual bot token.",
+    "❌ BOT_TOKEN is still set to the placeholder value. Please update it with your actual bot token."
   );
   process.exit(1);
 } else {
@@ -26,7 +26,7 @@ if (!apiBaseURL) {
   process.exit(1);
 } else if (apiBaseURL === "https://bsac-api.example.com") {
   console.error(
-    "❌ API_BASE_URL is still set to the placeholder value. Please update it with the actual API URL.",
+    "❌ API_BASE_URL is still set to the placeholder value. Please update it with the actual API URL."
   );
   process.exit(1);
 } else {

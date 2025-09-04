@@ -20,7 +20,7 @@ export class StartCommand extends AbstractSlashCommand {
           "Для начала работы выберите свою роль:",
         {
           reply_markup: inlineKeyboards.chooseRole,
-        },
+        }
       );
     } else {
       ctx.user.state = UserState.MainMenu;
@@ -30,7 +30,7 @@ export class StartCommand extends AbstractSlashCommand {
         "🎓 Добро пожаловать обратно!\n\n" + "Выберите действие:",
         {
           reply_markup: replyKeyboards[UserState.MainMenu],
-        },
+        }
       );
     }
   }

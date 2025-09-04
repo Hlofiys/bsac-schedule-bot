@@ -30,7 +30,7 @@ export async function getGroupSchedule(groupId: number, dates?: string[]) {
         path: { groupId },
         query: { dates },
       },
-    },
+    }
   );
   if (error) {
     throw new Error(`Failed to fetch group schedule: ${JSON.stringify(error)}`);
@@ -46,11 +46,11 @@ export async function getTeacherSchedule(teacherId: number, dates?: string[]) {
         path: { teacherId },
         query: { dates },
       },
-    },
+    }
   );
   if (error) {
     throw new Error(
-      `Failed to fetch teacher schedule: ${JSON.stringify(error)}`,
+      `Failed to fetch teacher schedule: ${JSON.stringify(error)}`
     );
   }
   return data?.data || [];

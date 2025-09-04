@@ -53,7 +53,7 @@ const userSchema = new mongoose.Schema<User>(
   },
   {
     collection: "users", // Explicitly set collection name
-  },
+  }
 );
 
 export const User = mongoose.model<User>("User", userSchema);

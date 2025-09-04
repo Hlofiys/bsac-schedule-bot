@@ -21,7 +21,7 @@ export class SettingsCommand extends AbstractHearsCommand {
       .text("Сменить роль", callbackIdBuild("settings", ["role"]))
       .text(
         isStudent ? "Сменить группу" : "Сменить преподавателя",
-        callbackIdBuild("settings", ["change_following"]),
+        callbackIdBuild("settings", ["change_following"])
       );
 
     // Add subgroup option for students
@@ -30,7 +30,7 @@ export class SettingsCommand extends AbstractHearsCommand {
         .row()
         .text(
           "Сменить подгруппу",
-          callbackIdBuild("settings", ["change_subgroup"]),
+          callbackIdBuild("settings", ["change_subgroup"])
         );
     }
 

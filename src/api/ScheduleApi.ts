@@ -43,7 +43,7 @@ export class ScheduleApi extends BaseApi {
   }
 
   async getScheduleForDates(
-    options: GetScheduleForDatesOptions,
+    options: GetScheduleForDatesOptions
   ): Promise<GetScheduleForOneGroup[]> {
     const { groupId, teacherId, dates } = options;
     const datesQuery = dates

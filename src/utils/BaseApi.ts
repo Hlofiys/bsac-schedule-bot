@@ -7,7 +7,7 @@ export class BaseApi {
 
   protected async request<T = unknown>(
     endpoint: string,
-    options?: RequestInit,
+    options?: RequestInit
   ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
 

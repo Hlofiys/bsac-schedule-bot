@@ -62,14 +62,14 @@ export const inlineKeyboards = {
     .text("Дисциплина", callbackIdBuild("subject_schedule")),
   classroomScheduleType: new InlineKeyboard().text(
     "Свободные аудитории",
-    callbackIdBuild("classroom_schedule", [ClassroomScheduleType.Free]),
+    callbackIdBuild("classroom_schedule", [ClassroomScheduleType.Free])
   ),
 };
 
 export const batchButtons = (
   buttons: InlineKeyboardButton[],
   rowSize = 3,
-  extraRows: InlineKeyboardButton[][] = [],
+  extraRows: InlineKeyboardButton[][] = []
 ): InlineKeyboard => {
   const keyboard = new InlineKeyboard();
 

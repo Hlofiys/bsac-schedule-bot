@@ -86,7 +86,7 @@ settingsMenuHandler.callbackQuery(/settings.*/, async (ctx) => {
       }
 
       return await ctx.editMessageText(
-        "❌ Ошибка: подгруппу можно менять только студентам с выбранной группой.",
+        "❌ Ошибка: подгруппу можно менять только студентам с выбранной группой."
       );
     }
   }

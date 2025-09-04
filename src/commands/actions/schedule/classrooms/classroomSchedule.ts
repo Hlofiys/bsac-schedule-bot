@@ -20,7 +20,7 @@ classroomScheduleHandler.callbackQuery(
   async (ctx) => {
     // For now, we'll just show a simple message about free classrooms
     await ctx.editMessageText(
-      "🪙 Свободные аудитории:\n\nК сожалению, эта функция пока не реализована в BSAC боте.",
+      "🪙 Свободные аудитории:\n\nК сожалению, эта функция пока не реализована в BSAC боте."
     );
-  },
+  }
 );

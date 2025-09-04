@@ -46,7 +46,7 @@ export class WeekScheduleCommand extends AbstractHearsCommand {
               callbackIdBuild("group_week", [
                 ctx.user.selectedGroup,
                 dateToCallback(weekStart),
-              ]),
+              ])
             )
             .row();
         }
@@ -77,7 +77,7 @@ export class WeekScheduleCommand extends AbstractHearsCommand {
               callbackIdBuild("teacher_week", [
                 teacherId,
                 dateToCallback(weekStart),
-              ]),
+              ])
             )
             .row();
         }
@@ -87,14 +87,14 @@ export class WeekScheduleCommand extends AbstractHearsCommand {
         });
       } else {
         await ctx.reply(
-          "🤔 Пожалуйста, сначала выберите группу или преподавателя в настройках.",
+          "🤔 Пожалуйста, сначала выберите группу или преподавателя в настройках."
         );
         return;
       }
     } catch (error) {
       console.error("Error in week schedule handler:", error);
       await ctx.reply(
-        "❌ Произошла ошибка при получении расписания. Пожалуйста, попробуйте позже.",
+        "❌ Произошла ошибка при получении расписания. Пожалуйста, попробуйте позже."
       );
     }
   }

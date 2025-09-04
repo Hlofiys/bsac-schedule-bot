@@ -38,7 +38,7 @@ export class DayScheduleCommand extends AbstractHearsCommand {
         });
       } else {
         await ctx.reply(
-          "❗ Сначала выберите группу или преподавателя в настройках",
+          "❗ Сначала выберите группу или преподавателя в настройках"
         );
         return;
       }
@@ -53,13 +53,13 @@ export class DayScheduleCommand extends AbstractHearsCommand {
       const scheduleText = this.formatSchedule(
         lessons,
         isToday ? "сегодня" : "завтра",
-        ctx.user.subgroup,
+        ctx.user.subgroup
       );
       await ctx.reply(scheduleText, { parse_mode: "HTML" });
     } catch (error) {
       console.error("Error fetching day schedule:", error);
       await ctx.reply(
-        "❌ Произошла ошибка при получении расписания. Попробуйте позже.",
+        "❌ Произошла ошибка при получении расписания. Попробуйте позже."
       );
     }
   }
@@ -67,7 +67,7 @@ export class DayScheduleCommand extends AbstractHearsCommand {
   private formatSchedule(
     lessonsWithWork: LessonSchedule[],
     dayText: string,
-    subgroup?: number,
+    subgroup?: number
   ): string {
     let message = `🎯 <b>Расписание на ${dayText}</b>\n\n`;
 
@@ -77,14 +77,14 @@ export class DayScheduleCommand extends AbstractHearsCommand {
           subgroup &&
           lesson.lessonSchedule?.subGroup &&
           lesson.lessonSchedule.subGroup !== subgroup
-        ),
+        )
     );
 
     lessons
       .sort(
         (a, b) =>
           (a.lessonSchedule?.lessonNumber || 0) -
-          (b.lessonSchedule?.lessonNumber || 0),
+          (b.lessonSchedule?.lessonNumber || 0)
       )
       .forEach((lessonWithWork, index) => {
         const lesson = lessonWithWork.lessonSchedule;

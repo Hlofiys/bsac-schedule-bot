@@ -22,7 +22,7 @@ chatHandler.on("message:text", async (ctx, next) => {
         "Для начала работы выберите свою роль:",
       {
         reply_markup: inlineKeyboards.chooseRole,
-      },
+      }
     );
     return;
   }
@@ -47,7 +47,7 @@ chatHandler.on("message:text", async (ctx, next) => {
         // Filter groups client-side to ensure proper matching
         const searchLower = searchText.toLowerCase();
         let groups = allGroups.filter((g) =>
-          g.groupNumber?.toLowerCase().includes(searchLower),
+          g.groupNumber?.toLowerCase().includes(searchLower)
         );
 
         // Sort by relevance: exact matches first, then starts with, then contains
@@ -74,7 +74,7 @@ chatHandler.on("message:text", async (ctx, next) => {
 
         if (groups.length === 0) {
           return await ctx.reply(
-            "🩼 Таких групп я не видал. Попробуй другой номер",
+            "🩼 Таких групп я не видал. Попробуй другой номер"
           );
         }
 
@@ -90,7 +90,7 @@ chatHandler.on("message:text", async (ctx, next) => {
 
           await ctx.reply(
             `🫔 Выбрана группа *${group.groupNumber || searchText}*`,
-            { parse_mode: "Markdown" },
+            { parse_mode: "Markdown" }
           );
           return await ctx.reply("🔢 Теперь выбери свою подгруппу:", {
             reply_markup: replyKeyboards[UserState.AskingSubgroup],
@@ -109,11 +109,9 @@ chatHandler.on("message:text", async (ctx, next) => {
           groups.map((g) =>
             InlineKeyboard.text(
               g.groupNumber || "Группа",
-              callbackIdBuild("select_entity", [
-                g.id?.toString() || searchText,
-              ]),
-            ),
-          ),
+              callbackIdBuild("select_entity", [g.id?.toString() || searchText])
+            )
+          )
         );
 
         return await ctx.reply("👞 Найдено несколько групп, выбери нужную:", {
@@ -122,7 +120,7 @@ chatHandler.on("message:text", async (ctx, next) => {
       } catch (error) {
         console.error("Error searching groups:", error);
         return await ctx.reply(
-          "🏌️‍♂️ ГООООООЛ выбор группы пока недоступен, напиши свою группу чуть позже",
+          "🏌️‍♂️ ГООООООЛ выбор группы пока недоступен, напиши свою группу чуть позже"
         );
       }
     } else {
@@ -136,7 +134,7 @@ chatHandler.on("message:text", async (ctx, next) => {
 
         if (teachers.length === 0) {
           return await ctx.reply(
-            "🫐 Таких я не видал. Попробуй написать другого преподавателя",
+            "🫐 Таких я не видал. Попробуй написать другого преподавателя"
           );
         }
 
@@ -148,9 +146,9 @@ chatHandler.on("message:text", async (ctx, next) => {
           teachers.map((t) =>
             InlineKeyboard.text(
               t.fio || "Преподаватель",
-              callbackIdBuild("select_entity", [t.fio || searchText]),
-            ),
-          ),
+              callbackIdBuild("select_entity", [t.fio || searchText])
+            )
+          )
         );
 
         await ctx.reply("👞 Выбери преподавателя", {
@@ -206,7 +204,7 @@ chatHandler.on("message:text", async (ctx, next) => {
 
     if (mockGroups.length === 0) {
       return await ctx.reply(
-        "🥺 Такой группы не нашлось. Попробуй другой номер группы",
+        "🥺 Такой группы не нашлось. Попробуй другой номер группы"
       );
     }
 
@@ -219,9 +217,9 @@ chatHandler.on("message:text", async (ctx, next) => {
 
     const buttons = batchButtons(
       mockGroups.map((g) =>
-        InlineKeyboard.text(g.display, callbackIdBuild("group_week", [g.id])),
+        InlineKeyboard.text(g.display, callbackIdBuild("group_week", [g.id]))
       ),
-      3,
+      3
     );
 
     await ctx.reply("🍍 Выбери группу", {
@@ -242,7 +240,7 @@ chatHandler.on("message:text", async (ctx, next) => {
 
     if (mockTeachers.length === 0) {
       return await ctx.reply(
-        "🥺 Такого преподавателя не нашлось. Попробуй написать по-другому",
+        "🥺 Такого преподавателя не нашлось. Попробуй написать по-другому"
       );
     }
 
@@ -255,9 +253,9 @@ chatHandler.on("message:text", async (ctx, next) => {
 
     const buttons = batchButtons(
       mockTeachers.map((t) =>
-        InlineKeyboard.text(t, callbackIdBuild("teacher_week", [t])),
+        InlineKeyboard.text(t, callbackIdBuild("teacher_week", [t]))
       ),
-      3,
+      3
     );
 
     await ctx.reply("🍍 Выбери преподавателя", {

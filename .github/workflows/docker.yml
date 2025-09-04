@@ -6,6 +6,12 @@ on:
       - master
   release:
     types: [published]
+  workflow_run:
+    workflows: ["Lint and Format Check"]
+    types:
+      - completed
+    branches:
+      - master
 
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -15,6 +21,7 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name != 'workflow_run' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
