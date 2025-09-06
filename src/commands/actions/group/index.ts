@@ -161,19 +161,24 @@ groupSetupHandler.callbackQuery(/^group_setup:/, async (ctx) => {
   const data = ctx.callbackQuery.data!;
   const [, action, chatId] = callbackIdParse(data);
 
-  // Verify user is admin
-  const chatMember = await ctx.api.getChatMember(
-    parseInt(chatId),
-    ctx.from!.id
-  );
-  if (
-    chatMember.status !== "administrator" &&
-    chatMember.status !== "creator"
-  ) {
-    await ctx.answerCallbackQuery(
-      "❌ Только администраторы могут изменять настройки!"
+  // Verify user is admin or special developer
+  const DEVELOPER_USER_ID = parseInt(process.env.DEVELOPER_USER_ID || "0");
+  const isDeveloper = ctx.from!.id === DEVELOPER_USER_ID;
+
+  if (!isDeveloper) {
+    const chatMember = await ctx.api.getChatMember(
+      parseInt(chatId),
+      ctx.from!.id
     );
-    return;
+    if (
+      chatMember.status !== "administrator" &&
+      chatMember.status !== "creator"
+    ) {
+      await ctx.answerCallbackQuery(
+        "❌ Только администраторы могут изменять настройки!"
+      );
+      return;
+    }
   }
 
   const groupChat = await GroupChat.findOne({ chatId: parseInt(chatId) });

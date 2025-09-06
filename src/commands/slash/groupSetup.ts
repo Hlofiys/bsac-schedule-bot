@@ -18,23 +18,31 @@ export class GroupSetupCommand extends AbstractSlashCommand {
       return;
     }
 
-    // Check if user is admin
-    try {
-      const chatMember = await ctx.api.getChatMember(ctx.chat.id, ctx.from!.id);
+    // Check if user is admin or special developer
+    const DEVELOPER_USER_ID = parseInt(process.env.DEVELOPER_USER_ID || "0");
+    const isDeveloper = ctx.from!.id === DEVELOPER_USER_ID;
 
-      if (
-        chatMember.status !== "administrator" &&
-        chatMember.status !== "creator"
-      ) {
-        await ctx.reply(
-          "❌ Только администраторы группы могут настраивать бота!"
+    if (!isDeveloper) {
+      try {
+        const chatMember = await ctx.api.getChatMember(
+          ctx.chat.id,
+          ctx.from!.id
         );
+
+        if (
+          chatMember.status !== "administrator" &&
+          chatMember.status !== "creator"
+        ) {
+          await ctx.reply(
+            "❌ Только администраторы группы могут настраивать бота!"
+          );
+          return;
+        }
+      } catch (error) {
+        console.error("Error checking admin status:", error);
+        await ctx.reply("❌ Ошибка при проверке прав администратора!");
         return;
       }
-    } catch (error) {
-      console.error("Error checking admin status:", error);
-      await ctx.reply("❌ Ошибка при проверке прав администратора!");
-      return;
     }
 
     const chatId = ctx.chat.id;

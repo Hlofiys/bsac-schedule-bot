@@ -33,4 +33,9 @@ if (!apiBaseURL) {
   console.log("✅ API_BASE_URL is set correctly");
 }
 
+// Optional developer override
+if (process.env.DEVELOPER_USER_ID) {
+  console.log("🔧 Developer user ID override enabled");
+}
+
 console.log("✅ All environment variables are properly configured");

@@ -26,6 +26,7 @@ services:
       - NODE_ENV=production
       - BOT_TOKEN=${BOT_TOKEN}
       - API_BASE_URL=${API_BASE_URL}
+      - DEVELOPER_USER_ID=${DEVELOPER_USER_ID}
       - MONGODB_URI=mongodb://mongo:mongo@mongodb:27017/bsac-bot?authSource=admin
     networks:
       - bsac-network
