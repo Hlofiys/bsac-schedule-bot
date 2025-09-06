@@ -25,7 +25,10 @@ export class ScheduleScheduler {
 
     console.log("📅 Schedule scheduler started");
     console.log("🕐 Current time:", new Date().toLocaleString());
-    console.log("🌍 Timezone:", Intl.DateTimeFormat().resolvedOptions().timeZone);
+    console.log(
+      "🌍 Timezone:",
+      Intl.DateTimeFormat().resolvedOptions().timeZone
+    );
     console.log("🌍 TZ env var:", process.env.TZ);
   }
 
@@ -41,8 +44,10 @@ export class ScheduleScheduler {
     try {
       const now = new Date();
       const currentTime = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
-      
-      console.log(`🔍 Checking schedules at ${currentTime} (${now.toLocaleString()})`);
+
+      console.log(
+        `🔍 Checking schedules at ${currentTime} (${now.toLocaleString()})`
+      );
 
       // Find all active groups that should receive schedule at this time
       const groupsToNotify = await GroupChat.find({
@@ -54,15 +59,20 @@ export class ScheduleScheduler {
         ],
       });
 
-      console.log(`📊 Found ${groupsToNotify.length} groups to notify at ${currentTime}`);
-      
+      console.log(
+        `📊 Found ${groupsToNotify.length} groups to notify at ${currentTime}`
+      );
+
       if (groupsToNotify.length > 0) {
-        console.log("📋 Groups to notify:", groupsToNotify.map(g => ({ 
-          chatId: g.chatId, 
-          scheduleTime: g.scheduleTime,
-          selectedGroup: g.selectedGroup,
-          isActive: g.isActive 
-        })));
+        console.log(
+          "📋 Groups to notify:",
+          groupsToNotify.map((g) => ({
+            chatId: g.chatId,
+            scheduleTime: g.scheduleTime,
+            selectedGroup: g.selectedGroup,
+            isActive: g.isActive,
+          }))
+        );
       }
 
       for (const group of groupsToNotify) {
