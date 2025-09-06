@@ -3,6 +3,9 @@
 FROM oven/bun:alpine AS base
 WORKDIR /usr/src/app
 
+# Install timezone data and other required packages for Alpine
+RUN apk add --no-cache tzdata
+
 # install dependencies into temp directory
 # this will cache them and speed up future builds
 FROM base AS install
@@ -28,6 +31,12 @@ RUN bun run build
 # copy only the bundled application
 FROM base AS release
 COPY --from=prerelease /usr/src/app/dist/index.js .
+
+# Install timezone data in the final image too
+RUN apk add --no-cache tzdata
+
+# Set timezone (optional - can be overridden with TZ env var)
+ENV TZ=Europe/Minsk
 
 # run the app
 USER bun

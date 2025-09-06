@@ -24,6 +24,9 @@ export class ScheduleScheduler {
     }, 60000); // 1 minute interval
 
     console.log("📅 Schedule scheduler started");
+    console.log("🕐 Current time:", new Date().toLocaleString());
+    console.log("🌍 Timezone:", Intl.DateTimeFormat().resolvedOptions().timeZone);
+    console.log("🌍 TZ env var:", process.env.TZ);
   }
 
   stop() {
@@ -38,6 +41,8 @@ export class ScheduleScheduler {
     try {
       const now = new Date();
       const currentTime = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
+      
+      console.log(`🔍 Checking schedules at ${currentTime} (${now.toLocaleString()})`);
 
       // Find all active groups that should receive schedule at this time
       const groupsToNotify = await GroupChat.find({
@@ -49,7 +54,19 @@ export class ScheduleScheduler {
         ],
       });
 
+      console.log(`📊 Found ${groupsToNotify.length} groups to notify at ${currentTime}`);
+      
+      if (groupsToNotify.length > 0) {
+        console.log("📋 Groups to notify:", groupsToNotify.map(g => ({ 
+          chatId: g.chatId, 
+          scheduleTime: g.scheduleTime,
+          selectedGroup: g.selectedGroup,
+          isActive: g.isActive 
+        })));
+      }
+
       for (const group of groupsToNotify) {
+        console.log(`📤 Sending schedule to group ${group.chatId}`);
         await this.sendDailySchedule(group);
       }
     } catch (error) {
