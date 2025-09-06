@@ -12,15 +12,17 @@ export type GetScheduleForOneGroup =
 export interface GetGroupsOptions {
   search?: string;
   limit?: number;
+  [key: string]: unknown;
 }
 
 export interface GetTeachersOptions {
   search?: string;
   limit?: number;
+  [key: string]: unknown;
 }
 
 export interface GetScheduleForDatesOptions {
-  groupId?: string;
+  groupId?: number;
   teacherId?: string;
   dates: string[];
 }

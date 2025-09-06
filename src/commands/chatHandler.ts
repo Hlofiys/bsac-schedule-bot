@@ -13,7 +13,8 @@ import { ScheduleApi } from "../api/ScheduleApi.js";
 export const chatHandler = new Composer<EnhancedContext>();
 
 chatHandler.on("message:text", async (ctx, next) => {
-  if (!ctx.user) return;
+  // Only handle private chat messages
+  if (ctx.chat?.type !== "private" || !ctx.user) return next();
 
   // Handle new user setup
   if (ctx.newUser) {

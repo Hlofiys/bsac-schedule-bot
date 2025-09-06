@@ -239,7 +239,7 @@ function getLessonTime(lessonNumber: number | undefined): string {
     3: "12:15-13:55",
     4: "14:10-15:50",
     5: "16:20-18:00",
-    6: "18:15-19:55"
+    6: "18:15-19:55",
   };
   return lessonNumber
     ? times[lessonNumber] || "Время не указано"
