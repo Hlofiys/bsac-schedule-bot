@@ -45,10 +45,6 @@ export class ScheduleScheduler {
       const now = new Date();
       const currentTime = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
 
-      console.log(
-        `🔍 Checking schedules at ${currentTime} (${now.toLocaleString()})`
-      );
-
       // Find all active groups that should receive schedule at this time
       const groupsToNotify = await GroupChat.find({
         isActive: true,
@@ -58,10 +54,6 @@ export class ScheduleScheduler {
           { selectedTeacher: { $exists: true, $ne: null } },
         ],
       });
-
-      console.log(
-        `📊 Found ${groupsToNotify.length} groups to notify at ${currentTime}`
-      );
 
       if (groupsToNotify.length > 0) {
         console.log(
