@@ -25,6 +25,7 @@
   "author": "BSAC Schedule Bot",
   "license": "MIT",
   "dependencies": {
+    "date-fns-tz": "^3.2.0",
     "dotenv": "^17.2.1",
     "grammy": "^1.38.1",
     "mongoose": "^8.18.0",

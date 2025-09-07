@@ -22,7 +22,7 @@ export interface GetTeachersOptions {
 }
 
 export interface GetScheduleForDatesOptions {
-  groupId?: number;
+  groupId?: string;
   teacherId?: string;
   dates: string[];
 }

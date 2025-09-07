@@ -7,6 +7,9 @@ import {
 } from "../../../../utils/keyboards.js";
 import { UserState } from "../../../../schemas/User.js";
 import { ScheduleApi, GetScheduleForOneGroup } from "../../../../api/index.js";
+import { toZonedTime } from "date-fns-tz";
+
+const timeZone = "Europe/Minsk";
 
 export const weeksHandler = new Composer<EnhancedContext>();
 
@@ -140,7 +143,7 @@ function generateWeekButtons(
   entityId: string,
   isGroup: boolean
 ): InlineKeyboard {
-  const today = new Date();
+  const today = toZonedTime(new Date(), timeZone);
   const currentWeekStart = new Date(today);
   const day = currentWeekStart.getDay();
   const diff = currentWeekStart.getDate() - day + (day === 0 ? -6 : 1);

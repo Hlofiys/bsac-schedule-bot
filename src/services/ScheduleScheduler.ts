@@ -6,6 +6,9 @@ import {
   LessonSchedule,
 } from "../api/index.js";
 import { EnhancedContext } from "../utils/index.js";
+import { format, toZonedTime } from "date-fns-tz";
+
+const timeZone = "Europe/Minsk";
 
 export class ScheduleScheduler {
   private bot: Bot<EnhancedContext>;
@@ -24,11 +27,11 @@ export class ScheduleScheduler {
     }, 60000); // 1 minute interval
 
     console.log("📅 Schedule scheduler started");
-    console.log("🕐 Current time:", new Date().toLocaleString());
     console.log(
-      "🌍 Timezone:",
-      Intl.DateTimeFormat().resolvedOptions().timeZone
+      "🕐 Current time:",
+      toZonedTime(new Date(), timeZone).toLocaleString()
     );
+    console.log("🌍 Timezone:", timeZone);
     console.log("🌍 TZ env var:", process.env.TZ);
   }
 
@@ -42,7 +45,7 @@ export class ScheduleScheduler {
 
   private async checkAndSendSchedules() {
     try {
-      const now = new Date();
+      const now = toZonedTime(new Date(), timeZone);
       const currentTime = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
 
       // Find all active groups that should receive schedule at this time
@@ -78,15 +81,15 @@ export class ScheduleScheduler {
 
   private async sendDailySchedule(group: GroupChat) {
     try {
-      const tomorrow = new Date();
+      const tomorrow = toZonedTime(new Date(), timeZone);
       tomorrow.setDate(tomorrow.getDate() + 1);
-      const dateString = tomorrow.toISOString().split("T")[0];
+      const dateString = format(tomorrow, "yyyy-MM-dd", { timeZone });
 
       let scheduleForDay: GetScheduleForOneGroup[] = [];
 
       if (group.selectedGroup) {
         scheduleForDay = await this.scheduleApi.getScheduleForDates({
-          groupId: group.selectedGroup,
+          groupId: group.selectedGroup.toString(),
           dates: [dateString],
         });
       } else if (group.selectedTeacher) {

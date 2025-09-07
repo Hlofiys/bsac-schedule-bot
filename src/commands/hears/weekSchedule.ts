@@ -6,6 +6,9 @@ import {
 import { UserState, UserRole } from "../../schemas/User.js";
 import { callbackIdBuild, dateToCallback } from "../../utils/keyboards.js";
 import { InlineKeyboard } from "grammy";
+import { toZonedTime } from "date-fns-tz";
+
+const timeZone = "Europe/Minsk";
 
 export class WeekScheduleCommand extends AbstractHearsCommand {
   constructor(utils: CommandUtils) {
@@ -16,7 +19,7 @@ export class WeekScheduleCommand extends AbstractHearsCommand {
     if (ctx.user?.state !== UserState.MainMenu) return;
 
     // Get current week start
-    const today = new Date();
+    const today = toZonedTime(new Date(), timeZone);
     const currentWeekStart = new Date(today);
     const day = currentWeekStart.getDay();
     const diff = currentWeekStart.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday

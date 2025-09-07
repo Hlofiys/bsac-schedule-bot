@@ -5,6 +5,9 @@ import {
 } from "../../utils/index.js";
 import { UserState } from "../../schemas/User.js";
 import { GetScheduleForOneGroup, LessonSchedule } from "../../api/index.js";
+import { toZonedTime, format } from "date-fns-tz";
+
+const timeZone = "Europe/Minsk";
 
 export class DayScheduleCommand extends AbstractHearsCommand {
   constructor(utils: CommandUtils) {
@@ -18,12 +21,12 @@ export class DayScheduleCommand extends AbstractHearsCommand {
     const isToday = ctx.message?.text === "Сегодня";
 
     try {
-      const targetDate = new Date();
+      const targetDate = toZonedTime(new Date(), timeZone);
       if (!isToday) {
         targetDate.setDate(targetDate.getDate() + 1);
       }
 
-      const dateString = targetDate.toISOString().split("T")[0];
+      const dateString = format(targetDate, "yyyy-MM-dd", { timeZone });
 
       let scheduleForDay: GetScheduleForOneGroup[] = [];
       if (ctx.user.selectedGroup) {
