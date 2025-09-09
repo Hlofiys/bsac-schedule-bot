@@ -72,7 +72,7 @@ export class DayScheduleCommand extends AbstractHearsCommand {
     dayText: string,
     subgroup?: number
   ): string {
-    let message = `🎯 <b>Расписание на ${dayText}</b>\\n\\n`;
+    let message = `🎯 <b>Расписание на ${dayText}</b>\n\n`;
 
     const lessons = lessonsWithWork.filter(
       (lesson) =>
@@ -108,14 +108,14 @@ export class DayScheduleCommand extends AbstractHearsCommand {
         const translatedType = this.translateLessonType(lessonType);
         const typeEmoji = this.getLessonTypeEmoji(lessonType);
 
-        message += `⚡ <b>${timeSlot}</b>\\n`;
-        message += `   ${typeEmoji} ${translatedType}\\n`;
-        message += `   🧠 ${lessonName}\\n`;
-        message += `   🤓 ${teacherName}\\n`;
-        message += `   ${cabinetDisplay}\\n`;
+        message += `⚡ <b>${timeSlot}</b>\n`;
+        message += `   ${typeEmoji} ${translatedType}\n`;
+        message += `   🧠 ${lessonName}\n`;
+        message += `   🤓 ${teacherName}\n`;
+        message += `   ${cabinetDisplay}\n`;
 
         if (index < lessons.length - 1) {
-          message += "\\n";
+          message += "\n";
         }
       });
 
