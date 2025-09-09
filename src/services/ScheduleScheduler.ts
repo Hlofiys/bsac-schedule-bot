@@ -309,9 +309,7 @@ export class ScheduleScheduler {
         const translatedType = this.translateLessonType(lessonType);
 
         // Add subgroup indicator
-        const subgroupIndicator = subgroup
-          ? ` 🐧 Подгруппа ${subgroup}`
-          : "";
+        const subgroupIndicator = subgroup ? ` 🐧 Подгруппа ${subgroup}` : "";
 
         message += `⚡ <b>${timeSlot}</b>${subgroupIndicator}\n`;
         message += `   🧠 ${translatedType} • ${lessonName}\n`;
