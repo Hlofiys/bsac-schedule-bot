@@ -199,9 +199,11 @@ export class ScheduleScheduler {
               ? `🚪 Ауд. ${cabinet}`
               : "🚪 Ауд. ?";
         const translatedType = this.translateLessonType(lessonType);
+        const typeEmoji = this.getLessonTypeEmoji(lessonType);
 
         message += `⚡ <b>${timeSlot}</b>\n`;
-        message += `   🧠 ${translatedType} • ${lessonName}\n`;
+        message += `   ${typeEmoji} ${translatedType}\n`;
+        message += `   🧠 ${lessonName}\n`;
         message += `   🤓 ${teacherName}\n`;
         message += `   ${cabinetDisplay}\n`;
 
@@ -256,9 +258,11 @@ export class ScheduleScheduler {
               ? `🚪 Ауд. ${cabinet}`
               : "🚪 Ауд. ?";
         const translatedType = this.translateLessonType(lessonType);
+        const typeEmoji = this.getLessonTypeEmoji(lessonType);
 
         message += `⚡ <b>${timeSlot}</b>\n`;
-        message += `   🧠 ${translatedType} • ${lessonName}\n`;
+        message += `   ${typeEmoji} ${translatedType}\n`;
+        message += `   🧠 ${lessonName}\n`;
         message += `   🤓 ${teacherName}\n`;
         message += `   ${cabinetDisplay}\n`;
 
@@ -307,12 +311,14 @@ export class ScheduleScheduler {
               ? `🚪 Ауд. ${cabinet}`
               : "🚪 Ауд. ?";
         const translatedType = this.translateLessonType(lessonType);
+        const typeEmoji = this.getLessonTypeEmoji(lessonType);
 
         // Add subgroup indicator
         const subgroupIndicator = subgroup ? ` 🐧 Подгруппа ${subgroup}` : "";
 
         message += `⚡ <b>${timeSlot}</b>${subgroupIndicator}\n`;
-        message += `   🧠 ${translatedType} • ${lessonName}\n`;
+        message += `   ${typeEmoji} ${translatedType}\n`;
+        message += `   🧠 ${lessonName}\n`;
         message += `   🤓 ${teacherName}\n`;
         message += `   ${cabinetDisplay}\n`;
 
@@ -347,5 +353,15 @@ export class ScheduleScheduler {
     };
 
     return translations[type] || type;
+  }
+
+  private getLessonTypeEmoji(type: string): string {
+    const emojiMap: { [key: string]: string } = {
+      Lecture: "🦉", // Wise owl for lectures (sitting and listening)
+      Practical: "🔨", // Hammer for practical work (hands-on building)
+      Laboratory: "🧙‍♂️", // Wizard for lab work (magical experiments)
+    };
+
+    return emojiMap[type] || "🤖"; // Robot for unknown types
   }
 }

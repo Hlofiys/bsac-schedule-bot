@@ -72,7 +72,7 @@ export class DayScheduleCommand extends AbstractHearsCommand {
     dayText: string,
     subgroup?: number
   ): string {
-    let message = `🎯 <b>Расписание на ${dayText}</b>\n\n`;
+    let message = `🎯 <b>Расписание на ${dayText}</b>\\n\\n`;
 
     const lessons = lessonsWithWork.filter(
       (lesson) =>
@@ -106,14 +106,16 @@ export class DayScheduleCommand extends AbstractHearsCommand {
               ? `🚪 Ауд. ${cabinet}`
               : "🚪 Ауд. ?";
         const translatedType = this.translateLessonType(lessonType);
+        const typeEmoji = this.getLessonTypeEmoji(lessonType);
 
-        message += `⚡ <b>${timeSlot}</b> | ${translatedType}\n`;
-        message += `   🧠 ${lessonName}\n`;
-        message += `   🤓 ${teacherName}\n`;
-        message += `   ${cabinetDisplay}\n`;
+        message += `⚡ <b>${timeSlot}</b>\\n`;
+        message += `   ${typeEmoji} ${translatedType}\\n`;
+        message += `   🧠 ${lessonName}\\n`;
+        message += `   🤓 ${teacherName}\\n`;
+        message += `   ${cabinetDisplay}\\n`;
 
         if (index < lessons.length - 1) {
-          message += "\n";
+          message += "\\n";
         }
       });
 
@@ -143,5 +145,15 @@ export class DayScheduleCommand extends AbstractHearsCommand {
     };
 
     return translations[type] || type;
+  }
+
+  private getLessonTypeEmoji(type: string): string {
+    const emojiMap: { [key: string]: string } = {
+      Lecture: "🦉", // Wise owl for lectures (sitting and listening)
+      Practical: "🔨", // Hammer for practical work (hands-on building)
+      Laboratory: "🧙‍♂️", // Wizard for lab work (magical experiments)
+    };
+
+    return emojiMap[type] || "🤖"; // Robot for unknown types
   }
 }
