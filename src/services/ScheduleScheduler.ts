@@ -110,8 +110,10 @@ export class ScheduleScheduler {
       }
 
       // Check if there are any subgroup-specific lessons
-      const hasSubgroupSpecificLessons = lessons.some(lesson => 
-        lesson.lessonSchedule?.subGroup !== undefined && lesson.lessonSchedule?.subGroup !== null
+      const hasSubgroupSpecificLessons = lessons.some(
+        (lesson) =>
+          lesson.lessonSchedule?.subGroup !== undefined &&
+          lesson.lessonSchedule?.subGroup !== null
       );
 
       if (group.sendBothSubgroups && hasSubgroupSpecificLessons) {
@@ -147,10 +149,10 @@ export class ScheduleScheduler {
       } else {
         // Mode 2: Send one message with all schedules
         // Either because sendBothSubgroups is false, or there are no subgroup-specific lessons
-        const allScheduleMessage = hasSubgroupSpecificLessons 
+        const allScheduleMessage = hasSubgroupSpecificLessons
           ? this.formatAllScheduleWithSubgroupMarks(lessons, "завтра")
           : this.formatSchedule(lessons, "завтра");
-          
+
         if (allScheduleMessage) {
           await this.bot.api.sendMessage(group.chatId, allScheduleMessage, {
             parse_mode: "HTML",
