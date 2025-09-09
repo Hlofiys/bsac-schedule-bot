@@ -109,7 +109,12 @@ export class ScheduleScheduler {
         return;
       }
 
-      if (group.sendBothSubgroups) {
+      // Check if there are any subgroup-specific lessons
+      const hasSubgroupSpecificLessons = lessons.some(lesson => 
+        lesson.lessonSchedule?.subGroup !== undefined && lesson.lessonSchedule?.subGroup !== null
+      );
+
+      if (group.sendBothSubgroups && hasSubgroupSpecificLessons) {
         // Mode 1: Send two separate messages - one for each subgroup
         // Each message contains both common schedule and subgroup-specific schedule
 
@@ -140,11 +145,12 @@ export class ScheduleScheduler {
           );
         }
       } else {
-        // Mode 2: Send one message with all schedules marked by subgroup
-        const allScheduleMessage = this.formatAllScheduleWithSubgroupMarks(
-          lessons,
-          "завтра"
-        );
+        // Mode 2: Send one message with all schedules
+        // Either because sendBothSubgroups is false, or there are no subgroup-specific lessons
+        const allScheduleMessage = hasSubgroupSpecificLessons 
+          ? this.formatAllScheduleWithSubgroupMarks(lessons, "завтра")
+          : this.formatSchedule(lessons, "завтра");
+          
         if (allScheduleMessage) {
           await this.bot.api.sendMessage(group.chatId, allScheduleMessage, {
             parse_mode: "HTML",
