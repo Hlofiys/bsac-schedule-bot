@@ -200,8 +200,8 @@ export class ScheduleScheduler {
               : "🚪 Ауд. ?";
         const translatedType = this.translateLessonType(lessonType);
 
-        message += `⚡ <b>${timeSlot}</b> | ${translatedType}\n`;
-        message += `   🧠 ${lessonName}\n`;
+        message += `⚡ <b>${timeSlot}</b>\n`;
+        message += `   🧠 ${translatedType} • ${lessonName}\n`;
         message += `   🤓 ${teacherName}\n`;
         message += `   ${cabinetDisplay}\n`;
 
@@ -257,8 +257,8 @@ export class ScheduleScheduler {
               : "🚪 Ауд. ?";
         const translatedType = this.translateLessonType(lessonType);
 
-        message += `⚡ <b>${timeSlot}</b> | ${translatedType}\n`;
-        message += `   🧠 ${lessonName}\n`;
+        message += `⚡ <b>${timeSlot}</b>\n`;
+        message += `   🧠 ${translatedType} • ${lessonName}\n`;
         message += `   🤓 ${teacherName}\n`;
         message += `   ${cabinetDisplay}\n`;
 
@@ -310,11 +310,11 @@ export class ScheduleScheduler {
 
         // Add subgroup indicator
         const subgroupIndicator = subgroup
-          ? ` <b>[Подгруппа ${subgroup}]</b>`
-          : " <b>[Общее]</b>";
+          ? ` 🐧 Подгруппа ${subgroup}`
+          : "";
 
-        message += `⚡ <b>${timeSlot}</b> | ${translatedType}${subgroupIndicator}\n`;
-        message += `   🧠 ${lessonName}\n`;
+        message += `⚡ <b>${timeSlot}</b>${subgroupIndicator}\n`;
+        message += `   🧠 ${translatedType} • ${lessonName}\n`;
         message += `   🤓 ${teacherName}\n`;
         message += `   ${cabinetDisplay}\n`;
 
