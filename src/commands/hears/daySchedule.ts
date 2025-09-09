@@ -108,8 +108,7 @@ export class DayScheduleCommand extends AbstractHearsCommand {
         const translatedType = this.translateLessonType(lessonType);
         const typeEmoji = this.getLessonTypeEmoji(lessonType);
 
-        message += `⚡ <b>${timeSlot}</b>\n`;
-        message += `   ${typeEmoji} ${translatedType}\n`;
+        message += `⚡ <b>${timeSlot}</b> | ${typeEmoji} ${translatedType}\n`;
         message += `   🧠 ${lessonName}\n`;
         message += `   🤓 ${teacherName}\n`;
         message += `   ${cabinetDisplay}\n`;
