@@ -110,40 +110,43 @@ export class ScheduleScheduler {
       }
 
       if (group.sendBothSubgroups) {
-        // Send schedule for both subgroups
-        const subgroup1Schedule = this.formatSchedule(lessons, "завтра", 1);
-        const subgroup2Schedule = this.formatSchedule(lessons, "завтра", 2);
+        // Mode 1: Send two separate messages - one for each subgroup
+        // Each message contains both common schedule and subgroup-specific schedule
 
-        if (subgroup1Schedule) {
+        const subgroup1Message = this.formatSubgroupSchedule(
+          lessons,
+          "завтра",
+          1
+        );
+        const subgroup2Message = this.formatSubgroupSchedule(
+          lessons,
+          "завтра",
+          2
+        );
+
+        if (subgroup1Message) {
           await this.bot.api.sendMessage(
             group.chatId,
-            `📚 <b>Подгруппа 1</b>\n\n${subgroup1Schedule}`,
+            `📚 <b>Подгруппа 1</b>\n\n${subgroup1Message}`,
             { parse_mode: "HTML" }
           );
         }
 
-        if (subgroup2Schedule) {
+        if (subgroup2Message) {
           await this.bot.api.sendMessage(
             group.chatId,
-            `📚 <b>Подгруппа 2</b>\n\n${subgroup2Schedule}`,
-            { parse_mode: "HTML" }
-          );
-        }
-
-        // Also send common lessons (no subgroup specified)
-        const commonSchedule = this.formatSchedule(lessons, "завтра");
-        if (commonSchedule) {
-          await this.bot.api.sendMessage(
-            group.chatId,
-            `📚 <b>Общие занятия</b>\n\n${commonSchedule}`,
+            `📚 <b>Подгруппа 2</b>\n\n${subgroup2Message}`,
             { parse_mode: "HTML" }
           );
         }
       } else {
-        // Send all lessons without subgroup filtering
-        const allSchedule = this.formatSchedule(lessons, "завтра");
-        if (allSchedule) {
-          await this.bot.api.sendMessage(group.chatId, allSchedule, {
+        // Mode 2: Send one message with all schedules marked by subgroup
+        const allScheduleMessage = this.formatAllScheduleWithSubgroupMarks(
+          lessons,
+          "завтра"
+        );
+        if (allScheduleMessage) {
+          await this.bot.api.sendMessage(group.chatId, allScheduleMessage, {
             parse_mode: "HTML",
           });
         }
@@ -203,6 +206,119 @@ export class ScheduleScheduler {
         message += `   ${cabinetDisplay}\n`;
 
         if (index < lessons.length - 1) {
+          message += "\n";
+        }
+      });
+
+    return message;
+  }
+
+  /**
+   * Mode 1: Format schedule for a specific subgroup including both common and subgroup-specific lessons
+   */
+  private formatSubgroupSchedule(
+    lessonsWithWork: LessonSchedule[],
+    dayText: string,
+    subgroup: number
+  ): string {
+    // Get lessons for this subgroup AND common lessons (no subgroup specified)
+    const lessons = lessonsWithWork.filter((lesson) => {
+      const lessonSubgroup = lesson.lessonSchedule?.subGroup;
+      return !lessonSubgroup || lessonSubgroup === subgroup;
+    });
+
+    if (lessons.length === 0) {
+      return "";
+    }
+
+    let message = `🎯 <b>Расписание на ${dayText}</b>\n\n`;
+
+    lessons
+      .sort(
+        (a, b) =>
+          (a.lessonSchedule?.lessonNumber || 0) -
+          (b.lessonSchedule?.lessonNumber || 0)
+      )
+      .forEach((lessonWithWork, index) => {
+        const lesson = lessonWithWork.lessonSchedule;
+        if (!lesson) return;
+
+        const timeSlot = this.getLessonTime(lesson.lessonNumber);
+        const lessonName = lesson.lesson?.name || "Не указано";
+        const teacherName = lesson.teacher?.fio || "Не указано";
+        const cabinet = lesson.cabinet;
+        const lessonType = lesson.staticLessonType || "Не указано";
+
+        const cabinetDisplay =
+          cabinet === 0
+            ? "🏃‍♂️ Спортзал"
+            : cabinet
+              ? `🚪 Ауд. ${cabinet}`
+              : "🚪 Ауд. ?";
+        const translatedType = this.translateLessonType(lessonType);
+
+        message += `⚡ <b>${timeSlot}</b> | ${translatedType}\n`;
+        message += `   🧠 ${lessonName}\n`;
+        message += `   🤓 ${teacherName}\n`;
+        message += `   ${cabinetDisplay}\n`;
+
+        if (index < lessons.length - 1) {
+          message += "\n";
+        }
+      });
+
+    return message;
+  }
+
+  /**
+   * Mode 2: Format all schedules with subgroup marks in one message
+   */
+  private formatAllScheduleWithSubgroupMarks(
+    lessonsWithWork: LessonSchedule[],
+    dayText: string
+  ): string {
+    if (lessonsWithWork.length === 0) {
+      return "";
+    }
+
+    let message = `🎯 <b>Расписание на ${dayText}</b>\n\n`;
+
+    lessonsWithWork
+      .sort(
+        (a, b) =>
+          (a.lessonSchedule?.lessonNumber || 0) -
+          (b.lessonSchedule?.lessonNumber || 0)
+      )
+      .forEach((lessonWithWork, index) => {
+        const lesson = lessonWithWork.lessonSchedule;
+        if (!lesson) return;
+
+        const timeSlot = this.getLessonTime(lesson.lessonNumber);
+        const lessonName = lesson.lesson?.name || "Не указано";
+        const teacherName = lesson.teacher?.fio || "Не указано";
+        const cabinet = lesson.cabinet;
+        const lessonType = lesson.staticLessonType || "Не указано";
+        const subgroup = lesson.subGroup;
+
+        const cabinetDisplay =
+          cabinet === 0
+            ? "🏃‍♂️ Спортзал"
+            : cabinet
+              ? `🚪 Ауд. ${cabinet}`
+              : "🚪 Ауд. ?";
+        const translatedType = this.translateLessonType(lessonType);
+
+        // Add subgroup indicator
+        const subgroupIndicator = subgroup
+          ? ` <b>[Подгруппа ${subgroup}]</b>`
+          : " <b>[Общее]</b>";
+
+        message += `⚡ <b>${timeSlot}</b> | ${translatedType}${subgroupIndicator}\n`;
+        message += `   🧠 ${lessonName}\n`;
+        message += `   🤓 ${teacherName}\n`;
+        message += `   ${cabinetDisplay}\n`;
+
+        if (index < lessonsWithWork.length - 1) {
           message += "\n";
         }
       });

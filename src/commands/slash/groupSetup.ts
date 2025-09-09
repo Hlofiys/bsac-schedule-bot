@@ -98,7 +98,7 @@ export class GroupSetupCommand extends AbstractSlashCommand {
     }
 
     status += `🕐 <b>Время отправки:</b> ${groupChat.scheduleTime}\n`;
-    status += `🎭 <b>Подгруппы:</b> ${groupChat.sendBothSubgroups ? "Обе подгруппы отдельно" : "Все занятия вместе"}\n`;
+    status += `🎭 <b>Подгруппы:</b> ${groupChat.sendBothSubgroups ? "Раздельные сообщения" : "Одно сообщение с метками"}\n`;
     status += `${groupChat.isActive ? "🎉" : "😴"} <b>Уведомления:</b> ${groupChat.isActive ? "Включены" : "Отключены"}`;
 
     return status;
@@ -143,7 +143,7 @@ export class GroupStatusCommand extends AbstractSlashCommand {
     }
 
     status += `🕐 <b>Время отправки:</b> ${groupChat.scheduleTime}\n`;
-    status += `🎭 <b>Подгруппы:</b> ${groupChat.sendBothSubgroups ? "Обе подгруппы отдельно" : "Все занятия вместе"}\n`;
+    status += `🎭 <b>Подгруппы:</b> ${groupChat.sendBothSubgroups ? "Раздельные сообщения" : "Одно сообщение с метками"}\n`;
     status += `${groupChat.isActive ? "🎉" : "😴"} <b>Уведомления:</b> ${groupChat.isActive ? "Включены" : "Отключены"}`;
 
     return status;
