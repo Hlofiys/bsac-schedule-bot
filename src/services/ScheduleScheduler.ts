@@ -131,20 +131,31 @@ export class ScheduleScheduler {
           2
         );
 
-        if (subgroup1Message) {
+        // Check if both subgroup schedules are identical
+        if (subgroup1Message && subgroup2Message && subgroup1Message === subgroup2Message) {
+          // Send one combined message if schedules are identical
           await this.bot.api.sendMessage(
             group.chatId,
-            `📚 <b>Подгруппа 1</b>\n\n${subgroup1Message}`,
+            subgroup1Message,
             { parse_mode: "HTML" }
           );
-        }
+        } else {
+          // Send separate messages if schedules are different
+          if (subgroup1Message) {
+            await this.bot.api.sendMessage(
+              group.chatId,
+              `📚 <b>Подгруппа 1</b>\n\n${subgroup1Message}`,
+              { parse_mode: "HTML" }
+            );
+          }
 
-        if (subgroup2Message) {
-          await this.bot.api.sendMessage(
-            group.chatId,
-            `📚 <b>Подгруппа 2</b>\n\n${subgroup2Message}`,
-            { parse_mode: "HTML" }
-          );
+          if (subgroup2Message) {
+            await this.bot.api.sendMessage(
+              group.chatId,
+              `📚 <b>Подгруппа 2</b>\n\n${subgroup2Message}`,
+              { parse_mode: "HTML" }
+            );
+          }
         }
       } else {
         // Mode 2: Send one message with all schedules
