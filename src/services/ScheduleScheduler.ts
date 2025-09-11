@@ -116,9 +116,9 @@ export class ScheduleScheduler {
           lesson.lessonSchedule?.subGroup !== null
       );
 
-      if (group.sendBothSubgroups && hasSubgroupSpecificLessons) {
-        // Mode 1: Send two separate messages - one for each subgroup
-        // Each message contains both common schedule and subgroup-specific schedule
+      if (group.sendBothSubgroups) {
+        // Mode 1: Check if we should send separate messages for subgroups
+        // Generate schedules for both subgroups to compare them
 
         const subgroup1Message = this.formatSubgroupSchedule(
           lessons,
@@ -132,13 +132,15 @@ export class ScheduleScheduler {
         );
 
         // Check if both subgroup schedules are identical
-        if (subgroup1Message && subgroup2Message && subgroup1Message === subgroup2Message) {
+        if (
+          subgroup1Message &&
+          subgroup2Message &&
+          subgroup1Message === subgroup2Message
+        ) {
           // Send one combined message if schedules are identical
-          await this.bot.api.sendMessage(
-            group.chatId,
-            subgroup1Message,
-            { parse_mode: "HTML" }
-          );
+          await this.bot.api.sendMessage(group.chatId, subgroup1Message, {
+            parse_mode: "HTML",
+          });
         } else {
           // Send separate messages if schedules are different
           if (subgroup1Message) {
@@ -159,7 +161,7 @@ export class ScheduleScheduler {
         }
       } else {
         // Mode 2: Send one message with all schedules
-        // Either because sendBothSubgroups is false, or there are no subgroup-specific lessons
+        // Either because sendBothSubgroups is false
         const allScheduleMessage = hasSubgroupSpecificLessons
           ? this.formatAllScheduleWithSubgroupMarks(lessons, "завтра")
           : this.formatSchedule(lessons, "завтра");
